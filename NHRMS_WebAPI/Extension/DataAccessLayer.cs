@@ -3,9 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
-using System.Data.SqlClient;
 using System.Linq;
-//using System.Web.UI.WebControls;
 using NHRMS_WebAPI.Extension;
 using NHRMS_WebAPI.Models;
 
@@ -577,7 +575,7 @@ namespace ITInventory.Common
             try
             {
                 List<object> parameter = new List<object>();
-                parameter.Add("@LeaveTypeID");
+                parameter.Add("@DesignationID");
                 parameter.Add(designationID);
 
                 List<DesignationDetail> result = (from dr in DB.ReadDS("DesignationDetailGet", parameter.ToArray()).Tables[0].AsEnumerable()
