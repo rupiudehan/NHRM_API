@@ -9,6 +9,8 @@ namespace NHRMS_WebAPI.Models
     {
         public long EmployeeID { get; set; }
         public string EmployeeName { get; set; }
+        public int GenderID { get; set; }
+        public string GenderName { get; set; }
         public string EmpPassword { get; set; }
         public string RegDate { get; set; }
         public string MobileNo { get; set; }

@@ -22,6 +22,8 @@ namespace ITInventory.Common
             List<object> parameter=new List<object>();
             parameter.Add("@EmployeeName");
             parameter.Add(User.EmployeeName);
+            parameter.Add("@GenderID");
+            parameter.Add(User.GenderID);
             parameter.Add("@EmpPassword");
             parameter.Add(User.EmpPassword);
             parameter.Add("@RegDate");
@@ -67,7 +69,7 @@ namespace ITInventory.Common
                 parameter.Add("@Password");
                 parameter.Add(password);
 
-                List<EmployeeDetail> result = (from dr in DB.ReadDS("LoingEmployeeAttendance", parameter.ToArray()).Tables[0].AsEnumerable()
+                List<EmployeeDetail> result = (from dr in DB.ReadDS("LogingEmployeeAttendance", parameter.ToArray()).Tables[0].AsEnumerable()
                                          select new EmployeeDetail()
                                          {
                                              EmployeeID = dr.Field<long>("EmployeeID"),
@@ -77,6 +79,8 @@ namespace ITInventory.Common
                                              EmpPassword = dr.Field<string>("EmpPassword"),
                                              DesignationID = dr.Field<int>("DesignationID"),
                                              DesignationName = dr.Field<string>("DesignationName"),
+                                             GenderID = dr.Field<int>("GenderID"),
+                                             GenderName = dr.Field<string>("GenderName"),
                                              OfficeID = dr.Field<int>("OfficeID"),
                                              OfficeName = dr.Field<string>("OfficeName"),
                                              OfficeLattitute = dr.Field<float>("OfficeLattitute").ToString(),
@@ -218,6 +222,33 @@ namespace ITInventory.Common
             result.Message = output[1];
 
             return result;
+        }
+        #endregion
+
+        #region Gender Detail
+        public List<Gender> GetGenderDetail(int genderID)
+        {
+            try
+            {
+                List<object> parameter = new List<object>();
+                parameter.Add("@GenderID");
+                parameter.Add(genderID);
+
+                List<Gender> result = (from dr in DB.ReadDS("GenderDetailGet", parameter.ToArray()).Tables[0].AsEnumerable()
+                                         select new Gender()
+                                         {
+                                             GenderID = dr.Field<int>("GenderID"),
+                                             GenderName = dr.Field<string>("GenderName")
+                                         }).ToList();
+
+
+                return result;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+
         }
         #endregion
 

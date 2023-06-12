@@ -162,6 +162,7 @@
     <Compile Include="Controllers\DistrictController.cs" />
     <Compile Include="Controllers\EmployeeController.cs" />
     <Compile Include="Controllers\EmployeeTypeController.cs" />
+    <Compile Include="Controllers\GenderController.cs" />
     <Compile Include="Controllers\HolidayController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LeaveCategoryController.cs" />
@@ -187,6 +188,7 @@
     <Compile Include="Models\EmployeeDetail.cs" />
     <Compile Include="Models\EmployeeLeaveTypeMasterDetail.cs" />
     <Compile Include="Models\EmployeeType.cs" />
+    <Compile Include="Models\Gender.cs" />
     <Compile Include="Models\Holiday.cs" />
     <Compile Include="Models\LeaveCategoryDetail.cs" />
     <Compile Include="Models\LeaveStatusDetail.cs" />
