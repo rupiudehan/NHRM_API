@@ -70,11 +70,20 @@ public class output
         output result = new output();
         try
         {
-            if (obj != null && obj.Count()!=0)
+            if (obj != null)
             {
-                result.IsSucess = true;
-                result.Message = "success";
-                result.ResponseData = obj;
+                //if (obj.Count() != 0)
+                //{
+                    result.IsSucess = true;
+                    result.Message = "success";
+                    result.ResponseData = obj;
+                //}
+                /*else
+                {
+                    result.IsSucess = false;
+                    result.Message = "";
+                    result.ResponseData = null;
+                }*/
             }
             else
             {

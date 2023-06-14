@@ -166,6 +166,7 @@
     <Compile Include="Controllers\HolidayController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LeaveCategoryController.cs" />
+    <Compile Include="Controllers\LeaveController.cs" />
     <Compile Include="Controllers\LeaveStatusController.cs" />
     <Compile Include="Controllers\LeaveTypeController.cs" />
     <Compile Include="Controllers\ManagementController.cs" />
@@ -191,7 +192,9 @@
     <Compile Include="Models\Gender.cs" />
     <Compile Include="Models\Holiday.cs" />
     <Compile Include="Models\LeaveCategoryDetail.cs" />
+    <Compile Include="Models\LeaveDetail.cs" />
     <Compile Include="Models\LeaveStatusDetail.cs" />
+    <Compile Include="Models\LeaveTourMaster.cs" />
     <Compile Include="Models\LeaveType.cs" />
     <Compile Include="Models\LeaveTypeCount.cs" />
     <Compile Include="Models\ManagementCategoryDetail.cs" />
@@ -270,6 +273,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="UploadattendanceDoc\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Scripts\bootstrap.min.js.map" />

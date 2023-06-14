@@ -11,5 +11,9 @@ namespace NHRMS_WebAPI.Models
         public string OfficeName { get; set; }
         public string OfficeLattitute { get; set; }
         public string OfficeLongitute { get; set; }
+        public string OfficeInTime { get; set; }
+        public string OfficeOutTime { get; set; }
+        public string HalfDayTime { get; set; }
+        public string ShortLeaveTime { get; set; }
     }
 }

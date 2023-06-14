@@ -13,13 +13,13 @@ namespace NHRMS_WebAPI.Controllers
     {
         DataAccessLayer DAL = new DataAccessLayer();
         
-        [Route("app/GetLeavetypes/{employeeTypeID}")]
-        public output GetLeavetypes(int employeeTypeID)
+        [Route("app/GetLeavetypes/{leaveTypeID}")]
+        public output GetLeavetypes(int leaveTypeID)
         {
             output result = new output();
             try
             {
-                List<LeaveType> obj = DAL.GetLeavetypeDetail(employeeTypeID);
+                List<LeaveType> obj = DAL.GetLeavetypeDetail(leaveTypeID);
                 result = result.GetResponse(obj);
             }
             catch (Exception ex)

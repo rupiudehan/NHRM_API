@@ -32,4 +32,11 @@ namespace NHRMS_WebAPI.Models
         public string AttInDate { get; set; }
         public string AttOutDate { get; set; }
     }
+
+    public class AttendanceBalanceDetail:MessageHandle
+    {
+        public string hrmscode { get; set; }
+        public int OfficeID { get; set; }
+        public long EmployeeID { get; set; }
+    }
 }
