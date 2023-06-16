@@ -192,9 +192,9 @@ namespace NHRMS_WebAPI.Extension
                         SetOutputParameter(command, outparam);
                         connection.Open();
                         command.ExecuteScalar();
-                        string[] strVal= { };
+                        string[] strVal= new string[2];
                         strVal[0] = command.Parameters[outparam[0].ToString()].Value.ToString();
-                        strVal[1] = command.Parameters[outparam[1].ToString()].Value.ToString();
+                        strVal[1] = command.Parameters[outparam[3].ToString()].Value.ToString();
                         connection.Close();
                         return strVal;
                     }
@@ -305,30 +305,46 @@ namespace NHRMS_WebAPI.Extension
         {
             try
             {
-                if (param[0] != null)
+                int count = 0;
+                for (int i = 0; i < param.Length;)
                 {
-                    // NOTE: Processes a name/value pair at each iteration
-                    var name = param[0].ToString();
-                    // No empty strings to the database
-                    if (!(param[0] is string && (string)param[0] == ""))
-                    {
-                        var dbParameter = command.CreateParameter();
-                        dbParameter.Direction = ParameterDirection.Output;
+                    count = i;
 
-                        switch ((param[1].ToString().ToLower()))
+
+                    if (param[i] != null)
+                    {
+                        // NOTE: Processes a name/value pair at each iteration
+                        var name = param[i].ToString();
+                        // No empty strings to the database
+                        if (!(param[i] is string && (string)param[i] == ""))
                         {
-                            case "string":
-                                dbParameter.DbType = DbType.String;
-                                break;
-                            case "int":
-                                dbParameter.DbType = DbType.Int32;
-                                break;
+                            count++;
+                            var dbParameter = command.CreateParameter();
+                            dbParameter.Direction = ParameterDirection.Output;
+
+                            switch ((param[count].ToString().ToLower()))
+                            {
+                                case "string":
+                                    dbParameter.DbType = DbType.String;
+                                    count++;
+                                    dbParameter.Size = Convert.ToInt32(param[count]);
+                                    i=i+3;
+                                    break;
+                                case "int":
+                                    dbParameter.DbType = DbType.Int32;
+                                    i = i + 3;
+                                    break;
+                                case "long":
+                                    dbParameter.DbType = DbType.Int64;
+                                    i = i + 3;
+                                    break;
+                            }
+                            dbParameter.ParameterName = name;
+                            command.Parameters.Add(dbParameter);
                         }
-                        dbParameter.Size = Convert.ToInt32(param[2].ToString());
-                        dbParameter.ParameterName = name;
-                        command.Parameters.Add(dbParameter);
                     }
                 }
+                
             }
             catch (Exception)
             {

@@ -23,7 +23,9 @@ namespace NHRMS_WebAPI.Models
         public string AdharCard { get; set; }
         public string HrmsNo { get; set; }
         public int EmployeeTypeID { get; set; }
-        public string DesignationName { get; set; }
+        public string DesignationName { get; set; }        
+        public string DesignationNames { get; set; }
+        public string DesignationIDs { get; set; }
         public string OfficeName { get; set; }
         public string OfficeLattitute { get; set; }
         public string OfficeLongitute { get; set; }

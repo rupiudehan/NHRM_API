@@ -54,11 +54,7 @@ namespace ITInventory.Common
             parameter.Add("@ProcessedBy");
             parameter.Add(User.ProcessedBy);
 
-            List<object> outParameter = new List<object>();
-            outParameter.Add("@Success");
-            outParameter.Add(User.Success);
-            outParameter.Add("@Msg");
-            outParameter.Add(User.Message);
+            List<object> outParameter = OutputParams();
             string[] output=DB.InsertorUpdateWithOutput("EmployeeDetailCreate", parameter.ToArray(), outParameter.ToArray());
             result.Success = Convert.ToInt16(output[0]);
             result.Message = output[1];                  
@@ -97,6 +93,8 @@ namespace ITInventory.Common
                                              HrmsNo = dr.Field<string>("HrmsNo"),
                                              BranchIDs = dr.Field<string>("BranchIDs"),
                                              BranchNames = dr.Field<string>("BranchNames"),
+                                             DesignationIDs = dr.Field<string>("DesignationIDs"),
+                                             DesignationNames = dr.Field<string>("DesignationNames"),
                                              EmployeeTypeID = dr.Field<int>("EmployeeTypeID"),
                                              EmployeeTypeName = dr.Field<string>("EmployeeTypeName"),
                                              DateofInActive = dr.Field<DateTime?>("DateOfInActive").ToString(),
@@ -200,6 +198,38 @@ namespace ITInventory.Common
 
         }
 
+        public List<EmployeeDesignation> GetEmployeeDesignationDetail(long employeeID, int designationID)
+        {
+            try
+            {
+                List<object> parameter = new List<object>();
+                parameter.Add("@EmployeeID");
+                parameter.Add(employeeID);
+                parameter.Add("@DesignationID");
+                parameter.Add(designationID);
+
+                List<EmployeeDesignation> result = (from dr in DB.ReadDS("EmployeeDesignationGet", parameter.ToArray()).Tables[0].AsEnumerable()
+                                               select new EmployeeDesignation()
+                                               {
+                                                   EmployeeID = dr.Field<long>("EmployeeID"),
+                                                   DesignationID = dr.Field<int>("DesignationID"),
+                                                   DesignationName = dr.Field<string>("DesignationName"),
+                                                   ID = dr.Field<long>("ID"),
+                                                   CreatedBy = dr.Field<string>("CreatedBy"),
+                                                   CreatedOn = dr.Field<DateTime?>("CreatedOn").ToString(),
+                                                   IsActive = dr.Field<bool>("IsActive")
+                                               }).ToList();
+
+
+                return result;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+
+        }
+
         public List<EmployeeLeaveTypeMasterDetail> GetEmployeeLeaveTypeMasterDetail(long employeeID, long leaveID)
         {
             try
@@ -269,11 +299,7 @@ namespace ITInventory.Common
             parameter.Add("@ProcessedBy");
             parameter.Add(ProcessedBy);
 
-            List<object> outParameter = new List<object>();
-            outParameter.Add("@Success");
-            outParameter.Add(success);
-            outParameter.Add("@Msg");
-            outParameter.Add(msg);
+            List<object> outParameter = OutputParams();
             string[] output = DB.InsertorUpdateWithOutput("EmployeeLeaveTypeMasterCreateEdit", parameter.ToArray(), outParameter.ToArray());
             result.Success = Convert.ToInt16(output[0]);
             result.Message = output[1];
@@ -321,11 +347,7 @@ namespace ITInventory.Common
             parameter.Add("@ProcessedBy");
             parameter.Add(user.ProcessedBy);
 
-            List<object> outParameter = new List<object>();
-            outParameter.Add("@Success");
-            outParameter.Add(user.Success);
-            outParameter.Add("@Msg");
-            outParameter.Add(user.Message);
+            List<object> outParameter = OutputParams();
             string[] output = DB.InsertorUpdateWithOutput("EmployeeReportingAuthorityCreate", parameter.ToArray(), outParameter.ToArray());
             result.Success = Convert.ToInt16(output[0]);
             result.Message = output[1];
@@ -407,11 +429,7 @@ namespace ITInventory.Common
             parameter.Add("@IN");
             parameter.Add(att.IsInTime);
 
-            List<object> outParameter = new List<object>();
-            outParameter.Add("@Success");
-            outParameter.Add(att.Success);
-            outParameter.Add("@Msg");
-            outParameter.Add(att.Message);
+            List<object> outParameter = OutputParams();
             string[] output = DB.InsertorUpdateWithOutput("AttendanceMark", parameter.ToArray(), outParameter.ToArray());
             result.Success = Convert.ToInt16(output[0]);
             result.Message = output[1];
@@ -1115,11 +1133,7 @@ namespace ITInventory.Common
             parameter.Add("@StatusUpdatedBy");
             parameter.Add(ld.StatusUpdatedBy);
 
-            List<object> outParameter = new List<object>();
-            outParameter.Add("@Success");
-            outParameter.Add(ld.Success);
-            outParameter.Add("@Msg");
-            outParameter.Add(ld.Message);
+            List<object> outParameter = OutputParams();
             string[] output = DB.InsertorUpdateWithOutput("ApplyLeaveCreate", parameter.ToArray(), outParameter.ToArray());
             result.Success = Convert.ToInt16(output[0]);
             result.Message = output[1];
@@ -1149,11 +1163,7 @@ namespace ITInventory.Common
             parameter.Add("@LeaveStatusID");
             parameter.Add(ld.LeaveStatusID);
 
-            List<object> outParameter = new List<object>();
-            outParameter.Add("@Success");
-            outParameter.Add(ld.Success);
-            outParameter.Add("@Msg");
-            outParameter.Add(ld.Message);
+            List<object> outParameter = OutputParams();
             string[] output = DB.InsertorUpdateWithOutput("ApplyLeaveEdit", parameter.ToArray(), outParameter.ToArray());
             result.Success = Convert.ToInt16(output[0]);
             result.Message = output[1];
@@ -1207,6 +1217,18 @@ namespace ITInventory.Common
             }
 
 
+        }
+
+        private List<object> OutputParams()
+        {
+            List<object> outParameter = new List<object>();
+            outParameter.Add("@Success");
+            outParameter.Add("int");
+            outParameter.Add(50);
+            outParameter.Add("@Msg");
+            outParameter.Add("string");
+            outParameter.Add(2000);
+            return outParameter;
         }
         #endregion
     }

@@ -22,6 +22,8 @@ namespace NHRMS_WebAPI.Controllers
             {                
                 MessageHandle obj= DAL.EmployeeRegiatrationForAttendance(user);
                 result = result.GetResponsePost(obj, obj.Message);
+                result.IsSucess = Convert.ToBoolean(obj.Success);
+                result.Message = obj.Message;
             }
             catch (Exception ex)
             {
@@ -89,6 +91,25 @@ namespace NHRMS_WebAPI.Controllers
             return result;
         }
 
+
+
+        [Route("app/GetEmployeeDesignation/{employeeID}/{designationID}")]
+        public output GetEmployeeDesignation(long employeeID, int designationID)
+        {
+            output result = new output();
+            try
+            {
+                List<EmployeeDesignation> obj = DAL.GetEmployeeDesignationDetail(employeeID, designationID);
+                result = result.GetResponse(obj);
+
+            }
+            catch (Exception)
+            {
+
+            }
+            return result;
+        }
+
         [HttpPost]
         [Route("app/EmployeeReportingAuthorityPost")]
         public output EmployeeReportingAuthorityPost(ReportingAuthorityDetail user)
@@ -98,6 +119,8 @@ namespace NHRMS_WebAPI.Controllers
             {
                 MessageHandle obj = DAL.EmployeeReportingAuthorityPost(user);
                 result = result.GetResponsePost(obj,obj.Message);
+                result.IsSucess = Convert.ToBoolean(obj.Success);
+                result.Message = obj.Message;
             }
             catch (Exception ex)
             {
@@ -131,16 +154,19 @@ namespace NHRMS_WebAPI.Controllers
 
         [HttpPost]
         [Route("app/EmployeeLeaveTypeMasterPost")]
-        public MessageHandle EmployeeLeaveTypeMasterPost(long LeaveID, int YearID, long EmployeeID, int LeaveTypeID, decimal LeaveCount, string ProcessedBy)
+        public output EmployeeLeaveTypeMasterPost(long LeaveID, int YearID, long EmployeeID, int LeaveTypeID, decimal LeaveCount, string ProcessedBy)
         {
-            MessageHandle result = new MessageHandle();
+            output result = new output();
             try
             {
-                result = DAL.EmployeeLeaveTypeMasterEditCreate(LeaveID, YearID, EmployeeID, LeaveTypeID, LeaveCount, ProcessedBy);
+                MessageHandle obj = DAL.EmployeeLeaveTypeMasterEditCreate(LeaveID, YearID, EmployeeID, LeaveTypeID, LeaveCount, ProcessedBy);
+                result = result.GetResponsePost(obj, obj.Message);
+                result.IsSucess = Convert.ToBoolean(obj.Success);
+                result.Message = obj.Message;
             }
             catch (Exception ex)
             {
-                result.Success = 0;
+                result.IsSucess = false;
                 result.Message = ex.Message;
             }
             finally

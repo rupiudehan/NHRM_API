@@ -188,6 +188,7 @@
     <Compile Include="Models\DesignationDetail.cs" />
     <Compile Include="Models\District.cs" />
     <Compile Include="Models\EmployeeBranch.cs" />
+    <Compile Include="Models\EmployeeDesignation.cs" />
     <Compile Include="Models\EmployeeDetail.cs" />
     <Compile Include="Models\EmployeeLeaveTypeMasterDetail.cs" />
     <Compile Include="Models\EmployeeType.cs" />
