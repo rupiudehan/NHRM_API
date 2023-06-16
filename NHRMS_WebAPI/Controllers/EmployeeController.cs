@@ -54,6 +54,7 @@ namespace NHRMS_WebAPI.Controllers
             }
             return result;
         }
+
         [Route("app/GetEmployeeDetail/{hrmsCode}")]
         public output GetEmployeeDetail(string hrmsCode)
         {

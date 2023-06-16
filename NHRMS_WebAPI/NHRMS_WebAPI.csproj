@@ -158,6 +158,7 @@
     <Compile Include="Controllers\AttendanceController.cs" />
     <Compile Include="Controllers\BranchController.cs" />
     <Compile Include="Controllers\CityController.cs" />
+    <Compile Include="Controllers\CollectiveRetrievalController.cs" />
     <Compile Include="Controllers\DesignationController.cs" />
     <Compile Include="Controllers\DistrictController.cs" />
     <Compile Include="Controllers\EmployeeController.cs" />
@@ -171,6 +172,7 @@
     <Compile Include="Controllers\LeaveTypeController.cs" />
     <Compile Include="Controllers\ManagementController.cs" />
     <Compile Include="Controllers\OfficeController.cs" />
+    <Compile Include="Controllers\StateController.cs" />
     <Compile Include="Controllers\YearController.cs" />
     <Compile Include="Extension\DataAccessLayer.cs" />
     <Compile Include="Extension\DataService.cs" />

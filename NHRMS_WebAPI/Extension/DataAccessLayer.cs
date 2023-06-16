@@ -461,7 +461,41 @@ namespace ITInventory.Common
 
         }
 
-        
+
+        #endregion
+
+        #region States
+        public List<State> GetStateDetail(int stateID, int countryID)
+        {
+            try
+            {
+                List<object> parameter = new List<object>();
+                parameter.Add("@StateID");
+                parameter.Add(stateID);
+                parameter.Add("@CountryID");
+                parameter.Add(countryID);
+
+                List<State> result = (from dr in DB.ReadDS("StateDetailGet", parameter.ToArray()).Tables[0].AsEnumerable()
+                                         select new State()
+                                         {
+                                             CreatedOn = dr.Field<DateTime?>("CreatedOn").ToString(),
+                                             CreatedBy = dr.Field<string>("CreatedBy"),
+                                             StateID = dr.Field<int>("StateID"),
+                                             StateCode = dr.Field<string>("StateCode"),
+                                             StateName = dr.Field<string>("StateName"),
+                                             CountryId = dr.Field<int>("CountryId"),
+                                             CountryName = dr.Field<string>("CountryName")
+                                         }).ToList();
+
+
+                return result;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+
+        }
         #endregion
 
         #region Districts
