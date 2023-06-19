@@ -29,7 +29,7 @@ namespace ITInventory.Common
                 List<FetchHrmsCode> result = (from dr in DB.ReadDS("GenerateHRMSCode", parameter.ToArray()).Tables[0].AsEnumerable()
                                                select new FetchHrmsCode() 
                                                {                                                   
-                                                   HrmsCode = dr.Field<string>("HrmsCode"),
+                                                   HrmsCode = Prefix+"-"+dr.Field<string>("HrmsCode"),
                                                    Success = 1,
                                                    Message = ""
                                                }).ToList();
