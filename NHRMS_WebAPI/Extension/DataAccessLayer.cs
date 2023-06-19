@@ -181,7 +181,9 @@ namespace ITInventory.Common
                                                    InactiveForAttendance = dr.Field<bool>("InactiveForAttendance"),
                                                    DateOfInactiveForAttendance = dr.Field<DateTime?>("DateOfInactiveForAttendance").ToString(),
                                                    isActive = dr.Field<bool>("IsActive"),
-                                                   isDeleted = dr.Field<bool>("isDeleted")
+                                                   isDeleted = dr.Field<bool>("isDeleted"),
+                                                   Success = 1,
+                                                   Message = ""
                                                }).ToList();
 
 
@@ -213,7 +215,9 @@ namespace ITInventory.Common
                                                    ID = dr.Field<long>("ID"),
                                                    CreatedBy = dr.Field<string>("CreatedBy"),
                                                    CreatedOn = dr.Field<DateTime?>("CreatedOn").ToString(),
-                                                   IsActive = dr.Field<bool>("IsActive")
+                                                   IsActive = dr.Field<bool>("IsActive"),
+                                                   Success = 1,
+                                                   Message = ""
                                                }).ToList();
 
 
@@ -245,7 +249,9 @@ namespace ITInventory.Common
                                                    ID = dr.Field<long>("ID"),
                                                    CreatedBy = dr.Field<string>("CreatedBy"),
                                                    CreatedOn = dr.Field<DateTime?>("CreatedOn").ToString(),
-                                                   IsActive = dr.Field<bool>("IsActive")
+                                                   IsActive = dr.Field<bool>("IsActive"),
+                                                   Success = 1,
+                                                   Message = ""
                                                }).ToList();
 
 
@@ -296,7 +302,9 @@ namespace ITInventory.Common
                                                                   OfficeName = dr.Field<string>("OfficeName"),
                                                                   OfficeLattitute = dr.Field<float>("OfficeLattitute"),
                                                                   OfficeLongitute = dr.Field<float>("OfficeLongitute"),
-                                                                  ISActive = dr.Field<bool>("ISActive")
+                                                                  ISActive = dr.Field<bool>("ISActive"),
+                                                                  Success = 1,
+                                                                  Message = ""
                                                               }).ToList();
 
 
@@ -349,7 +357,9 @@ namespace ITInventory.Common
                                          select new Gender()
                                          {
                                              GenderID = dr.Field<int>("GenderID"),
-                                             GenderName = dr.Field<string>("GenderName")
+                                             GenderName = dr.Field<string>("GenderName"),
+                                             Success = 1,
+                                             Message = ""
                                          }).ToList();
 
 
@@ -413,7 +423,9 @@ namespace ITInventory.Common
                                                    CreatedOn = dr.Field<DateTime?>("CreatedOn").ToString(),
                                                    UpdatedBy = dr.Field<string>("UpdatedBy"),
                                                    UpdatedOn = dr.Field<DateTime?>("UpdatedOn").ToString(),
-                                                   IsActive = dr.Field<bool>("IsActive")
+                                                   IsActive = dr.Field<bool>("IsActive"),
+                                                   Success = 1,
+                                                   Message = ""
                                                }).ToList();
 
 
@@ -494,7 +506,9 @@ namespace ITInventory.Common
                                                    OldTimeDiiff = dr.Field<string>("OldTimeDiiff"),
                                                    OutTimeOld = dr.Field<DateTime?>("OutTimeOld").ToString(),
                                                    InTimeOld = dr.Field<DateTime?>("InTimeOld").ToString(),
-                                                   isHoliday = dr.Field<int>("isHoliday")
+                                                   isHoliday = dr.Field<int>("isHoliday"),
+                                                   Success = 1,
+                                                   Message = ""
                                                }).ToList();
 
 
@@ -530,7 +544,9 @@ namespace ITInventory.Common
                                              StateCode = dr.Field<string>("StateCode"),
                                              StateName = dr.Field<string>("StateName"),
                                              CountryId = dr.Field<int>("CountryId"),
-                                             CountryName = dr.Field<string>("CountryName")
+                                             CountryName = dr.Field<string>("CountryName"),
+                                             Success = 1,
+                                             Message = ""
                                          }).ToList();
 
 
@@ -569,7 +585,9 @@ namespace ITInventory.Common
                                               StateCode = dr.Field<string>("StateCode"),
                                               StateName = dr.Field<string>("StateName"),
                                               CountryId = dr.Field<int>("CountryId"),
-                                              CountryName = dr.Field<string>("CountryName")
+                                              CountryName = dr.Field<string>("CountryName"),
+                                              Success = 1,
+                                              Message = ""
                                           }).ToList();
                 
 
@@ -614,7 +632,9 @@ namespace ITInventory.Common
                                              StateCode = dr.Field<string>("StateCode"),
                                              StateName = dr.Field<string>("StateName"),
                                              CountryId = dr.Field<int>("CountryId"),
-                                             CountryName = dr.Field<string>("CountryName")
+                                             CountryName = dr.Field<string>("CountryName"),
+                                             Success = 1,
+                                             Message = ""
                                          }).ToList();
 
 
@@ -669,7 +689,9 @@ namespace ITInventory.Common
                                          OfficeInTime = Convert.ToString(dr.Field<TimeSpan?>("InTime")),
                                          OfficeOutTime = Convert.ToString(dr.Field<TimeSpan?>("OutTime")),
                                          HalfDayTime = Convert.ToString(dr.Field<TimeSpan?>("HalfDayTime")),
-                                         ShortLeaveTime = Convert.ToString(dr.Field<TimeSpan?>("ShortLeaveTime"))
+                                         ShortLeaveTime = Convert.ToString(dr.Field<TimeSpan?>("ShortLeaveTime")),
+                                         Success = 1,
+                                         Message = ""
                                      }).ToList();
 
 
@@ -698,7 +720,9 @@ namespace ITInventory.Common
                                              EmployeeTypeID = dr.Field<int>("EmployeeTypeID"),
                                              EmployeeTypeName = dr.Field<string>("EmployeeTypeName"),
                                              CreatedOn = dr.Field<DateTime?>("CreatedOn").ToString(),
-                                             CreatedBy = dr.Field<string>("CreatedBy")
+                                             CreatedBy = dr.Field<string>("CreatedBy"),
+                                             Success = 1,
+                                             Message = ""
                                          }).ToList();
 
 
@@ -729,7 +753,9 @@ namespace ITInventory.Common
                                                  LeaveTypeCode = dr.Field<string>("LeaveTypeCode"),
                                                  CreatedOn = dr.Field<DateTime?>("CreatedOn").ToString(),
                                                  CreatedBy = dr.Field<string>("CreatedBy"),
-                                                 IsAttachmentAllowed = dr.Field<bool>("IsAttachmentAllowed")
+                                                 IsAttachmentAllowed = dr.Field<bool>("IsAttachmentAllowed"),
+                                                 Success = 1,
+                                                 Message = ""
                                              }).ToList();
 
 
@@ -758,7 +784,9 @@ namespace ITInventory.Common
                                               DesignationID = dr.Field<int>("DesignationID"),
                                               DesignationName = dr.Field<string>("DesignationName"),
                                               CreatedOn = dr.Field<DateTime?>("CreatedOn").ToString(),
-                                              CreatedBy = dr.Field<string>("CreatedBy")
+                                              CreatedBy = dr.Field<string>("CreatedBy"),
+                                              Success = 1,
+                                              Message = ""
                                           }).ToList();
 
 
@@ -789,7 +817,9 @@ namespace ITInventory.Common
                                                       CreatedOn = dr.Field<DateTime?>("CreatedOn").ToString(),
                                                       CreatedBy = dr.Field<string>("CreatedBy"),
                                                       UpdatedOn = dr.Field<DateTime?>("UpdatedOn").ToString(),
-                                                      UpdatedBy = dr.Field<string>("UpdatedBy")
+                                                      UpdatedBy = dr.Field<string>("UpdatedBy"),
+                                                      Success = 1,
+                                                      Message = ""
                                                   }).ToList();
 
 
@@ -816,7 +846,9 @@ namespace ITInventory.Common
                                              select new YearDetail()
                                              {
                                                  YearId = dr.Field<int>("YearId"),
-                                                 Year = dr.Field<string>("Year")
+                                                 Year = dr.Field<string>("Year"),
+                                                 Success = 1,
+                                                 Message = ""
                                              }).ToList();
 
 
@@ -855,7 +887,9 @@ namespace ITInventory.Common
                                                YearId = dr.Field<int>("YearId"),
                                                Year = dr.Field<string>("Year"),
                                                CreatedBy = dr.Field<string>("CreatedBy"),
-                                               CreatedOn = dr.Field<DateTime?>("CreatedOn").ToString()
+                                               CreatedOn = dr.Field<DateTime?>("CreatedOn").ToString(),
+                                               Success = 1,
+                                               Message = ""
                                            }).ToList();
 
 
@@ -887,7 +921,9 @@ namespace ITInventory.Common
                                                    CategoryName = dr.Field<string>("CategoryName"),
                                                    BossID = dr.Field<int>("BossID"),
                                                    AuthorityName = dr.Field<string>("AuthorityName"),
-                                                   IsActive = dr.Field<bool>("IsActive")
+                                                   IsActive = dr.Field<bool>("IsActive"),
+                                                   Success = 1,
+                                                   Message = ""
                                                }).ToList();
 
 
@@ -917,7 +953,9 @@ namespace ITInventory.Common
                                                          {
                                                              CategoryID = dr.Field<int>("CategoryID"),
                                                              CategoryName = dr.Field<string>("CategoryName"),
-                                                             IsVisible = dr.Field<bool>("IsVisible")
+                                                             IsVisible = dr.Field<bool>("IsVisible"),
+                                                             Success = 1,
+                                                             Message = ""
                                                          }).ToList();
 
 
@@ -947,7 +985,9 @@ namespace ITInventory.Common
                                                         CreatedBy = dr.Field<string>("CreatedBy"),
                                                         CreatedOn = dr.Field<DateTime?>("CreatedOn").ToString(),
                                                         UpdatedBy = dr.Field<string>("UpdatedBy"),
-                                                        UpdatedOn = dr.Field<DateTime?>("UpdatedOn").ToString()
+                                                        UpdatedOn = dr.Field<DateTime?>("UpdatedOn").ToString(),
+                                                        Success = 1,
+                                                        Message = ""
                                                     }).ToList();
 
 
@@ -977,7 +1017,9 @@ namespace ITInventory.Common
                                                         StatusName = dr.Field<string>("StatusName"),
                                                         StatusCode = dr.Field<string>("StatusCode"),
                                                         CreatedBy = dr.Field<string>("CreatedBy"),
-                                                        CreatedOn = dr.Field<DateTime?>("CreatedOn").ToString()
+                                                        CreatedOn = dr.Field<DateTime?>("CreatedOn").ToString(),
+                                                        Success = 1,
+                                                        Message = ""
                                                     }).ToList();
 
 
@@ -1009,7 +1051,9 @@ namespace ITInventory.Common
                                                       UpdatedOn = dr.Field<DateTime?>("UpdatedOn").ToString(),
                                                       CreatedBy = dr.Field<string>("CreatedBy"),
                                                       CreatedOn = dr.Field<DateTime?>("CreatedOn").ToString(),
-                                                      IsActive = dr.Field<bool>("IsActive")
+                                                      IsActive = dr.Field<bool>("IsActive"),
+                                                      Success = 1,
+                                                      Message = ""
                                                   }).ToList();
 
 
@@ -1044,7 +1088,9 @@ namespace ITInventory.Common
                                                 UpdatedOn = dr.Field<DateTime?>("UpdatedOn").ToString(),
                                                 CreatedBy = dr.Field<string>("CreatedBy"),
                                                 CreatedOn = dr.Field<DateTime?>("CreatedOn").ToString(),
-                                                IsActive = dr.Field<bool>("IsActive")
+                                                IsActive = dr.Field<bool>("IsActive"),
+                                                Success = 1,
+                                                Message = ""
                                             }).ToList();
 
 
@@ -1096,7 +1142,9 @@ namespace ITInventory.Common
                                                         {
                                                             EmployeeID = dr.Field<long>("EmployeeID"),
                                                             hrmscode = dr.Field<string>("hrmscode"),
-                                                            OfficeID = dr.Field<int>("OfficeID")
+                                                            OfficeID = dr.Field<int>("OfficeID"),
+                                                            Success = 1,
+                                                            Message = ""
                                                         }).ToList();
 
 
