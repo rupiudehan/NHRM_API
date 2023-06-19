@@ -5,6 +5,10 @@ using System.Web;
 
 namespace NHRMS_WebAPI.Models
 {
+    public class FetchHrmsCode:MessageHandle
+    {
+        public string HrmsCode { get; set; }
+    }
     public class EmployeeDetail:MessageHandle
     {
         public long EmployeeID { get; set; }

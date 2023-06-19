@@ -17,6 +17,32 @@ namespace ITInventory.Common
         DbConnection con = DB.GetConnection();
 
         //SqlConnection con = Common.DataService.GetConnection();
+        #region Generate HRMS Code
+        public List<FetchHrmsCode> GenerateHrmsCode(string Prefix)
+        {
+            try
+            {
+                List<object> parameter = new List<object>();
+                parameter.Add("@Prefix");
+                parameter.Add(Prefix);
+                
+                List<FetchHrmsCode> result = (from dr in DB.ReadDS("GenerateHRMSCode", parameter.ToArray()).Tables[0].AsEnumerable()
+                                               select new FetchHrmsCode() 
+                                               {                                                   
+                                                   HrmsCode = dr.Field<string>("HrmsCode"),
+                                                   Success = 1,
+                                                   Message = ""
+                                               }).ToList();
+
+
+                return result.Count == 0 ? null : result;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+        #endregion
         #region Employee        
         public MessageHandle EmployeeRegiatrationForAttendance(EmployeeDetail User)
         {

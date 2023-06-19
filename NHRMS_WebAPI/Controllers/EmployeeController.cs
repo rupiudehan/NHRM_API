@@ -40,6 +40,23 @@ namespace NHRMS_WebAPI.Controllers
 
         }
 
+        [Route("app/GenerateHrmsCode/Prefix")]
+        public output GenerateHrmsCode(string Prefix)
+        {
+            output result = new output();
+            try
+            {
+                List<FetchHrmsCode> obj = DAL.GenerateHrmsCode(Prefix);
+                result = result.GetResponse(obj);
+            }
+            catch (Exception ex)
+            {
+                result.IsSucess = false;
+                result.Message = ex.Message;
+            }
+            return result;
+        }
+
         [Route("app/GetLoginEmployee")]
         public output GetLoginEmployee(string username, string password)
         {
