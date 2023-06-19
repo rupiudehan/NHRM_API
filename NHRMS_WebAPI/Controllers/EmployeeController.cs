@@ -41,6 +41,7 @@ namespace NHRMS_WebAPI.Controllers
         }
 
         [Route("app/GenerateHrmsCode/Prefix")]
+        [HttpGet]
         public output GenerateHrmsCode(string Prefix)
         {
             output result = new output();
