@@ -45,7 +45,9 @@ namespace NHRMS_WebAPI.Controllers
                 arrayList.Add(state.ResponseDataC);
                 arrayList.Add(district.ResponseDataC);
                 result.ResponseData = arrayList;
-                
+                result.IsSucess = true;
+                result.Message = "";
+
             }
             catch (Exception ex)
             {
