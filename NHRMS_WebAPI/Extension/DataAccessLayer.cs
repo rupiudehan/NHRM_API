@@ -103,11 +103,13 @@ namespace ITInventory.Common
                                              InactiveForAttendance = dr.Field<bool>("InactiveForAttendance"),
                                              DateOfInactiveForAttendance = dr.Field<DateTime?>("DateOfInactiveForAttendance").ToString(),
                                              isActive = dr.Field<bool>("IsActive"),
-                                             isDeleted = dr.Field<bool>("isDeleted")
+                                             isDeleted = dr.Field<bool>("isDeleted"),
+                                             Success=1,
+                                             Message=""
                                          }).ToList();
 
 
-                return result;
+                return result.Count==0?null:result;
             }
             catch (Exception)
             {
