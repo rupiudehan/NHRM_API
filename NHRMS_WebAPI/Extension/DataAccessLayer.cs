@@ -88,8 +88,9 @@ namespace ITInventory.Common
             return result;
         }
 
-        public List<EmployeeDetail> GetEmployeeLoginDetail(string username,string password)
+        public List<EmployeeDetail> GetEmployeeLoginDetail(string username,string password,out string msg)
         {
+            msg = string.Empty;
             try
             {
                 List<object> parameter = new List<object>();
@@ -133,7 +134,10 @@ namespace ITInventory.Common
                                              Success=1,
                                              Message=""
                                          }).ToList();
-
+                if (result.Count == 0)
+                {
+                    msg = "Invalid HRMS No./Password!";                    
+                }
 
                 return result.Count==0?null:result;
             }

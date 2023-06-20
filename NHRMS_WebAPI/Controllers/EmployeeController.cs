@@ -64,8 +64,11 @@ namespace NHRMS_WebAPI.Controllers
             output result = new output();
             try
             {
-                List<EmployeeDetail> obj= DAL.GetEmployeeLoginDetail(username, password);
+                string msg = string.Empty;
+                List<EmployeeDetail> obj= DAL.GetEmployeeLoginDetail(username, password,out msg);
                 result = result.GetResponse(obj);
+                //result.IsSucess = false;
+                result.Message = msg;
             }
             catch (Exception ex)
             {
