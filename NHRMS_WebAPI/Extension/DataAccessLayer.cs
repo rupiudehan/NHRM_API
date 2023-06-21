@@ -100,7 +100,7 @@ namespace ITInventory.Common
             parameter.Add(User.GenderID);
             parameter.Add("@EmpPassword");
             parameter.Add(User.EmpPassword);
-            if (User.RegDate != "")
+            if (User.RegDate != "" && User.RegDate!=null)
             {
                 string[] dateParts = User.RegDate.Split(new char[] { '/' });
                 User.RegDate = dateParts[2] + "-" + dateParts[1] + "-" + dateParts[0];
