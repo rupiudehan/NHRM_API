@@ -88,6 +88,52 @@ namespace ITInventory.Common
             return result;
         }
 
+        public MessageHandle EmployeeUpdationForAttendance(EmployeeDetail User)
+        {
+            MessageHandle result = new MessageHandle();
+            List<object> parameter = new List<object>();
+            parameter.Add("@EmployeeID");
+            parameter.Add(User.EmployeeID);
+            parameter.Add("@EmployeeName");
+            parameter.Add(User.EmployeeName);
+            parameter.Add("@GenderID");
+            parameter.Add(User.GenderID);
+            parameter.Add("@EmpPassword");
+            parameter.Add(User.EmpPassword);
+            if (User.RegDate != "")
+            {
+                string[] dateParts = User.RegDate.Split(new char[] { '/' });
+                User.RegDate = dateParts[2] + "-" + dateParts[1] + "-" + dateParts[0];
+                parameter.Add("@RegDate");
+                parameter.Add(User.RegDate);
+            }
+            parameter.Add("@MobNo");
+            parameter.Add(User.MobileNo);
+            parameter.Add("@DesignationID");
+            parameter.Add(User.DesignationID);
+            parameter.Add("@OfficeID");
+            parameter.Add(User.OfficeID);
+            parameter.Add("@BranchID");
+            parameter.Add(User.BranchID);
+            parameter.Add("@SimID");
+            parameter.Add(User.SimID);
+            parameter.Add("@AdharCard");
+            parameter.Add(User.AdharCard);
+            parameter.Add("@HrmsNo");
+            parameter.Add(User.HrmsNo);
+            parameter.Add("@EmployeeTypeID");
+            parameter.Add(User.EmployeeTypeID);
+            parameter.Add("@ProcessedBy");
+            parameter.Add(User.ProcessedBy);
+
+            List<object> outParameter = OutputParams();
+            string[] output = DB.InsertorUpdateWithOutput("EmployeeDetailEdit", parameter.ToArray(), outParameter.ToArray());
+            result.Success = Convert.ToInt16(output[0]);
+            result.Message = output[1];
+
+            return result;
+        }
+
         public List<EmployeeDetail> GetEmployeeLoginDetail(string username,string password,out string msg)
         {
             msg = string.Empty;
@@ -407,7 +453,7 @@ namespace ITInventory.Common
                 parameter.Add("@ReportingAuthorityID");
                 parameter.Add(reportingAuthorityID);
 
-                List<ReportingAuthorityDetailFetch> result = (from dr in DB.ReadDS("EmployeeReportingAuthorityDetail", parameter.ToArray()).Tables[0].AsEnumerable()
+                List<ReportingAuthorityDetailFetch> result = (from dr in DB.ReadDS("EmployeeReportingAuthorityDetailGet", parameter.ToArray()).Tables[0].AsEnumerable()
                                                select new ReportingAuthorityDetailFetch()
                                                {
                                                    ID = dr.Field<long>("ID"),
