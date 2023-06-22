@@ -95,5 +95,22 @@ namespace NHRMS_WebAPI.Controllers
             return result;
 
         }
+
+        [Route("app/GetEmployeeLeaveBalanceDetail/{EmployeeID}")]
+        public output GetEmployeeLeaveBalanceDetail(long EmployeeID)
+        {
+            output result = new output();
+            try
+            {
+                object obj = DAL.GetEmployeeLeaveBalanceDetail(EmployeeID);
+                //result = result.GetResponse(obj);
+            }
+            catch (Exception ex)
+            {
+                result.IsSucess = false;
+                result.Message = ex.Message;
+            }
+            return result;
+        }
     }
 }

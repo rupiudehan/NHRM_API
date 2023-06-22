@@ -1,11 +1,15 @@
 ﻿//using Microsoft.ApplicationBlocks.Data;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
 using System.Data.SqlClient;
+using System.Dynamic;
 using System.IO;
 using System.Linq;
+using System.Text;
+using System.Web.UI.WebControls;
 using NHRMS_WebAPI.Extension;
 using NHRMS_WebAPI.Models;
 
@@ -1319,6 +1323,41 @@ namespace ITInventory.Common
             result.Message = output[1];
 
             return result;
+        }
+
+        public IDictionary<String, Object> GetEmployeeLeaveBalanceDetail(long EmployeeID)
+        {
+            try
+            {
+                List<object> parameter = new List<object>();
+                parameter.Add("@EmployeeID");
+                parameter.Add(EmployeeID);
+                DataSet ds = DB.ReadDS("EmployeeLeaveBalanceDetail", parameter.ToArray());
+                ExpandoObject dynamicDto = new ExpandoObject();
+                ArrayList columnName = new ArrayList();
+                
+                foreach (DataColumn column in ds.Tables[0].Columns)
+                {
+                    columnName.Add(column.ColumnName+",");
+                    //((IDictionary<String, Object>)dynamicDto).Add(column.ColumnName, row[column.ColumnName]);
+                }
+
+                int count = 0;
+                //var result = (from dr in DB.ReadDS("EmployeeLeaveBalanceDetail", parameter.ToArray()).Tables[0].AsEnumerable()
+                //              select new
+                //              {
+                //                  columnName[count++]= dr.Field<long>(columnName[count++].ToString())
+                                  
+                //              }).ToList();
+                //object d = result;
+
+                return dynamicDto;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+
         }
         #endregion
 
