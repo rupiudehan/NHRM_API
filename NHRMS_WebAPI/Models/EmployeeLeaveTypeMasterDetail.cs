@@ -26,8 +26,8 @@ namespace NHRMS_WebAPI.Models
         public string EmployeeTypeName { get; set; }
         public int OfficeID { get; set; }
         public string OfficeName { get; set; }
-        public float OfficeLattitute { get; set; }
-        public float OfficeLongitute { get; set; }
+        public double OfficeLattitute { get; set; }
+        public double OfficeLongitute { get; set; }
         public bool ISActive { get; set; }
     }
 }
