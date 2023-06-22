@@ -48,7 +48,7 @@ namespace NHRMS_WebAPI.Controllers
         }
 
         [HttpPost]
-        [Route("app/AddLeaveDetail")]
+        [Route("app/AddLeaveDetailPost")]
         public output AddLeaveDetail(LeaveDetail ld)
         {
             output result = new output();
@@ -73,7 +73,7 @@ namespace NHRMS_WebAPI.Controllers
 
         }
         [HttpPost]
-        [Route("app/UpdateLeaveDetail")]
+        [Route("app/UpdateLeaveDetailPost")]
         public output UpdateLeaveDetail(EditLeaveDetail ld)
         {
             output result = new output();

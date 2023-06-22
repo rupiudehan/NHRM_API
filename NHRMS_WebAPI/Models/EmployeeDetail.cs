@@ -31,6 +31,18 @@ namespace NHRMS_WebAPI.Models
         public string DesignationNames { get; set; }
         public string DesignationIDs { get; set; }
         public string OfficeName { get; set; }
+        public int CityID { get; set; }
+        public string CityName { get; set; }
+        public string CityCode { get; set; }
+        public int DistrictID { get; set; }
+        public string DistrictCode { get; set; }
+        public string DistrictName { get; set; }
+        public int StateID { get; set; }
+        public string StateCode { get; set; }
+        public string StateName { get; set; }
+        public int CountryID { get; set; }
+        public string CountryCode { get; set; }
+        public string CountryName { get; set; }
         public string OfficeLattitute { get; set; }
         public string OfficeLongitute { get; set; }
         public string EmployeeTypeName { get; set; }

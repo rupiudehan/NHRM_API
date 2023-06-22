@@ -159,6 +159,18 @@ namespace ITInventory.Common
                                              GenderName = dr.Field<string>("GenderName"),
                                              OfficeID = dr.Field<int>("OfficeID"),
                                              OfficeName = dr.Field<string>("OfficeName"),
+                                             CityID = dr.Field<int>("CityID"),
+                                             CityCode = dr.Field<string>("CityCode"),
+                                             CityName = dr.Field<string>("CityName"),
+                                             DistrictID = dr.Field<int>("DistrictID"),
+                                             DistrictCode = dr.Field<string>("DistrictCode"),
+                                             DistrictName = dr.Field<string>("DistrictName"),
+                                             StateID = dr.Field<int>("StateID"),
+                                             StateCode = dr.Field<string>("StateCode"),
+                                             StateName = dr.Field<string>("StateName"),
+                                             CountryID = dr.Field<int>("CountryID"),
+                                             CountryCode = dr.Field<string>("CountryCode"),
+                                             CountryName = dr.Field<string>("CountryName"),
                                              OfficeLattitute = dr.Field<double>("OfficeLattitute").ToString(),
                                              OfficeLongitute = dr.Field<double>("OfficeLongitute").ToString(),
                                              SimID = dr.Field<string>("SimID"),
@@ -1218,19 +1230,31 @@ namespace ITInventory.Common
             List<object> parameter = new List<object>();
             parameter.Add("@EmployeeID");
             parameter.Add(ld.EmployeeID);
-            if (ld.LeaveFromDate != "")
+            if (ld.LeaveFromDate != "" && ld.LeaveFromDate != null)
             {
                 string[] dateParts = ld.LeaveFromDate.Split(new char[] { '/' });
                 ld.LeaveFromDate = dateParts[2] + "-" + dateParts[1] + "-" + dateParts[0];
                 parameter.Add("@LeaveFromDate");
                 parameter.Add(ld.LeaveFromDate);
             }
-            parameter.Add("@LeaveFromTime");
-            parameter.Add(ld.LeaveFromTime);
-            parameter.Add("@LeaveToDate");
-            parameter.Add(ld.LeaveToDate);
-            parameter.Add("@LeaveToTime");
-            parameter.Add(ld.LeaveToTime);
+            if (ld.LeaveFromTime != "" && ld.LeaveFromTime != null)
+            {
+                parameter.Add("@LeaveFromTime");
+                parameter.Add(ld.LeaveFromTime);
+            }
+            if (ld.LeaveToDate != "" && ld.LeaveToDate != null)
+            {
+                string[] dateParts = ld.LeaveToDate.Split(new char[] { '/' });
+                ld.LeaveToDate = dateParts[2] + "-" + dateParts[1] + "-" + dateParts[0];
+                parameter.Add("@LeaveToDate");
+                parameter.Add(ld.LeaveToDate);
+            }
+            if (ld.LeaveToTime!="" && ld.LeaveToTime!=null)
+            {
+
+                parameter.Add("@LeaveToTime");
+                parameter.Add(ld.LeaveToTime);
+            }
             parameter.Add("@LeaveCategoryID");
             parameter.Add(ld.LeaveCategoryID);
             parameter.Add("@LeaveTypeID");

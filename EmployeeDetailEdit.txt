@@ -1,0 +1,116 @@
+USE [NHMS]
+GO
+/****** Object:  StoredProcedure [dbo].[EmployeeDetailEdit]    Script Date: 6/21/2023 1:38:09 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+ALTER PROC [dbo].[EmployeeDetailEdit]
+@EmployeeID bigint,
+@EmployeeName varchar(100),
+@GenderID int,
+@EmpPassword varchar(50),
+@RegDate date = null,
+@MobNo nvarchar(50) = null,
+@DesignationID int = null,
+@OfficeID int = null,
+@BranchID int,
+@SimID nvarchar(50) = null,
+@AdharCard nvarchar(50) = null,
+@HrmsNo nvarchar(50) = null,
+@EmployeeTypeID int,
+@isActive bit=1,
+@isDeleted bit = 0,
+@DateofInActive date = null,
+@DateofJoining date = null,
+@DateofTransfer date = null,
+@InactiveForAttendance bit=null,
+@DateOfInactiveForAttendance date = null,
+@ProcessedBy varchar(50),
+@Success INT OUT,
+@Msg VARCHAR(Max) OUT
+AS
+BEGIN
+	BEGIN TRY
+		BEGIN TRAN	
+		UPDATE EmployeeDetail SET EmployeeName=@EmployeeName,GenderID=@GenderID,EmpPassword=@EmpPassword, 
+		RegDate=@RegDate,MobNo=@MobNo,DesignationID=@DesignationID,OfficeID=@OfficeID,SimID=@SimID,Adharcard=@AdharCard,
+		EmployeeTypeID=@EmployeeTypeID,ISActive=@isActive,IsDeleted=@isDeleted,DateOfInActive=@DateofInActive,
+		DateofJoining=@DateofJoining,DateOfTransfer=@DateofTransfer,InactiveForAttendance=@InactiveForAttendance,
+		DateOfInactiveForAttendance=@DateOfInactiveForAttendance
+		WHERE EmployeeID=@EmployeeID
+		UPDATE EmployeeBranch SET BranchID=@BranchID,IsActive=@isActive
+		WHERE EmployeeID=@EmployeeID
+		UPDATE EmployeeDesignation SET DesignationID=@DesignationID,IsActive=@isActive
+		WHERE EmployeeID=@EmployeeID
+		UPDATE EmployeeSimIdDetail SET SimID=@SimID,IsActive=@isActive
+		WHERE EmployeeID=@EmployeeID
+		DECLARE @ReportingAuthorityID BIGINT,@ReportingAuthorityOfficeID INT,@ReportingAuthorityBranchID INT,
+		@ReportingAuthorityDesignationID INT,@ApplyDate DATE,@IsApprovedOldOffice BIT,@OldOfficeApprovalDate DATE,
+		@OldOfficeRemarks VARCHAR(500),@PreviousPostingPlaceID BIGINT
+		
+		SELECT @PreviousPostingPlaceID=PostingPlaceID,@ReportingAuthorityID=ReportingAuthorityID,
+		 @ReportingAuthorityOfficeID=ReportingAuthorityOfficeID,@ReportingAuthorityBranchID=ReportingAuthorityBranchID,
+		 @ReportingAuthorityDesignationID=ReportingAuthorityDesignationID,@ApplyDate=ApplyDate,@IsApprovedOldOffice=IsApprovedOldOffice,
+		 @OldOfficeApprovalDate=ApplyDate,@OldOfficeRemarks=OldOfficeRemarks
+		FROM EmployeePlaceOfPosting WHERE IsActive=1
+		UPDATE EmployeePlaceOfPosting SET IsActive=0,IsTransfered=1 WHERE EmployeeID=@EmployeeID AND IsActive=1
+		INSERT INTO EmployeePlaceOfPosting(EmployeeID,DateOfJoining,CurrentOfficeID,CurrentBranchID,CurrentDesignationID,IsActive,IsDeleted,
+		IsApprovedOldOffice,OldOfficeApprovalDate,OldOfficeRemarks,PreviousPostingPlaceID)
+		VALUES(@EmployeeID,@DateofJoining,@OfficeID,@BranchID,@DesignationID,1,0,@IsApprovedOldOffice,
+		@OldOfficeApprovalDate,@OldOfficeRemarks,@PreviousPostingPlaceID)
+		
+		--IF(NOT EXISTS(SELECT * FROM EmployeeDetail WHERE (HrmsNo=@HrmsNo OR SimID=@SimID OR MobNo=@MobNo) AND ISActive=1 AND IsDeleted=0))
+		--BEGIN
+		--	BEGIN TRAN			
+		--		INSERT INTO EmployeeDetail (EmployeeName,GenderID,EmpPassword,RegDate,MobNo,DesignationID,OfficeID,SimID,Adharcard,HrmsNo,EmployeeTypeID,ISActive,IsDeleted,DateOfInActive,DateofJoining,DateOfTransfer,InactiveForAttendance,DateOfInactiveForAttendance,CreatedDate,CreatedBy)
+		--		VALUES(@EmployeeName,@GenderID,@EmpPassword,@RegDate,@MobNo,@DesignationID,@OfficeID,@SimID,@AdharCard,@HrmsNo,@EmployeeTypeID,@isActive,@isDeleted,@DateofInActive,@DateofJoining,@DateofTransfer,@InactiveForAttendance,@DateOfInactiveForAttendance,GETDATE(),@ProcessedBy)
+			
+		--		DECLARE @EmployeeID bigint=SCOPE_IDENTITY()
+			
+		--		INSERT INTO EmployeeBranch(EmployeeID,BranchID,CreatedBy,CreatedOn,IsActive)
+		--		VALUES(@EmployeeID,@BranchID,@ProcessedBy,GETDATE(),@isActive)
+		--		--DECLARE @EmployeeBranchID bigint=IDENT_CURRENT('EmployeeBranch')
+		--		INSERT INTO EmployeeDesignation(EmployeeID,DesignationID,CreatedBy,CreatedOn,IsActive)
+		--		VALUES(@EmployeeID,@DesignationID,@ProcessedBy,GETDATE(),@isActive)
+		--		--DECLARE @EmployeeDesignationID bigint=IDENT_CURRENT('EmployeeDesignation')
+		--		INSERT INTO EmployeeSimIdDetail(EmployeeID,SimID,InactiveForAttendance,CreatedBy,CreatedOn,IsActive)
+		--		VALUES(@EmployeeID,@SimID,@isActive,@ProcessedBy,GETDATE(),@isActive)
+			
+		--		INSERT INTO EmployeePlaceOfPosting(EmployeeID,DateOfJoining,CurrentOfficeID,CurrentBranchID,CurrentDesignationID,IsActive,IsDeleted)
+		--		VALUES(@EmployeeID,@DateofJoining,@OfficeID,@BranchID,@DesignationID,@isActive,@isDeleted)
+				SET @Success=1
+			
+			COMMIT TRAN
+		--END
+		--ELSE
+		--BEGIN
+		--	SET @Success=0
+		--	SET @Msg ='Record already exists!'
+		--END
+	END TRY
+	BEGIN CATCH
+		ROLLBACK TRAN
+		SET @Success=0
+
+		--if ERROR_MESSAGE() LIKE '%The DELETE statement conflicted with the REFERENCE constraint%'
+
+		SET @Msg ='Can not save record!'
+
+
+
+		--SELECT
+
+		--ERROR_NUMBER() AS ErrorNumber,
+
+		--ERROR_STATE() AS ErrorState,
+
+		--ERROR_SEVERITY() AS ErrorSeverity,
+
+		--ERROR_PROCEDURE() AS ErrorProcedure,
+
+		--ERROR_LINE() AS ErrorLine,
+
+		--ERROR_MESSAGE() AS ErrorMessage
+	END CATCH
+END
