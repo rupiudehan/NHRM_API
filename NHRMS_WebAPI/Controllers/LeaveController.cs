@@ -98,6 +98,32 @@ namespace NHRMS_WebAPI.Controllers
             return result;
 
         }
+
+        [HttpPost]
+        [Route("app/LeaveAutoDeductPost")]
+        public output LeaveAutoDeductPost(LeaveAutoDeductDetail ld)
+        {
+            output result = new output();
+            try
+            {
+                MessageHandle obj = DAL.LeaveAutoDeduct(ld);
+                result = result.GetResponsePost(obj, obj.Message);
+                result.IsSucess = Convert.ToBoolean(obj.Success);
+                result.Message = obj.Message;
+            }
+            catch (Exception ex)
+            {
+                result.IsSucess = false;
+                result.Message = ex.Message;
+            }
+            finally
+            {
+
+            }
+
+            return result;
+
+        }
         [HttpGet]
         [Route("app/GetEmployeeLeaveBalanceDetail/{EmployeeID}")]
         public output GetEmployeeLeaveBalanceDetail(long EmployeeID)
@@ -135,6 +161,24 @@ namespace NHRMS_WebAPI.Controllers
             try
             {
                 List<EmplyeeLeaveBalanceWithLeaveType> obj = DAL.GetEmployeeLeaveBalanceDetailWithLeaveType(EmployeeID, YearName, LeaveTypeID, hrmsNo);
+                result = result.GetResponse(obj);
+            }
+            catch (Exception ex)
+            {
+                result.IsSucess = false;
+                result.Message = ex.Message;
+            }
+            return result;
+        }
+
+        [HttpGet]
+        [Route("app/GetLeaveDateUnlockDetail")]
+        public output GetLeaveDateUnlockDetail(long EmployeeID, string hrmsNo = null)
+        {
+            output result = new output();
+            try
+            {
+                List<LeaveUnlockDetail> obj = DAL.GetLeaveDateUnlockDetail(EmployeeID, hrmsNo);
                 result = result.GetResponse(obj);
             }
             catch (Exception ex)

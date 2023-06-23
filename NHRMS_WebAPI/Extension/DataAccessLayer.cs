@@ -1392,6 +1392,59 @@ namespace ITInventory.Common
             return result;
         }
 
+        public MessageHandle LeaveAutoDeduct(LeaveAutoDeductDetail ld)
+        {
+            MessageHandle result = new MessageHandle();
+
+            List<object> parameter = new List<object>();
+            parameter.Add("@EmployeeID");
+            parameter.Add(ld.EmployeeID);
+            parameter.Add("@LeaveCategoryID");
+            parameter.Add(ld.LeaveCategoryID);
+            parameter.Add("@LeaveTypeID");
+            parameter.Add(ld.LeaveTypeID);
+            parameter.Add("@LeaveTourCode");
+            parameter.Add(ld.LeaveTypeT);
+            if (ld.LeaveFromDate != "" && ld.LeaveFromDate != null)
+            {
+                string[] dateParts = ld.LeaveFromDate.Split(new char[] { '/' });
+                ld.LeaveFromDate = dateParts[2] + "-" + dateParts[1] + "-" + dateParts[0];
+                parameter.Add("@LeaveFromDate");
+                parameter.Add(ld.LeaveFromDate);
+            }
+            if (ld.LeaveFromTime != "" && ld.LeaveFromTime != null)
+            {
+                parameter.Add("@LeaveFromTime");
+                parameter.Add(ld.LeaveFromTime);
+            }
+            if (ld.LeaveToDate != "" && ld.LeaveToDate != null)
+            {
+                string[] dateParts = ld.LeaveToDate.Split(new char[] { '/' });
+                ld.LeaveToDate = dateParts[2] + "-" + dateParts[1] + "-" + dateParts[0];
+                parameter.Add("@LeaveToDate");
+                parameter.Add(ld.LeaveToDate);
+            }
+            if (ld.LeaveToTime != "" && ld.LeaveToTime != null)
+            {
+
+                parameter.Add("@LeaveToTime");
+                parameter.Add(ld.LeaveToTime);
+            }
+            parameter.Add("@ApprovingAuthorityID");
+            parameter.Add(ld.ApprovingAuthorityID);
+            parameter.Add("@ROfficerDesignationID");
+            parameter.Add(ld.ROfficerDesignationID);
+            parameter.Add("@ROfficeDeptID");
+            parameter.Add(ld.ROfficeDeptID);
+
+            List<object> outParameter = OutputParams();
+            string[] output = DB.InsertorUpdateWithOutput("LeaveAutoDeductCreate", parameter.ToArray(), outParameter.ToArray());
+            result.Success = Convert.ToInt16(output[0]);
+            result.Message = output[1];
+
+            return result;
+        }
+
         public DataTable GetEmployeeLeaveBalanceDetail(long EmployeeID)
         {
             try
@@ -1459,7 +1512,6 @@ namespace ITInventory.Common
                 parameter.Add(YearName);
                 parameter.Add("@LeaveTypeID");
                 parameter.Add(LeaveTypeID);
-                DataSet ds = DB.ReadDS("EmployeeLeaveBalanceDetailForLeaveType", parameter.ToArray());
                 List<EmplyeeLeaveBalanceWithLeaveType> result = (from dr in DB.ReadDS("EmployeeLeaveBalanceDetailForLeaveType", parameter.ToArray()).Tables[0].AsEnumerable()
                                                         select new EmplyeeLeaveBalanceWithLeaveType()
                                                         {
@@ -1480,6 +1532,42 @@ namespace ITInventory.Common
                                                             Success = 1,
                                                             Message = ""
                                                         }).ToList();
+                return result;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+            return null;
+        }
+
+        public List<LeaveUnlockDetail> GetLeaveDateUnlockDetail(long EmployeeID, string hrmsNo)
+        {
+            try
+            {
+                List<object> parameter = new List<object>();
+                parameter.Add("@EmployeeID");
+                parameter.Add(EmployeeID);
+                if (EmployeeID == 0)
+                {
+                    parameter.Add("@HrmsCode");
+                    parameter.Add(hrmsNo);
+                }
+                List<LeaveUnlockDetail> result = (from dr in DB.ReadDS("LeaveDateUnlockGet", parameter.ToArray()).Tables[0].AsEnumerable()
+                                                                 select new LeaveUnlockDetail()
+                                                                 {
+                                                                     EmployeeID = dr.Field<long>("EmployeeID"),
+                                                                     HrmsNo = dr.Field<string>("HrmsNo"),
+                                                                     OfficeID = dr.Field<int>("OfficeID"),
+                                                                     DesignationID = dr.Field<int>("DesignationID"),
+                                                                     BranchID = dr.Field<int>("BranchID"),
+                                                                     FromDate = dr.Field<DateTime>("FromDate").ToString(),
+                                                                     ToDate = dr.Field<DateTime>("ToDate").ToString(),
+                                                                     EnteryDate = dr.Field<DateTime?>("EnteryDate").ToString(),
+                                                                     NoOfDays = dr.Field<int>("NoOfDays"),
+                                                                     Success = 1,
+                                                                     Message = ""
+                                                                 }).ToList();
                 return result;
             }
             catch (Exception)

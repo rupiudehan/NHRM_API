@@ -23,6 +23,8 @@ namespace NHRMS_WebAPI.Models
         public int LeaveStatusID { get; set; }
         public string HrmsNo { get; set; }
         public string bytedata { get; set; }
+        public int ROfficerDesignationID { get; set; }
+        public int ROfficeDeptID { get; set; }
     }
 
     public class EditLeaveDetail : MessageHandle
