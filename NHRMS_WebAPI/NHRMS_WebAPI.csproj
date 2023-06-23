@@ -192,6 +192,7 @@
     <Compile Include="Models\EmployeeDetail.cs" />
     <Compile Include="Models\EmployeeLeaveTypeMasterDetail.cs" />
     <Compile Include="Models\EmployeeType.cs" />
+    <Compile Include="Models\EmplyeeLeaveBalanceWithLeaveType.cs" />
     <Compile Include="Models\Gender.cs" />
     <Compile Include="Models\Holiday.cs" />
     <Compile Include="Models\LeaveCategoryDetail.cs" />

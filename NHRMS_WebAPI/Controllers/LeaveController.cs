@@ -15,6 +15,7 @@ namespace NHRMS_WebAPI.Controllers
     {
         DataAccessLayer DAL = new DataAccessLayer();
         // GET api/<controller>
+        [HttpGet]
         [Route("app/GetLeaveTourMaster")]
         public output GetLeaveTourMaster()
         {
@@ -31,7 +32,7 @@ namespace NHRMS_WebAPI.Controllers
             }
             return result;
         }
-
+        [HttpGet]
         [Route("app/GetLeaveBalanceDetail/{EmployeeID}/{leaveTypeID}")]
         public output GetLeaveBalanceDetail(long EmployeeID, int leaveTypeID)
         {
@@ -97,7 +98,7 @@ namespace NHRMS_WebAPI.Controllers
             return result;
 
         }
-
+        [HttpGet]
         [Route("app/GetEmployeeLeaveBalanceDetail/{EmployeeID}")]
         public output GetEmployeeLeaveBalanceDetail(long EmployeeID)
         {
@@ -118,6 +119,23 @@ namespace NHRMS_WebAPI.Controllers
                 //}
 
                 //result = result.GetResponse(obj);
+            }
+            catch (Exception ex)
+            {
+                result.IsSucess = false;
+                result.Message = ex.Message;
+            }
+            return result;
+        }
+        [HttpGet]
+        [Route("app/GetEmployeeLeaveBalanceDetailWithLeaveType")]
+        public output GetEmployeeLeaveBalanceDetailWithLeaveType(long EmployeeID, string YearName, int LeaveTypeID, string hrmsNo=null)
+        {
+            output result = new output();
+            try
+            {
+                List<EmplyeeLeaveBalanceWithLeaveType> obj = DAL.GetEmployeeLeaveBalanceDetailWithLeaveType(EmployeeID, YearName, LeaveTypeID, hrmsNo);
+                result = result.GetResponse(obj);
             }
             catch (Exception ex)
             {

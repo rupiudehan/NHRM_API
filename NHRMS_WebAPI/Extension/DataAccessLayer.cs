@@ -1442,6 +1442,52 @@ namespace ITInventory.Common
             }
             return null;
         }
+
+        public List<EmplyeeLeaveBalanceWithLeaveType> GetEmployeeLeaveBalanceDetailWithLeaveType(long EmployeeID,string YearName,int LeaveTypeID, string hrmsNo)
+        {
+            try
+            {
+                List<object> parameter = new List<object>();
+                parameter.Add("@EmployeeID");
+                parameter.Add(EmployeeID);
+                if (EmployeeID == 0)
+                {
+                    parameter.Add("@HrmsCode");
+                    parameter.Add(hrmsNo);
+                }
+                parameter.Add("@year");
+                parameter.Add(YearName);
+                parameter.Add("@LeaveTypeID");
+                parameter.Add(LeaveTypeID);
+                DataSet ds = DB.ReadDS("EmployeeLeaveBalanceDetailForLeaveType", parameter.ToArray());
+                List<EmplyeeLeaveBalanceWithLeaveType> result = (from dr in DB.ReadDS("EmployeeLeaveBalanceDetailForLeaveType", parameter.ToArray()).Tables[0].AsEnumerable()
+                                                        select new EmplyeeLeaveBalanceWithLeaveType()
+                                                        {
+                                                            EmployeeID = dr.Field<long>("EmployeeID"),
+                                                            HrmsNo = dr.Field<string>("HrmsNo"),
+                                                            EmployeeName = dr.Field<string>("EmployeeName"),
+                                                            OfficeID = dr.Field<int>("OfficeID"),
+                                                            LeaveTypeName = dr.Field<string>("LeaveTypeName"),
+                                                            LeaveBalance = dr.Field<decimal>("LeaveBalance"),
+                                                            DesignationID = dr.Field<int>("DesignationID"),
+                                                            DesignationName = dr.Field<string>("DesignationName"),
+                                                            EmployeeTypeID = dr.Field<int>("EmployeeTypeID"),
+                                                            EmployeeTypeName = dr.Field<string>("EmployeeTypeName"),
+                                                            GenderID = dr.Field<int>("GenderID"),
+                                                            GenderName = dr.Field<string>("GenderName"),
+                                                            BranchID = dr.Field<int>("BranchID"),
+                                                            OfficeName = dr.Field<string>("OfficeName"),
+                                                            Success = 1,
+                                                            Message = ""
+                                                        }).ToList();
+                return result;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+            return null;
+        }
         #endregion
 
         #region Function
