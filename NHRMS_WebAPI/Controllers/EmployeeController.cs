@@ -122,6 +122,23 @@ namespace NHRMS_WebAPI.Controllers
             return result;
         }
 
+        [Route("app/GetEmployeeDetailWithID/{empID}")]
+        public output GetEmployeGetEmployeeDetailWithIDeDetail(long empID)
+        {
+            output result = new output();
+            try
+            {
+                List<EmployeeDetail> obj = DAL.GetEmployeeDetailWithID(empID);
+                result = result.GetResponse(obj);
+            }
+            catch (Exception ex)
+            {
+                result.IsSucess = false;
+                result.Message = ex.Message;
+            }
+            return result;
+        }
+
         [Route("app/GetEmployeeBranch/{employeeID}/{branchID}")]
         public output GetEmployeeBranch(long employeeID, int branchID)
         {

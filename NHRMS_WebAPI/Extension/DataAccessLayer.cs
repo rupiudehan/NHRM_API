@@ -262,6 +262,58 @@ namespace ITInventory.Common
 
         }
 
+        public List<EmployeeDetail> GetEmployeeDetailWithID(long empID)
+        {
+            try
+            {
+                List<object> parameter = new List<object>();
+                parameter.Add("@EmployeeID");
+                parameter.Add(empID);
+
+                List<EmployeeDetail> result = (from dr in DB.ReadDS("EmployeeDetailGetWithID", parameter.ToArray()).Tables[0].AsEnumerable()
+                                               select new EmployeeDetail()
+                                               {
+                                                   EmployeeID = dr.Field<long>("EmployeeID"),
+                                                   EmployeeName = dr.Field<string>("EmployeeName"),
+                                                   RegDate = Convert.ToString(dr.Field<DateTime?>("RegDate")),
+                                                   MobileNo = dr.Field<string>("MobNo"),
+                                                   EmpPassword = dr.Field<string>("EmpPassword"),
+                                                   DesignationID = dr.Field<int>("DesignationID"),
+                                                   DesignationName = dr.Field<string>("DesignationName"),
+                                                   GenderID = dr.Field<int>("GenderID"),
+                                                   GenderName = dr.Field<string>("GenderName"),
+                                                   OfficeID = dr.Field<int>("OfficeID"),
+                                                   OfficeName = dr.Field<string>("OfficeName"),
+                                                   OfficeLattitute = dr.Field<double>("OfficeLattitute").ToString(),
+                                                   OfficeLongitute = dr.Field<double>("OfficeLongitute").ToString(),
+                                                   SimID = dr.Field<string>("SimID"),
+                                                   AdharCard = dr.Field<string>("Adharcard"),
+                                                   HrmsNo = dr.Field<string>("HrmsNo"),
+                                                   BranchIDs = dr.Field<string>("BranchIDs"),
+                                                   BranchNames = dr.Field<string>("BranchNames"),
+                                                   EmployeeTypeID = dr.Field<int>("EmployeeTypeID"),
+                                                   EmployeeTypeName = dr.Field<string>("EmployeeTypeName"),
+                                                   DateofInActive = dr.Field<DateTime?>("DateOfInActive").ToString(),
+                                                   DateofJoining = dr.Field<DateTime?>("DateofJoining").ToString(),
+                                                   DateofTransfer = dr.Field<DateTime?>("DateOfTransfer").ToString(),
+                                                   InactiveForAttendance = dr.Field<bool>("InactiveForAttendance"),
+                                                   DateOfInactiveForAttendance = dr.Field<DateTime?>("DateOfInactiveForAttendance").ToString(),
+                                                   isActive = dr.Field<bool>("IsActive"),
+                                                   isDeleted = dr.Field<bool>("isDeleted"),
+                                                   Success = 1,
+                                                   Message = ""
+                                               }).ToList();
+
+
+                return result;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+
+        }
+
         public List<EmployeeBranch> GetEmployeeBranchDetail(long employeeID,int branchID)
         {
             try
@@ -1325,7 +1377,7 @@ namespace ITInventory.Common
             return result;
         }
 
-        public IDictionary<String, Object> GetEmployeeLeaveBalanceDetail(long EmployeeID)
+        public DataTable GetEmployeeLeaveBalanceDetail(long EmployeeID)
         {
             try
             {
@@ -1333,31 +1385,47 @@ namespace ITInventory.Common
                 parameter.Add("@EmployeeID");
                 parameter.Add(EmployeeID);
                 DataSet ds = DB.ReadDS("EmployeeLeaveBalanceDetail", parameter.ToArray());
-                ExpandoObject dynamicDto = new ExpandoObject();
-                ArrayList columnName = new ArrayList();
+                DataTable dt = new DataTable();
                 
+                //ExpandoObject dynamicDto = new ExpandoObject();
+                //ArrayList columnName = new ArrayList();
+                //foreach (DataRow row in ds.Tables[0].Rows)
+                //{
                 foreach (DataColumn column in ds.Tables[0].Columns)
                 {
-                    columnName.Add(column.ColumnName+",");
+                    //columnName.Add(column.ColumnName+",");
                     //((IDictionary<String, Object>)dynamicDto).Add(column.ColumnName, row[column.ColumnName]);
+                    dt.Columns.Add(column.ColumnName);
                 }
+                //}
+                foreach (DataRow row in ds.Tables[0].Rows)
+                {
+                    DataRow dr = dt.NewRow();
+                    foreach (DataColumn column in ds.Tables[0].Columns)
+                    {
+                        //columnName.Add(column.ColumnName+",");
+                        //((IDictionary<String, Object>)dynamicDto).Add(column.ColumnName, row[column.ColumnName]);
+                        dr[column.ColumnName] = row[column.ColumnName]==null || row[column.ColumnName].ToString() == "" ? "0.00": row[column.ColumnName];
+                    }
+                    dt.Rows.Add(dr);
+                }
+                    //int count = 0;
+                    //var result = (from dr in DB.ReadDS("EmployeeLeaveBalanceDetail", parameter.ToArray()).Tables[0].AsEnumerable()
+                    //              select new
+                    //              {
+                    //                  columnName[count++] = dr.Field<long>(columnName[count++].ToString())
 
-                int count = 0;
-                //var result = (from dr in DB.ReadDS("EmployeeLeaveBalanceDetail", parameter.ToArray()).Tables[0].AsEnumerable()
-                //              select new
-                //              {
-                //                  columnName[count++]= dr.Field<long>(columnName[count++].ToString())
-                                  
-                //              }).ToList();
-                //object d = result;
+                    //              }).ToList();
+                    //object d = result;
 
-                return dynamicDto;
+                    //return dynamicDto;
+                    return dt;
             }
             catch (Exception)
             {
                 return null;
             }
-
+            return null;
         }
         #endregion
 

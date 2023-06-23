@@ -2,6 +2,8 @@
 using NHRMS_WebAPI.Models;
 using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Drawing;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -102,7 +104,19 @@ namespace NHRMS_WebAPI.Controllers
             output result = new output();
             try
             {
-                object obj = DAL.GetEmployeeLeaveBalanceDetail(EmployeeID);
+                DataTable obj = DAL.GetEmployeeLeaveBalanceDetail(EmployeeID);
+                //if (obj!=null)
+                //{
+                //    string jsonString = "[{";
+                //    foreach (var item in obj)
+                //    {
+                //        jsonString += "\""+item.Key + "\":"+ item.Value + "\",";
+                //    }
+                //    jsonString = jsonString.Remove(jsonString.Length - 2, 1) + "}]";
+                result.IsSucess = true;
+                result.ResponseData = obj;
+                //}
+
                 //result = result.GetResponse(obj);
             }
             catch (Exception ex)
