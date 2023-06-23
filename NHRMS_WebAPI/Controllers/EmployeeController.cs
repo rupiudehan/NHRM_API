@@ -41,6 +41,33 @@ namespace NHRMS_WebAPI.Controllers
         }
 
         [HttpPost]
+        [Route("app/EmployeeDeletePost/{empID}")]
+        public output EmployeeDelete(long empID)
+        {
+            output result = new output();
+            try
+            {
+                MessageHandle obj = DAL.EmployeeDetailDelete(empID);
+                result = result.GetResponsePost(obj, obj.Message);
+                result.IsSucess = Convert.ToBoolean(obj.Success);
+                result.Message = obj.Message;
+            }
+            catch (Exception ex)
+            {
+                result.IsSucess = false;
+                result.Message = ex.Message;
+            }
+            finally
+            {
+                //result.ResponseData = 2;
+            }
+
+            return result;
+
+
+        }
+
+        [HttpPost]
         [Route("app/EmpRegUpdatepost")]
         public output EmpRegUpdatepost(EmployeeDetail user)
         {
