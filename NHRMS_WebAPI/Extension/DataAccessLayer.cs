@@ -475,6 +475,34 @@ namespace ITInventory.Common
 
             return result;
         }
+
+        private int CheckSimDetail(long empID,string simID)
+        {
+            int result = 0;
+            try
+            {
+                List<object> parameter = new List<object>();
+                parameter.Add("@EmployeeId");
+                parameter.Add(empID);
+                parameter.Add("@SimId");
+                parameter.Add(simID);
+
+                DataSet ds = DB.ReadDS("CheckSimDetail", parameter.ToArray());
+                if (ds!=null && ds.Tables[0].Rows.Count>0)
+                {
+
+                    result = 1;
+                }
+
+
+                return result;
+            }
+            catch (Exception)
+            {
+                return result;
+            }
+
+        }
         #endregion
 
         #region Gender Detail
@@ -654,6 +682,72 @@ namespace ITInventory.Common
 
         }
 
+        public int CheckAttendanceDetail(long EmployeeID, string simID)
+        {
+            int result = 0;
+            try
+            {
+                result = CheckSimDetail(EmployeeID, simID);
+                if (result == 1)
+                {
+                    List<object> parameter = new List<object>();
+                    parameter.Add("@EmployeeID");
+                    parameter.Add(EmployeeID);
+
+                    List<EmployeeAttendanceMarkDetail> obj = (from dr in DB.ReadDS("AttendanceDetailGet", parameter.ToArray()).Tables[0].AsEnumerable()
+                                                              select new EmployeeAttendanceMarkDetail()
+                                                              {
+                                                                  EmployeeId = dr.Field<long>("EmployeeID"),
+                                                                  EmployeeName = dr.Field<string>("EmployeeName"),
+                                                                  MobNo = dr.Field<string>("MobNo"),
+                                                                  AttInDate = dr.Field<DateTime?>("AttInDate").ToString(),
+                                                                  AttOutDate = dr.Field<DateTime?>("AttOutDate").ToString(),
+                                                                  InTime = dr.Field<TimeSpan?>("AttInTime").ToString(),
+                                                                  OutTime = dr.Field<TimeSpan?>("AttOutTime").ToString(),
+                                                                  InLatitude = dr.Field<decimal>("INLatitude").ToString(),
+                                                                  InLongitude = dr.Field<decimal>("INLongitude").ToString(),
+                                                                  OutLatitude = dr.Field<decimal>("OutLatitude").ToString(),
+                                                                  OutLongitude = dr.Field<decimal>("OutLongitude").ToString(),
+                                                                  SimId = dr.Field<string>("SimID"),
+                                                                  HrmsNo = dr.Field<string>("HrmsNo"),
+                                                                  TimeDiff = dr.Field<string>("TimeDiff"),
+                                                                  DateofJoining = dr.Field<DateTime?>("DateofJoining").ToString(),
+                                                                  OldTimeDiiff = dr.Field<TimeSpan?>("OldTimeDiiff").ToString(),
+                                                                  OutTimeOld = dr.Field<TimeSpan?>("OutTimeOld").ToString(),
+                                                                  InTimeOld = dr.Field<TimeSpan?>("InTimeOld").ToString(),
+                                                                  isHoliday = dr.Field<int>("isHoliday"),
+                                                                  Success = 1,
+                                                                  Message = ""
+                                                              }).ToList();
+
+                    if (obj != null && obj.Count > 0)
+                    {
+                        foreach (EmployeeAttendanceMarkDetail item in obj)
+                        {
+                            //In Marked
+                            if (item.AttInDate!="" && item.AttOutDate=="")
+                            {
+                                result = 3;
+                            }
+                            else if (item.AttInDate != "" && item.AttOutDate != "") //In Marked and out marked
+                            {
+                                result = 4;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        result = 2;//No attendance marked
+                    }
+                }
+                return result;
+            }
+            catch (Exception)
+            {
+                return result;
+            }
+
+        }
 
         #endregion
 
@@ -1463,7 +1557,8 @@ namespace ITInventory.Common
                 {
                     //columnName.Add(column.ColumnName+",");
                     //((IDictionary<String, Object>)dynamicDto).Add(column.ColumnName, row[column.ColumnName]);
-                    dt.Columns.Add(column.ColumnName);
+                    string columnValue = column.ColumnName.Contains(" ") ? string.Concat(column.ColumnName.Where(c => !char.IsWhiteSpace(c))) : column.ColumnName;
+                    dt.Columns.Add(columnValue);
                 }
                 //}
                 foreach (DataRow row in ds.Tables[0].Rows)
@@ -1473,7 +1568,8 @@ namespace ITInventory.Common
                     {
                         //columnName.Add(column.ColumnName+",");
                         //((IDictionary<String, Object>)dynamicDto).Add(column.ColumnName, row[column.ColumnName]);
-                        dr[column.ColumnName] = row[column.ColumnName]==null || row[column.ColumnName].ToString() == "" ? "0.00": row[column.ColumnName];
+                        string columnValue = column.ColumnName.Contains(" ") ? string.Concat(column.ColumnName.Where(c => !char.IsWhiteSpace(c))) : column.ColumnName;
+                        dr[columnValue] = row[column.ColumnName] ==null || row[column.ColumnName].ToString() == "" ? "0.00": row[column.ColumnName];
                     }
                     dt.Rows.Add(dr);
                 }
