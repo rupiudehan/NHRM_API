@@ -72,6 +72,7 @@ namespace NHRMS_WebAPI.Controllers
             return result;
         }
 
+        [HttpGet]
         [Route("app/CheckDaillyAttendanceDetail/{EmployeeID}/{SimId}")]
         public output CheckDaillyAttendanceDetail(long EmployeeID,string SimId)
         {
