@@ -491,7 +491,7 @@ namespace ITInventory.Common
                 if (ds!=null && ds.Tables[0].Rows.Count>0)
                 {
 
-                    result = 1;
+                    result = Convert.ToInt32(ds.Tables[0].Rows[0][0])==0?0:1;
                 }
 
 
@@ -656,10 +656,10 @@ namespace ITInventory.Common
                                                    AttOutDate = dr.Field<DateTime?>("AttOutDate").ToString(),
                                                    InTime = dr.Field<TimeSpan?>("AttInTime").ToString(),
                                                    OutTime = dr.Field<TimeSpan?>("AttOutTime").ToString(),
-                                                   InLatitude = dr.Field<decimal>("INLatitude").ToString(),
-                                                   InLongitude = dr.Field<decimal>("INLongitude").ToString(),
-                                                   OutLatitude = dr.Field<decimal>("OutLatitude").ToString(),
-                                                   OutLongitude = dr.Field<decimal>("OutLongitude").ToString(),
+                                                   InLatitude = dr.Field<string>("INLatitude").ToString(),
+                                                   InLongitude = dr.Field<string>("INLongitude").ToString(),
+                                                   OutLatitude = dr.Field<string>("OutLatitude").ToString(),
+                                                   OutLongitude = dr.Field<string>("OutLongitude").ToString(),
                                                    SimId = dr.Field<string>("SimID"),
                                                    HrmsNo = dr.Field<string>("HrmsNo"),
                                                    TimeDiff = dr.Field<string>("TimeDiff"),
@@ -704,10 +704,10 @@ namespace ITInventory.Common
                                                                   AttOutDate = dr.Field<DateTime?>("AttOutDate").ToString(),
                                                                   InTime = dr.Field<TimeSpan?>("AttInTime").ToString(),
                                                                   OutTime = dr.Field<TimeSpan?>("AttOutTime").ToString(),
-                                                                  InLatitude = dr.Field<decimal>("INLatitude").ToString(),
-                                                                  InLongitude = dr.Field<decimal>("INLongitude").ToString(),
-                                                                  OutLatitude = dr.Field<decimal>("OutLatitude").ToString(),
-                                                                  OutLongitude = dr.Field<decimal>("OutLongitude").ToString(),
+                                                                  InLatitude = dr.Field<string>("INLatitude").ToString(),
+                                                                  InLongitude = dr.Field<string>("INLatitude"),
+                                                                  OutLatitude = dr.Field<string>("OutLatitude"),
+                                                                  OutLongitude = dr.Field<string>("OutLongitude"),
                                                                   SimId = dr.Field<string>("SimID"),
                                                                   HrmsNo = dr.Field<string>("HrmsNo"),
                                                                   TimeDiff = dr.Field<string>("TimeDiff"),
