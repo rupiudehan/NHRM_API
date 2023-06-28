@@ -183,6 +183,7 @@
     </Compile>
     <Compile Include="Models\ApprovalCategory.cs" />
     <Compile Include="Models\AttendanceMark.cs" />
+    <Compile Include="Models\AttendanceMonthlyDetail.cs" />
     <Compile Include="Models\BranchDetail.cs" />
     <Compile Include="Models\City.cs" />
     <Compile Include="Models\DesignationDetail.cs" />

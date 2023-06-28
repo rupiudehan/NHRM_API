@@ -115,5 +115,22 @@ namespace NHRMS_WebAPI.Controllers
             }
             return result;
         }
+
+        [Route("app/GetMonthlyAttendanceDetail")]
+        public output GetMonthlyAttendanceDetail(long EmployeeID, string startDate, string endDate)
+        {
+            output result = new output();
+            try
+            {
+                List<AttendanceMonthlyDetail> obj = DAL.GetMonthlyAttendanceDetail(EmployeeID,startDate,endDate);
+                result = result.GetResponse(obj);
+            }
+            catch (Exception ex)
+            {
+                result.IsSucess = false;
+                result.Message = ex.Message;
+            }
+            return result;
+        }
     }
 }

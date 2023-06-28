@@ -563,7 +563,6 @@ namespace ITInventory.Common
                 parameter.Add(employeeID);
                 parameter.Add("@ReportingAuthorityID");
                 parameter.Add(reportingAuthorityID);
-
                 List<ReportingAuthorityDetailFetch> result = (from dr in DB.ReadDS("EmployeeReportingAuthorityDetailGet", parameter.ToArray()).Tables[0].AsEnumerable()
                                                select new ReportingAuthorityDetailFetch()
                                                {
@@ -745,6 +744,49 @@ namespace ITInventory.Common
             catch (Exception)
             {
                 return result;
+            }
+
+        }
+
+        public List<AttendanceMonthlyDetail> GetMonthlyAttendanceDetail(long EmployeeID,string startDate,string endDate)
+        {
+            try
+            {
+                List<object> parameter = new List<object>();
+                parameter.Add("@EmployeeID");
+                parameter.Add(EmployeeID);
+                parameter = MapDate(startDate, parameter, "@StartDate");
+                parameter = MapDate(endDate, parameter, "@EndDate");
+                
+
+                List<AttendanceMonthlyDetail> result = (from dr in DB.ReadDS("EmployeeAttendanceMonthlyDetailGet", parameter.ToArray()).Tables[0].AsEnumerable()
+                                                             select new AttendanceMonthlyDetail()
+                                                             {
+                                                                 datedata = dr.Field<string>("datedata"),
+                                                                 EmployeeName = dr.Field<string>("EmployeeName"),
+                                                                 MobNo = dr.Field<string>("MobNo"),
+                                                                 attType = dr.Field<string>("attType"),
+                                                                 YearName = dr.Field<int>("YearName"),
+                                                                 Monthname = dr.Field<int>("Monthname"),
+                                                                 BranchName = dr.Field<string>("BranchName").ToString(),
+                                                                 DesignationName = dr.Field<string>("DesignationName").ToString(),
+                                                                 Hrmsno = dr.Field<string>("Hrmsno"),
+                                                                 attintime = dr.Field<string>("attintime"),
+                                                                 attouttime = dr.Field<string>("attouttime"),
+                                                                 Officename = dr.Field<string>("Officename"),
+                                                                 type = dr.Field<string>("type"),
+                                                                 LeaveName = dr.Field<string>("LeaveName"),
+                                                                 date = dr.Field<DateTime?>("date").ToString(),
+                                                                 holiday = dr.Field<string>("holiday"),
+                                                                 TimeDiff = dr.Field<string>("TimeDiff")
+                                                             }).ToList();
+
+
+                return result;
+            }
+            catch (Exception)
+            {
+                return null;
             }
 
         }
@@ -1731,6 +1773,19 @@ namespace ITInventory.Common
             outParameter.Add("string");
             outParameter.Add(2000);
             return outParameter;
+        }
+
+        private List<object> MapDate(string date, List<object> parameter,string paramName)
+        {
+            if (date != "")
+            {
+                string[] dateParts = date.Split(new char[] { '/' });
+                date = dateParts[2] + "-" + dateParts[1] + "-" + dateParts[0];
+                parameter.Add(paramName);
+                parameter.Add(date);
+            }
+
+            return parameter;
         }
         #endregion
     }
