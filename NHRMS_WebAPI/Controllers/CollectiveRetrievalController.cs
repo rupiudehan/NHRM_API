@@ -57,6 +57,39 @@ namespace NHRMS_WebAPI.Controllers
             return result;
         }
 
+        [Route("app/GetDataForLeaveApply/{employeeID}/{reportingAuthorityID}/{leaveTypeID}/{categoryId}")]
+        public output GetDataForLeaveApply(long employeeID, long reportingAuthorityID, int leaveTypeID, int categoryId)
+        {
+            output result = new output();
+            data reportingAuthority = new data();
+            data leaveType = new data();
+            data leaveCategory = new data();
+            ArrayList arrayList = new ArrayList();
+
+            try
+            {
+                CollectiveRetrievalController dd = new CollectiveRetrievalController();
+
+                reportingAuthority.ResponseDataC = dd.GetReportingAuthority(employeeID, reportingAuthorityID);
+                leaveType.ResponseDataC = dd.GetLeaveType(leaveTypeID);
+                leaveCategory.ResponseDataC = dd.GetLeaveCategories(categoryId);
+
+                arrayList.Add(reportingAuthority.ResponseDataC);
+                arrayList.Add(leaveType.ResponseDataC);
+                arrayList.Add(leaveCategory.ResponseDataC);
+                result.ResponseData = arrayList;
+                result.IsSucess = true;
+                result.Message = "";
+
+            }
+            catch (Exception ex)
+            {
+                result.IsSucess = false;
+                result.Message = ex.Message;
+            }
+            return result;
+        }
+
         private data GetGender(int genderID)
         {
             data result = new data();
@@ -140,6 +173,51 @@ namespace NHRMS_WebAPI.Controllers
                 List<State> obj = DAL.GetStateDetail( stateID, countryID);
 
                 result = result.GetResponseData<State>(obj);
+            }
+            catch (Exception ex)
+            {
+            }
+            return result;
+        }
+
+        private data GetReportingAuthority(long employeeID, long reportingAuthorityID)
+        {
+            data result = new data();
+            try
+            {
+                List<ReportingAuthorityDetailFetch> obj = DAL.GetReportingAuthorityDetai(employeeID, reportingAuthorityID);
+                result = result.GetResponseData<ReportingAuthorityDetailFetch>(obj);
+            }
+            catch (Exception ex)
+            {
+
+            }
+            return result;
+        }
+
+        private data GetLeaveType(int leaveTypeID)
+        {
+            data result = new data();
+            try
+            {
+                List<LeaveType> obj = DAL.GetLeavetypeDetail(leaveTypeID);
+
+                result = result.GetResponseData<LeaveType>(obj);
+            }
+            catch (Exception ex)
+            {
+            }
+            return result;
+        }
+
+        private data GetLeaveCategories(int categoryId)
+        {
+            data result = new data();
+            try
+            {
+                List<LeaveCategoryDetail> obj = DAL.GetLeaveCategories(categoryId, true);
+
+                result = result.GetResponseData<LeaveCategoryDetail>(obj);
             }
             catch (Exception ex)
             {

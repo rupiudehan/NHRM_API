@@ -569,7 +569,7 @@ namespace ITInventory.Common
                                                {
                                                    ID = dr.Field<long>("ID"),
                                                    EmployeeID = dr.Field<long>("EmployeeID"),
-                                                   AuthorityID = dr.Field<long>("AuthorityID"),
+                                                   AuthorityID = dr.Field<long>("ReportingAuthorityID"),
                                                    AuthorityName = dr.Field<string>("AuthorityName"),
                                                    AuthorityDesignationName = dr.Field<string>("AuthorityDesignationName"),
                                                    AuthorityDesignationID = dr.Field<int>("AuthorityDesignationID"),
