@@ -34,6 +34,9 @@ namespace NHRMS_WebAPI.Models
         public string LeaveFromDate { get; set; }
         public int LeaveTypeID { get; set; }
         public string LeaveTypeT { get; set; }
-        public int LeaveStatusID { get; set; }
+        public string LeaveStatus { get; set; }
+        public string Remarks { get; set; }
+        public string ApprovalFlow { get; set; }
+        public long StatusUpdatedBy { get; set; }
     }
 }

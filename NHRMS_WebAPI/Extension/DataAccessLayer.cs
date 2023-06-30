@@ -1500,6 +1500,8 @@ namespace ITInventory.Common
 
         public MessageHandle UpdateLeaveDetail(EditLeaveDetail ld)
         {
+            if (ld.ApprovalFlow == null || ld.ApprovalFlow == "")
+                ld.ApprovalFlow = "N";// F=Forward   SB=Send Back    N=Normal
             MessageHandle result = new MessageHandle();
             List<object> parameter = new List<object>();
             parameter.Add("@ID");
@@ -1517,8 +1519,14 @@ namespace ITInventory.Common
                 parameter.Add("@LeaveFromDate");
                 parameter.Add(ld.LeaveFromDate);
             }
-            parameter.Add("@LeaveStatusID");
-            parameter.Add(ld.LeaveStatusID);
+            parameter.Add("@LeaveStatus");
+            parameter.Add(ld.LeaveStatus);
+            parameter.Add("@Remarks");
+            parameter.Add(ld.Remarks);
+            parameter.Add("@ApprovalCategory");
+            parameter.Add(ld.ApprovalFlow);
+            parameter.Add("@StatusUpdatedBy");
+            parameter.Add(ld.StatusUpdatedBy);
 
             List<object> outParameter = OutputParams();
             string[] output = DB.InsertorUpdateWithOutput("ApplyLeaveEdit", parameter.ToArray(), outParameter.ToArray());
