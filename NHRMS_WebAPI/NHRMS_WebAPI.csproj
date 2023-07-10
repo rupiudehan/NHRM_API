@@ -159,6 +159,7 @@
     <Compile Include="Controllers\BranchController.cs" />
     <Compile Include="Controllers\CityController.cs" />
     <Compile Include="Controllers\CollectiveRetrievalController.cs" />
+    <Compile Include="Controllers\DashboardDetailController.cs" />
     <Compile Include="Controllers\DesignationController.cs" />
     <Compile Include="Controllers\DistrictController.cs" />
     <Compile Include="Controllers\EmployeeController.cs" />
@@ -173,6 +174,7 @@
     <Compile Include="Controllers\ManagementController.cs" />
     <Compile Include="Controllers\OfficeController.cs" />
     <Compile Include="Controllers\StateController.cs" />
+    <Compile Include="Controllers\TechnicalErrorController.cs" />
     <Compile Include="Controllers\YearController.cs" />
     <Compile Include="Extension\DataAccessLayer.cs" />
     <Compile Include="Extension\DataService.cs" />
@@ -186,6 +188,7 @@
     <Compile Include="Models\AttendanceMonthlyDetail.cs" />
     <Compile Include="Models\BranchDetail.cs" />
     <Compile Include="Models\City.cs" />
+    <Compile Include="Models\DashboardAttendanceTotalCount.cs" />
     <Compile Include="Models\DesignationDetail.cs" />
     <Compile Include="Models\District.cs" />
     <Compile Include="Models\EmployeeBranch.cs" />
@@ -209,6 +212,8 @@
     <Compile Include="Models\MessageHandle.cs" />
     <Compile Include="Models\OfficeDetail.cs" />
     <Compile Include="Models\ReportingAuthorityDetail.cs" />
+    <Compile Include="Models\TechError.cs" />
+    <Compile Include="Models\TechnicalErrorStatus.cs" />
     <Compile Include="Models\YearDetail.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
