@@ -1417,61 +1417,71 @@ namespace ITInventory.Common
         public MessageHandle AddLeaveDetail(LeaveDetail ld)
         {
             MessageHandle result = new MessageHandle();
-            string folder = System.Web.HttpContext.Current.Server.MapPath("/UploadattendanceDoc");
-
-            string filename = ld.HrmsNo + "LeaveAttachment" + DateTime.Now.ToString("dd-MM-yyyy");
-            string filePath = folder + "/" + filename + "/" + filename + ".jpeg";
-
-            List<object> parameter = new List<object>();
-            parameter.Add("@EmployeeID");
-            parameter.Add(ld.EmployeeID);
-            parameter = MapDate(ld.LeaveFromDate, parameter, "@LeaveFromDate");
-            parameter = MapDate(ld.LeaveToDate, parameter, "@LeaveToDate");
-            
-            if (ld.LeaveFromTime != "" && ld.LeaveFromTime != null)
-            {
-                parameter.Add("@LeaveFromTime");
-                parameter.Add(ld.LeaveFromTime);
-            }
-            if (ld.LeaveToTime!="" && ld.LeaveToTime!=null)
+            string extension = ld.fileExtension.ToLower();
+            if (ld.fileExtension != "" && (extension == "jpeg" || extension == "jpg" || extension == "pdf"))
             {
 
-                parameter.Add("@LeaveToTime");
-                parameter.Add(ld.LeaveToTime);
-            }
-            parameter.Add("@LeaveCategoryID");
-            parameter.Add(ld.LeaveCategoryID);
-            parameter.Add("@LeaveTypeID");
-            parameter.Add(ld.LeaveTypeID);
-            parameter.Add("@LeaveTypeT");
-            parameter.Add(ld.LeaveTypeT);
-            parameter.Add("@LeaveReason");
-            parameter.Add(ld.LeaveReason);
-            parameter.Add("@ApprovingAuthorityID");
-            parameter.Add(ld.ApprovingAuthorityID);
-            parameter.Add("@IsAttachedDocumets");
-            parameter.Add(ld.IsAttachedDocumets);
-            if (ld.IsAttachedDocumets)
-            {
-                string im = image(ld.HrmsNo, ld.bytedata);
-                parameter.Add("@AttachDocUrls");
-                parameter.Add(filePath);
-                //parameter.Add("http://pswc.in/UploadattendanceDoc/" + filename + "/" + filename + ".jpeg");
+                string folder = System.Web.HttpContext.Current.Server.MapPath("/UploadattendanceDoc");
+
+                string filename = ld.HrmsNo + "LeaveAttachment" + DateTime.Now.ToString("dd-MM-yyyy");
+                //string filePath = folder + "/" + filename + "/" + filename + ".jpeg";
+                string filePath = folder + "/" + filename + "/" + filename + "." + (extension == "jpg" ? "jpeg" : extension);  //Allowed extensions .pdf and .jpeg/jpg
+
+                List<object> parameter = new List<object>();
+                parameter.Add("@EmployeeID");
+                parameter.Add(ld.EmployeeID);
+                parameter = MapDate(ld.LeaveFromDate, parameter, "@LeaveFromDate");
+                parameter = MapDate(ld.LeaveToDate, parameter, "@LeaveToDate");
+
+                if (ld.LeaveFromTime != "" && ld.LeaveFromTime != null)
+                {
+                    parameter.Add("@LeaveFromTime");
+                    parameter.Add(ld.LeaveFromTime);
+                }
+                if (ld.LeaveToTime != "" && ld.LeaveToTime != null)
+                {
+
+                    parameter.Add("@LeaveToTime");
+                    parameter.Add(ld.LeaveToTime);
+                }
+                parameter.Add("@LeaveCategoryID");
+                parameter.Add(ld.LeaveCategoryID);
+                parameter.Add("@LeaveTypeID");
+                parameter.Add(ld.LeaveTypeID);
+                parameter.Add("@LeaveTypeT");
+                parameter.Add(ld.LeaveTypeT);
+                parameter.Add("@LeaveReason");
+                parameter.Add(ld.LeaveReason);
+                parameter.Add("@ApprovingAuthorityID");
+                parameter.Add(ld.ApprovingAuthorityID);
+                parameter.Add("@IsAttachedDocumets");
+                parameter.Add(ld.IsAttachedDocumets);
+                if (ld.IsAttachedDocumets)
+                {
+                    string im = image(ld.HrmsNo, ld.bytedata);
+                    parameter.Add("@AttachDocUrls");
+                    parameter.Add(filePath);
+                    //parameter.Add("http://pswc.in/UploadattendanceDoc/" + filename + "/" + filename + ".jpeg");
+                }
+                else
+                {
+                    parameter.Add("@AttachDocUrls");
+                    parameter.Add("");
+                }
+
+                parameter.Add("@StatusUpdatedBy");
+                parameter.Add(ld.StatusUpdatedBy);
+
+                List<object> outParameter = OutputParams();
+                string[] output = DB.InsertorUpdateWithOutput("ApplyLeaveCreate", parameter.ToArray(), outParameter.ToArray());
+                result.Success = Convert.ToInt16(output[0]);
+                result.Message = output[1];
             }
             else
             {
-                parameter.Add("@AttachDocUrls");
-                parameter.Add("");
+                result.Success = 6;
+                result.Message = "Invalid file uploaded";
             }
-            
-            parameter.Add("@StatusUpdatedBy");
-            parameter.Add(ld.StatusUpdatedBy);
-
-            List<object> outParameter = OutputParams();
-            string[] output = DB.InsertorUpdateWithOutput("ApplyLeaveCreate", parameter.ToArray(), outParameter.ToArray());
-            result.Success = Convert.ToInt16(output[0]);
-            result.Message = output[1];
-
             return result;
         }
 
@@ -1688,31 +1698,39 @@ namespace ITInventory.Common
         public MessageHandle AddTechnicalErrorDetail(TechErrorCreate ld)
         {
             MessageHandle result = new MessageHandle();
-            string folder = System.Web.HttpContext.Current.Server.MapPath("/UploadattendanceDoc");
+            string extension = ld.fileExtension.ToLower();
+            if (ld.fileExtension != "" && (extension == "jpeg" || extension == "jpg"))
+            {
+                string folder = System.Web.HttpContext.Current.Server.MapPath("/UploadattendanceDoc");
 
-            string filename = ld.HrmsNo + "LeaveAttachment" + DateTime.Now.ToString("dd-MM-yyyy");
-            string filePath = folder + "/" + filename + "/" + filename + ".jpeg";
+                string filename = ld.HrmsNo + "LeaveAttachment" + DateTime.Now.ToString("dd-MM-yyyy");
+                string filePath = folder + "/" + filename + "/" + filename + ".jpeg";
 
-            List<object> parameter = new List<object>();
-            parameter.Add("@Errormessage");
-            parameter.Add(ld.Errormessage);
-            parameter = MapDate(ld.ErrorDate, parameter, "@ErrorDate");
-            parameter.Add("@EmployeeID");
-            parameter.Add(ld.EmployeeID);
-            parameter.Add("@AuthorityID");
-            parameter.Add(ld.AuthorityID);
-            parameter.Add("@ProcessedBy");
-            parameter.Add(ld.ProcessedBy);
-            string im = imageTech(ld.HrmsNo, ld.bytedata);
-            parameter.Add("@Attachdocument");
-            parameter.Add(filePath);
-            //parameter.Add("http://pswc.in/UploadattendanceDoc/" + filename + "/" + filename + ".jpeg");
-            
-            List<object> outParameter = OutputParams();
-            string[] output = DB.InsertorUpdateWithOutput("TechnicalErrorCreate", parameter.ToArray(), outParameter.ToArray());
-            result.Success = Convert.ToInt16(output[0]);
-            result.Message = output[1];
+                List<object> parameter = new List<object>();
+                parameter.Add("@Errormessage");
+                parameter.Add(ld.Errormessage);
+                parameter = MapDate(ld.ErrorDate, parameter, "@ErrorDate");
+                parameter.Add("@EmployeeID");
+                parameter.Add(ld.EmployeeID);
+                parameter.Add("@AuthorityID");
+                parameter.Add(ld.AuthorityID);
+                parameter.Add("@ProcessedBy");
+                parameter.Add(ld.ProcessedBy);
+                string im = imageTech(ld.HrmsNo, ld.bytedata);
+                parameter.Add("@Attachdocument");
+                parameter.Add(filePath);
+                //parameter.Add("http://pswc.in/UploadattendanceDoc/" + filename + "/" + filename + ".jpeg");
 
+                List<object> outParameter = OutputParams();
+                string[] output = DB.InsertorUpdateWithOutput("TechnicalErrorCreate", parameter.ToArray(), outParameter.ToArray());
+                result.Success = Convert.ToInt16(output[0]);
+                result.Message = output[1];
+            }
+            else
+            {
+                result.Success = 2;
+                result.Message = "Invalid file uploaded";
+            }
             return result;
         }
 

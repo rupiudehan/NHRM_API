@@ -25,6 +25,7 @@ namespace NHRMS_WebAPI.Models
         public string bytedata { get; set; }
         public int ROfficerDesignationID { get; set; }
         public int ROfficeDeptID { get; set; }
+        public string fileExtension { get; set; }
     }
 
     public class EditLeaveDetail : MessageHandle
