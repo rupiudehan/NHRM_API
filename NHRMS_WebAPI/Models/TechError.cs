@@ -14,6 +14,7 @@ namespace NHRMS_WebAPI.Models
         public string Attachdocument { get; set; }
         public string ProcessedBy { get; set; }
         public string bytedata { get; set; }
+        public string ErrorDate { get; set; }
     }
 
     public class TechErrorEdit

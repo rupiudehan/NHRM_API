@@ -58,13 +58,7 @@ namespace ITInventory.Common
             parameter.Add(User.GenderID);
             parameter.Add("@EmpPassword");
             parameter.Add(User.EmpPassword);
-            if (User.RegDate != "")
-            {
-                string[] dateParts = User.RegDate.Split(new char[] { '/' });
-                User.RegDate = dateParts[2] + "-" + dateParts[1] + "-" + dateParts[0];
-                parameter.Add("@RegDate");
-                parameter.Add(User.RegDate);
-            }
+            parameter = MapDate(User.RegDate, parameter, "@RegDate");
             parameter.Add("@MobNo");
             parameter.Add(User.MobileNo);
             parameter.Add("@DesignationID");
@@ -104,13 +98,7 @@ namespace ITInventory.Common
             parameter.Add(User.GenderID);
             parameter.Add("@EmpPassword");
             parameter.Add(User.EmpPassword);
-            if (User.RegDate != "" && User.RegDate!=null)
-            {
-                string[] dateParts = User.RegDate.Split(new char[] { '/' });
-                User.RegDate = dateParts[2] + "-" + dateParts[1] + "-" + dateParts[0];
-                parameter.Add("@RegDate");
-                parameter.Add(User.RegDate);
-            }
+            parameter = MapDate(User.RegDate, parameter, "@RegDate");
             parameter.Add("@MobNo");
             parameter.Add(User.MobileNo);
             parameter.Add("@DesignationID");
@@ -1437,24 +1425,13 @@ namespace ITInventory.Common
             List<object> parameter = new List<object>();
             parameter.Add("@EmployeeID");
             parameter.Add(ld.EmployeeID);
-            if (ld.LeaveFromDate != "" && ld.LeaveFromDate != null)
-            {
-                string[] dateParts = ld.LeaveFromDate.Split(new char[] { '/' });
-                ld.LeaveFromDate = dateParts[2] + "-" + dateParts[1] + "-" + dateParts[0];
-                parameter.Add("@LeaveFromDate");
-                parameter.Add(ld.LeaveFromDate);
-            }
+            parameter = MapDate(ld.LeaveFromDate, parameter, "@LeaveFromDate");
+            parameter = MapDate(ld.LeaveToDate, parameter, "@LeaveToDate");
+            
             if (ld.LeaveFromTime != "" && ld.LeaveFromTime != null)
             {
                 parameter.Add("@LeaveFromTime");
                 parameter.Add(ld.LeaveFromTime);
-            }
-            if (ld.LeaveToDate != "" && ld.LeaveToDate != null)
-            {
-                string[] dateParts = ld.LeaveToDate.Split(new char[] { '/' });
-                ld.LeaveToDate = dateParts[2] + "-" + dateParts[1] + "-" + dateParts[0];
-                parameter.Add("@LeaveToDate");
-                parameter.Add(ld.LeaveToDate);
             }
             if (ld.LeaveToTime!="" && ld.LeaveToTime!=null)
             {
@@ -1512,13 +1489,7 @@ namespace ITInventory.Common
             parameter.Add(ld.LeaveTypeID);
             parameter.Add("@LeaveTypeT");
             parameter.Add(ld.LeaveTypeT);
-            if (ld.LeaveFromDate != "")
-            {
-                string[] dateParts = ld.LeaveFromDate.Split(new char[] { '/' });
-                ld.LeaveFromDate = dateParts[2] + "-" + dateParts[1] + "-" + dateParts[0];
-                parameter.Add("@LeaveFromDate");
-                parameter.Add(ld.LeaveFromDate);
-            }
+            parameter = MapDate(ld.LeaveFromDate, parameter, "@LeaveFromDate");
             parameter.Add("@LeaveStatus");
             parameter.Add(ld.LeaveStatus);
             parameter.Add("@Remarks");
@@ -1549,25 +1520,14 @@ namespace ITInventory.Common
             parameter.Add(ld.LeaveTypeID);
             parameter.Add("@LeaveTourCode");
             parameter.Add(ld.LeaveTypeT);
-            if (ld.LeaveFromDate != "" && ld.LeaveFromDate != null)
-            {
-                string[] dateParts = ld.LeaveFromDate.Split(new char[] { '/' });
-                ld.LeaveFromDate = dateParts[2] + "-" + dateParts[1] + "-" + dateParts[0];
-                parameter.Add("@LeaveFromDate");
-                parameter.Add(ld.LeaveFromDate);
-            }
+            parameter = MapDate(ld.LeaveFromDate, parameter, "@LeaveFromDate");
             if (ld.LeaveFromTime != "" && ld.LeaveFromTime != null)
             {
                 parameter.Add("@LeaveFromTime");
                 parameter.Add(ld.LeaveFromTime);
             }
-            if (ld.LeaveToDate != "" && ld.LeaveToDate != null)
-            {
-                string[] dateParts = ld.LeaveToDate.Split(new char[] { '/' });
-                ld.LeaveToDate = dateParts[2] + "-" + dateParts[1] + "-" + dateParts[0];
-                parameter.Add("@LeaveToDate");
-                parameter.Add(ld.LeaveToDate);
-            }
+            parameter = MapDate(ld.LeaveToDate, parameter, "@LeaveToDate");
+            
             if (ld.LeaveToTime != "" && ld.LeaveToTime != null)
             {
 
@@ -1734,10 +1694,11 @@ namespace ITInventory.Common
             string filePath = folder + "/" + filename + "/" + filename + ".jpeg";
 
             List<object> parameter = new List<object>();
-            parameter.Add("@EmployeeID");
-            parameter.Add(ld.EmployeeID);
             parameter.Add("@Errormessage");
             parameter.Add(ld.Errormessage);
+            parameter = MapDate(ld.ErrorDate, parameter, "@ErrorDate");
+            parameter.Add("@EmployeeID");
+            parameter.Add(ld.EmployeeID);
             parameter.Add("@AuthorityID");
             parameter.Add(ld.AuthorityID);
             parameter.Add("@ProcessedBy");
