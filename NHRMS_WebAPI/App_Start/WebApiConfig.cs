@@ -21,6 +21,7 @@ namespace NHRMS_WebAPI
             config.Formatters.JsonFormatter.SupportedMediaTypes.Add(
               new MediaTypeHeaderValue("text/html")
               );
+            //config.Formatters.XmlFormatter.SupportedMediaTypes.Add(new System.Net.Http.Headers.MediaTypeHeaderValue("multipart/form-data"));
 
             // Web API routes
             config.MapHttpAttributeRoutes();

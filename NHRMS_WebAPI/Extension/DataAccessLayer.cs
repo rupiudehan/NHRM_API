@@ -1485,7 +1485,10 @@ namespace ITInventory.Common
             string[] output = DB.InsertorUpdateWithOutput("ApplyLeaveCreate", parameter.ToArray(), outParameter.ToArray());
             result.Success = Convert.ToInt16(output[0]);
             result.Message = output[1];
-
+            if (result.Success==2)
+            {
+                if (ld.IsAttachedDocumets) { string im = image(ld.HrmsNo, ld.bytedata); }
+            }
             return result;
         }
 
@@ -1707,7 +1710,7 @@ namespace ITInventory.Common
             {
                 string folder = System.Web.HttpContext.Current.Server.MapPath("/UploadattendanceDoc");
 
-                string filename = ld.HrmsNo + "LeaveAttachment" + DateTime.Now.ToString("dd-MM-yyyy");
+                string filename = ld.HrmsNo + "TechnicalErrorAttachment" + DateTime.Now.ToString("dd-MM-yyyy");
                 string filePath = folder + "/" + filename + "/" + filename + ".jpeg";
 
                 List<object> parameter = new List<object>();
@@ -1720,7 +1723,6 @@ namespace ITInventory.Common
                 parameter.Add(ld.AuthorityID);
                 parameter.Add("@ProcessedBy");
                 parameter.Add(ld.ProcessedBy);
-                string im = imageTech(ld.HrmsNo, ld.bytedata);
                 parameter.Add("@Attachdocument");
                 parameter.Add(filePath);
                 //parameter.Add("http://pswc.in/UploadattendanceDoc/" + filename + "/" + filename + ".jpeg");
@@ -1729,6 +1731,10 @@ namespace ITInventory.Common
                 string[] output = DB.InsertorUpdateWithOutput("TechnicalErrorCreate", parameter.ToArray(), outParameter.ToArray());
                 result.Success = Convert.ToInt16(output[0]);
                 result.Message = output[1];
+                if (result.Success == 1)
+                {
+                    string im = imageTech(ld.HrmsNo, ld.bytedata);
+                }
             }
             else
             {
