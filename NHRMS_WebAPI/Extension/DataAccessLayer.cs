@@ -29,14 +29,14 @@ namespace ITInventory.Common
                 List<object> parameter = new List<object>();
                 parameter.Add("@Prefix");
                 parameter.Add(Prefix);
-                
+
                 List<FetchHrmsCode> result = (from dr in DB.ReadDS("GenerateHRMSCode", parameter.ToArray()).Tables[0].AsEnumerable()
-                                               select new FetchHrmsCode() 
-                                               {                                                   
-                                                   HrmsCode = Prefix+"-"+dr.Field<string>("HrmsCode"),
-                                                   Success = 1,
-                                                   Message = ""
-                                               }).ToList();
+                                              select new FetchHrmsCode()
+                                              {
+                                                  HrmsCode = Prefix + "-" + dr.Field<string>("HrmsCode"),
+                                                  Success = 1,
+                                                  Message = ""
+                                              }).ToList();
 
 
                 return result.Count == 0 ? null : result;
@@ -50,8 +50,8 @@ namespace ITInventory.Common
         #region Employee        
         public MessageHandle EmployeeRegiatrationForAttendance(EmployeeDetail User)
         {
-            MessageHandle result= new MessageHandle();            
-            List<object> parameter=new List<object>();
+            MessageHandle result = new MessageHandle();
+            List<object> parameter = new List<object>();
             parameter.Add("@EmployeeName");
             parameter.Add(User.EmployeeName);
             parameter.Add("@GenderID");
@@ -79,10 +79,10 @@ namespace ITInventory.Common
             parameter.Add(User.ProcessedBy);
 
             List<object> outParameter = OutputParams();
-            string[] output=DB.InsertorUpdateWithOutput("EmployeeDetailCreate", parameter.ToArray(), outParameter.ToArray());
+            string[] output = DB.InsertorUpdateWithOutput("EmployeeDetailCreate", parameter.ToArray(), outParameter.ToArray());
             result.Success = Convert.ToInt16(output[0]);
-            result.Message = output[1];                  
-            
+            result.Message = output[1];
+
             return result;
         }
 
@@ -126,7 +126,7 @@ namespace ITInventory.Common
             return result;
         }
 
-        public List<EmployeeDetail> GetEmployeeLoginDetail(string username,string password,out string msg)
+        public List<EmployeeDetail> GetEmployeeLoginDetail(string username, string password, out string msg)
         {
             msg = string.Empty;
             try
@@ -138,58 +138,58 @@ namespace ITInventory.Common
                 parameter.Add(password);
 
                 List<EmployeeDetail> result = (from dr in DB.ReadDS("LogingEmployeeAttendance", parameter.ToArray()).Tables[0].AsEnumerable()
-                                         select new EmployeeDetail()
-                                         {
-                                             EmployeeID = dr.Field<long>("EmployeeID"),
-                                             EmployeeName = dr.Field<string>("EmployeeName"),
-                                             RegDate = Convert.ToString(dr.Field<DateTime?>("RegDate")),
-                                             MobileNo = dr.Field<string>("MobNo"),
-                                             EmpPassword = dr.Field<string>("EmpPassword"),
-                                             DesignationID = dr.Field<int>("DesignationID"),
-                                             DesignationName = dr.Field<string>("DesignationName"),
-                                             GenderID = dr.Field<int>("GenderID"),
-                                             GenderName = dr.Field<string>("GenderName"),
-                                             OfficeID = dr.Field<int>("OfficeID"),
-                                             OfficeName = dr.Field<string>("OfficeName"),
-                                             CityID = dr.Field<int>("CityID"),
-                                             CityCode = dr.Field<string>("CityCode"),
-                                             CityName = dr.Field<string>("CityName"),
-                                             DistrictID = dr.Field<int>("DistrictID"),
-                                             DistrictCode = dr.Field<string>("DistrictCode"),
-                                             DistrictName = dr.Field<string>("DistrictName"),
-                                             StateID = dr.Field<int>("StateID"),
-                                             StateCode = dr.Field<string>("StateCode"),
-                                             StateName = dr.Field<string>("StateName"),
-                                             CountryID = dr.Field<int>("CountryID"),
-                                             CountryCode = dr.Field<string>("CountryCode"),
-                                             CountryName = dr.Field<string>("CountryName"),
-                                             OfficeLattitute = dr.Field<double>("OfficeLattitute").ToString(),
-                                             OfficeLongitute = dr.Field<double>("OfficeLongitute").ToString(),
-                                             SimID = dr.Field<string>("SimID"),
-                                             AdharCard = dr.Field<string>("Adharcard"),
-                                             HrmsNo = dr.Field<string>("HrmsNo"),
-                                             BranchIDs = dr.Field<string>("BranchIDs"),
-                                             BranchNames = dr.Field<string>("BranchNames"),
-                                             DesignationIDs = dr.Field<string>("DesignationIDs"),
-                                             DesignationNames = dr.Field<string>("DesignationNames"),
-                                             EmployeeTypeID = dr.Field<int>("EmployeeTypeID"),
-                                             EmployeeTypeName = dr.Field<string>("EmployeeTypeName"),
-                                             DateofInActive = dr.Field<DateTime?>("DateOfInActive").ToString(),
-                                             DateofJoining = dr.Field<DateTime?>("DateofJoining").ToString(),
-                                             DateofTransfer = dr.Field<DateTime?>("DateOfTransfer").ToString(),
-                                             InactiveForAttendance = dr.Field<bool>("InactiveForAttendance"),
-                                             DateOfInactiveForAttendance = dr.Field<DateTime?>("DateOfInactiveForAttendance").ToString(),
-                                             isActive = dr.Field<bool>("IsActive"),
-                                             isDeleted = dr.Field<bool>("isDeleted"),
-                                             Success=1,
-                                             Message=""
-                                         }).ToList();
+                                               select new EmployeeDetail()
+                                               {
+                                                   EmployeeID = dr.Field<long>("EmployeeID"),
+                                                   EmployeeName = dr.Field<string>("EmployeeName"),
+                                                   RegDate = Convert.ToString(dr.Field<DateTime?>("RegDate")),
+                                                   MobileNo = dr.Field<string>("MobNo"),
+                                                   EmpPassword = dr.Field<string>("EmpPassword"),
+                                                   DesignationID = dr.Field<int>("DesignationID"),
+                                                   DesignationName = dr.Field<string>("DesignationName"),
+                                                   GenderID = dr.Field<int>("GenderID"),
+                                                   GenderName = dr.Field<string>("GenderName"),
+                                                   OfficeID = dr.Field<int>("OfficeID"),
+                                                   OfficeName = dr.Field<string>("OfficeName"),
+                                                   CityID = dr.Field<int>("CityID"),
+                                                   CityCode = dr.Field<string>("CityCode"),
+                                                   CityName = dr.Field<string>("CityName"),
+                                                   DistrictID = dr.Field<int>("DistrictID"),
+                                                   DistrictCode = dr.Field<string>("DistrictCode"),
+                                                   DistrictName = dr.Field<string>("DistrictName"),
+                                                   StateID = dr.Field<int>("StateID"),
+                                                   StateCode = dr.Field<string>("StateCode"),
+                                                   StateName = dr.Field<string>("StateName"),
+                                                   CountryID = dr.Field<int>("CountryID"),
+                                                   CountryCode = dr.Field<string>("CountryCode"),
+                                                   CountryName = dr.Field<string>("CountryName"),
+                                                   OfficeLattitute = dr.Field<double>("OfficeLattitute").ToString(),
+                                                   OfficeLongitute = dr.Field<double>("OfficeLongitute").ToString(),
+                                                   SimID = dr.Field<string>("SimID"),
+                                                   AdharCard = dr.Field<string>("Adharcard"),
+                                                   HrmsNo = dr.Field<string>("HrmsNo"),
+                                                   BranchIDs = dr.Field<string>("BranchIDs"),
+                                                   BranchNames = dr.Field<string>("BranchNames"),
+                                                   DesignationIDs = dr.Field<string>("DesignationIDs"),
+                                                   DesignationNames = dr.Field<string>("DesignationNames"),
+                                                   EmployeeTypeID = dr.Field<int>("EmployeeTypeID"),
+                                                   EmployeeTypeName = dr.Field<string>("EmployeeTypeName"),
+                                                   DateofInActive = dr.Field<DateTime?>("DateOfInActive").ToString(),
+                                                   DateofJoining = dr.Field<DateTime?>("DateofJoining").ToString(),
+                                                   DateofTransfer = dr.Field<DateTime?>("DateOfTransfer").ToString(),
+                                                   InactiveForAttendance = dr.Field<bool>("InactiveForAttendance"),
+                                                   DateOfInactiveForAttendance = dr.Field<DateTime?>("DateOfInactiveForAttendance").ToString(),
+                                                   isActive = dr.Field<bool>("IsActive"),
+                                                   isDeleted = dr.Field<bool>("isDeleted"),
+                                                   Success = 1,
+                                                   Message = ""
+                                               }).ToList();
                 if (result.Count == 0)
                 {
-                    msg = "Invalid HRMS No./Password!";                    
+                    msg = "Invalid HRMS No./Password!";
                 }
 
-                return result.Count==0?null:result;
+                return result.Count == 0 ? null : result;
             }
             catch (Exception)
             {
@@ -302,7 +302,7 @@ namespace ITInventory.Common
 
         }
 
-        public List<EmployeeBranch> GetEmployeeBranchDetail(long employeeID,int branchID)
+        public List<EmployeeBranch> GetEmployeeBranchDetail(long employeeID, int branchID)
         {
             try
             {
@@ -347,18 +347,18 @@ namespace ITInventory.Common
                 parameter.Add(designationID);
 
                 List<EmployeeDesignation> result = (from dr in DB.ReadDS("EmployeeDesignationGet", parameter.ToArray()).Tables[0].AsEnumerable()
-                                               select new EmployeeDesignation()
-                                               {
-                                                   EmployeeID = dr.Field<long>("EmployeeID"),
-                                                   DesignationID = dr.Field<int>("DesignationID"),
-                                                   DesignationName = dr.Field<string>("DesignationName"),
-                                                   ID = dr.Field<long>("ID"),
-                                                   CreatedBy = dr.Field<string>("CreatedBy"),
-                                                   CreatedOn = dr.Field<DateTime?>("CreatedOn").ToString(),
-                                                   IsActive = dr.Field<bool>("IsActive"),
-                                                   Success = 1,
-                                                   Message = ""
-                                               }).ToList();
+                                                    select new EmployeeDesignation()
+                                                    {
+                                                        EmployeeID = dr.Field<long>("EmployeeID"),
+                                                        DesignationID = dr.Field<int>("DesignationID"),
+                                                        DesignationName = dr.Field<string>("DesignationName"),
+                                                        ID = dr.Field<long>("ID"),
+                                                        CreatedBy = dr.Field<string>("CreatedBy"),
+                                                        CreatedOn = dr.Field<DateTime?>("CreatedOn").ToString(),
+                                                        IsActive = dr.Field<bool>("IsActive"),
+                                                        Success = 1,
+                                                        Message = ""
+                                                    }).ToList();
 
 
                 return result;
@@ -464,7 +464,7 @@ namespace ITInventory.Common
             return result;
         }
 
-        private int CheckSimDetail(long empID,string simID)
+        private int CheckSimDetail(long empID, string simID)
         {
             int result = 0;
             try
@@ -476,10 +476,10 @@ namespace ITInventory.Common
                 parameter.Add(simID);
 
                 DataSet ds = DB.ReadDS("CheckSimDetail", parameter.ToArray());
-                if (ds!=null && ds.Tables[0].Rows.Count>0)
+                if (ds != null && ds.Tables[0].Rows.Count > 0)
                 {
 
-                    result = Convert.ToInt32(ds.Tables[0].Rows[0][0])==0?0:1;
+                    result = Convert.ToInt32(ds.Tables[0].Rows[0][0]) == 0 ? 0 : 1;
                 }
 
 
@@ -503,13 +503,13 @@ namespace ITInventory.Common
                 parameter.Add(genderID);
 
                 List<Gender> result = (from dr in DB.ReadDS("GenderDetailGet", parameter.ToArray()).Tables[0].AsEnumerable()
-                                         select new Gender()
-                                         {
-                                             GenderID = dr.Field<int>("GenderID"),
-                                             GenderName = dr.Field<string>("GenderName"),
-                                             Success = 1,
-                                             Message = ""
-                                         }).ToList();
+                                       select new Gender()
+                                       {
+                                           GenderID = dr.Field<int>("GenderID"),
+                                           GenderName = dr.Field<string>("GenderName"),
+                                           Success = 1,
+                                           Message = ""
+                                       }).ToList();
 
 
                 return result;
@@ -552,29 +552,29 @@ namespace ITInventory.Common
                 parameter.Add("@ReportingAuthorityID");
                 parameter.Add(reportingAuthorityID);
                 List<ReportingAuthorityDetailFetch> result = (from dr in DB.ReadDS("EmployeeReportingAuthorityDetailGet", parameter.ToArray()).Tables[0].AsEnumerable()
-                                               select new ReportingAuthorityDetailFetch()
-                                               {
-                                                   ID = dr.Field<long>("ID"),
-                                                   EmployeeID = dr.Field<long>("EmployeeID"),
-                                                   AuthorityID = dr.Field<long>("ReportingAuthorityID"),
-                                                   AuthorityName = dr.Field<string>("AuthorityName"),
-                                                   AuthorityDesignationName = dr.Field<string>("AuthorityDesignationName"),
-                                                   AuthorityDesignationID = dr.Field<int>("AuthorityDesignationID"),
-                                                   AuthorityOfficeName = dr.Field<string>("AuthorityOfficeName"),
-                                                   AuthorityOfficeIDR = dr.Field<int>("AuthorityOfficeIDR"),
-                                                   EmployeeName = dr.Field<string>("EmployeeName"),
-                                                   DesignationName = dr.Field<string>("DesignationName"),
-                                                   DesignationID = dr.Field<int>("DesignationID"),
-                                                   OfficeName = dr.Field<string>("OfficeName"),
-                                                   OfficeID = dr.Field<int>("OfficeID"),
-                                                   CreatedBy = dr.Field<string>("CreatedBy"),
-                                                   CreatedOn = dr.Field<DateTime?>("CreatedOn").ToString(),
-                                                   UpdatedBy = dr.Field<string>("UpdatedBy"),
-                                                   UpdatedOn = dr.Field<DateTime?>("UpdatedOn").ToString(),
-                                                   IsActive = dr.Field<bool>("IsActive"),
-                                                   Success = 1,
-                                                   Message = ""
-                                               }).ToList();
+                                                              select new ReportingAuthorityDetailFetch()
+                                                              {
+                                                                  ID = dr.Field<long>("ID"),
+                                                                  EmployeeID = dr.Field<long>("EmployeeID"),
+                                                                  AuthorityID = dr.Field<long>("ReportingAuthorityID"),
+                                                                  AuthorityName = dr.Field<string>("AuthorityName"),
+                                                                  AuthorityDesignationName = dr.Field<string>("AuthorityDesignationName"),
+                                                                  AuthorityDesignationID = dr.Field<int>("AuthorityDesignationID"),
+                                                                  AuthorityOfficeName = dr.Field<string>("AuthorityOfficeName"),
+                                                                  AuthorityOfficeIDR = dr.Field<int>("AuthorityOfficeIDR"),
+                                                                  EmployeeName = dr.Field<string>("EmployeeName"),
+                                                                  DesignationName = dr.Field<string>("DesignationName"),
+                                                                  DesignationID = dr.Field<int>("DesignationID"),
+                                                                  OfficeName = dr.Field<string>("OfficeName"),
+                                                                  OfficeID = dr.Field<int>("OfficeID"),
+                                                                  CreatedBy = dr.Field<string>("CreatedBy"),
+                                                                  CreatedOn = dr.Field<DateTime?>("CreatedOn").ToString(),
+                                                                  UpdatedBy = dr.Field<string>("UpdatedBy"),
+                                                                  UpdatedOn = dr.Field<DateTime?>("UpdatedOn").ToString(),
+                                                                  IsActive = dr.Field<bool>("IsActive"),
+                                                                  Success = 1,
+                                                                  Message = ""
+                                                              }).ToList();
 
 
                 return result;
@@ -596,7 +596,7 @@ namespace ITInventory.Common
             parameter.Add(att.EmployeeId);
             parameter.Add("@SimId");
             parameter.Add(att.SimId);
-            if (att.IsInTime!=1)
+            if (att.IsInTime != 1)
             {
                 parameter.Add("@OutTime");
                 parameter.Add(att.OutTime);
@@ -613,7 +613,7 @@ namespace ITInventory.Common
                 parameter.Add(att.InLatitude);
                 parameter.Add("@InLongitude");
                 parameter.Add(att.InLongitude);
-            }            
+            }
             parameter.Add("@IN");
             parameter.Add(att.IsInTime);
 
@@ -634,30 +634,30 @@ namespace ITInventory.Common
                 parameter.Add(EmployeeID);
 
                 List<EmployeeAttendanceMarkDetail> result = (from dr in DB.ReadDS("AttendanceDetailGet", parameter.ToArray()).Tables[0].AsEnumerable()
-                                               select new EmployeeAttendanceMarkDetail()
-                                               {
-                                                   EmployeeId = dr.Field<long>("EmployeeID"),
-                                                   EmployeeName = dr.Field<string>("EmployeeName"),
-                                                   MobNo = dr.Field<string>("MobNo"),
-                                                   AttInDate = dr.Field<DateTime?>("AttInDate").ToString(),
-                                                   AttOutDate = dr.Field<DateTime?>("AttOutDate").ToString(),
-                                                   InTime = dr.Field<TimeSpan?>("AttInTime").ToString(),
-                                                   OutTime = dr.Field<TimeSpan?>("AttOutTime").ToString(),
-                                                   InLatitude = dr.Field<string>("INLatitude").ToString(),
-                                                   InLongitude = dr.Field<string>("INLongitude").ToString(),
-                                                   OutLatitude = dr.Field<string>("OutLatitude").ToString(),
-                                                   OutLongitude = dr.Field<string>("OutLongitude").ToString(),
-                                                   SimId = dr.Field<string>("SimID"),
-                                                   HrmsNo = dr.Field<string>("HrmsNo"),
-                                                   TimeDiff = dr.Field<string>("TimeDiff"),
-                                                   DateofJoining = dr.Field<DateTime?>("DateofJoining").ToString(),
-                                                   OldTimeDiiff = dr.Field<TimeSpan?>("OldTimeDiiff").ToString(),
-                                                   OutTimeOld = dr.Field<TimeSpan?>("OutTimeOld").ToString(),
-                                                   InTimeOld = dr.Field<TimeSpan?>("InTimeOld").ToString(),
-                                                   isHoliday = dr.Field<int>("isHoliday"),
-                                                   Success = 1,
-                                                   Message = ""
-                                               }).ToList();
+                                                             select new EmployeeAttendanceMarkDetail()
+                                                             {
+                                                                 EmployeeId = dr.Field<long>("EmployeeID"),
+                                                                 EmployeeName = dr.Field<string>("EmployeeName"),
+                                                                 MobNo = dr.Field<string>("MobNo"),
+                                                                 AttInDate = dr.Field<DateTime?>("AttInDate").ToString(),
+                                                                 AttOutDate = dr.Field<DateTime?>("AttOutDate").ToString(),
+                                                                 InTime = dr.Field<TimeSpan?>("AttInTime").ToString(),
+                                                                 OutTime = dr.Field<TimeSpan?>("AttOutTime").ToString(),
+                                                                 InLatitude = dr.Field<string>("INLatitude").ToString(),
+                                                                 InLongitude = dr.Field<string>("INLongitude").ToString(),
+                                                                 OutLatitude = dr.Field<string>("OutLatitude").ToString(),
+                                                                 OutLongitude = dr.Field<string>("OutLongitude").ToString(),
+                                                                 SimId = dr.Field<string>("SimID"),
+                                                                 HrmsNo = dr.Field<string>("HrmsNo"),
+                                                                 TimeDiff = dr.Field<string>("TimeDiff"),
+                                                                 DateofJoining = dr.Field<DateTime?>("DateofJoining").ToString(),
+                                                                 OldTimeDiiff = dr.Field<TimeSpan?>("OldTimeDiiff").ToString(),
+                                                                 OutTimeOld = dr.Field<TimeSpan?>("OutTimeOld").ToString(),
+                                                                 InTimeOld = dr.Field<TimeSpan?>("InTimeOld").ToString(),
+                                                                 isHoliday = dr.Field<int>("isHoliday"),
+                                                                 Success = 1,
+                                                                 Message = ""
+                                                             }).ToList();
 
 
                 return result;
@@ -712,7 +712,7 @@ namespace ITInventory.Common
                         foreach (EmployeeAttendanceMarkDetail item in obj)
                         {
                             //In Marked
-                            if (item.AttInDate!="" && item.AttOutDate=="")
+                            if (item.AttInDate != "" && item.AttOutDate == "")
                             {
                                 result = 3;
                             }
@@ -736,7 +736,7 @@ namespace ITInventory.Common
 
         }
 
-        public List<AttendanceMonthlyDetail> GetMonthlyAttendanceDetail(long EmployeeID,string startDate,string endDate)
+        public List<AttendanceMonthlyDetail> GetMonthlyAttendanceDetail(long EmployeeID, string startDate, string endDate)
         {
             try
             {
@@ -745,29 +745,29 @@ namespace ITInventory.Common
                 parameter.Add(EmployeeID);
                 parameter = MapDate(startDate, parameter, "@StartDate");
                 parameter = MapDate(endDate, parameter, "@EndDate");
-                
+
 
                 List<AttendanceMonthlyDetail> result = (from dr in DB.ReadDS("EmployeeAttendanceMonthlyDetailGet", parameter.ToArray()).Tables[0].AsEnumerable()
-                                                             select new AttendanceMonthlyDetail()
-                                                             {
-                                                                 datedata = dr.Field<string>("datedata"),
-                                                                 EmployeeName = dr.Field<string>("EmployeeName"),
-                                                                 MobNo = dr.Field<string>("MobNo"),
-                                                                 attType = dr.Field<string>("attType"),
-                                                                 YearName = dr.Field<int>("YearName"),
-                                                                 Monthname = dr.Field<int>("Monthname"),
-                                                                 BranchName = dr.Field<string>("BranchName").ToString(),
-                                                                 DesignationName = dr.Field<string>("DesignationName").ToString(),
-                                                                 Hrmsno = dr.Field<string>("Hrmsno"),
-                                                                 attintime = dr.Field<string>("attintime"),
-                                                                 attouttime = dr.Field<string>("attouttime"),
-                                                                 Officename = dr.Field<string>("Officename"),
-                                                                 type = dr.Field<string>("type"),
-                                                                 LeaveName = dr.Field<string>("LeaveName"),
-                                                                 date = dr.Field<DateTime?>("date").ToString(),
-                                                                 holiday = dr.Field<string>("holiday"),
-                                                                 TimeDiff = dr.Field<string>("TimeDiff")
-                                                             }).ToList();
+                                                        select new AttendanceMonthlyDetail()
+                                                        {
+                                                            datedata = dr.Field<string>("datedata"),
+                                                            EmployeeName = dr.Field<string>("EmployeeName"),
+                                                            MobNo = dr.Field<string>("MobNo"),
+                                                            attType = dr.Field<string>("attType"),
+                                                            YearName = dr.Field<int>("YearName"),
+                                                            Monthname = dr.Field<int>("Monthname"),
+                                                            BranchName = dr.Field<string>("BranchName").ToString(),
+                                                            DesignationName = dr.Field<string>("DesignationName").ToString(),
+                                                            Hrmsno = dr.Field<string>("Hrmsno"),
+                                                            attintime = dr.Field<string>("attintime"),
+                                                            attouttime = dr.Field<string>("attouttime"),
+                                                            Officename = dr.Field<string>("Officename"),
+                                                            type = dr.Field<string>("type"),
+                                                            LeaveName = dr.Field<string>("LeaveName"),
+                                                            date = dr.Field<DateTime?>("date").ToString(),
+                                                            holiday = dr.Field<string>("holiday"),
+                                                            TimeDiff = dr.Field<string>("TimeDiff")
+                                                        }).ToList();
 
 
                 return result;
@@ -793,18 +793,18 @@ namespace ITInventory.Common
                 parameter.Add(countryID);
 
                 List<State> result = (from dr in DB.ReadDS("StateDetailGet", parameter.ToArray()).Tables[0].AsEnumerable()
-                                         select new State()
-                                         {
-                                             CreatedOn = dr.Field<DateTime?>("CreatedOn").ToString(),
-                                             CreatedBy = dr.Field<string>("CreatedBy"),
-                                             StateID = dr.Field<int>("StateID"),
-                                             StateCode = dr.Field<string>("StateCode"),
-                                             StateName = dr.Field<string>("StateName"),
-                                             CountryId = dr.Field<int>("CountryId"),
-                                             CountryName = dr.Field<string>("CountryName"),
-                                             Success = 1,
-                                             Message = ""
-                                         }).ToList();
+                                      select new State()
+                                      {
+                                          CreatedOn = dr.Field<DateTime?>("CreatedOn").ToString(),
+                                          CreatedBy = dr.Field<string>("CreatedBy"),
+                                          StateID = dr.Field<int>("StateID"),
+                                          StateCode = dr.Field<string>("StateCode"),
+                                          StateName = dr.Field<string>("StateName"),
+                                          CountryId = dr.Field<int>("CountryId"),
+                                          CountryName = dr.Field<string>("CountryName"),
+                                          Success = 1,
+                                          Message = ""
+                                      }).ToList();
 
 
                 return result;
@@ -818,10 +818,10 @@ namespace ITInventory.Common
         #endregion
 
         #region Districts
-        public List<District> GetDistrictDetail(int districtID,int stateID,int countryID)
+        public List<District> GetDistrictDetail(int districtID, int stateID, int countryID)
         {
             try
-            {                    
+            {
                 List<object> parameter = new List<object>();
                 parameter.Add("@DistrictID");
                 parameter.Add(districtID);
@@ -831,55 +831,8 @@ namespace ITInventory.Common
                 parameter.Add(countryID);
 
                 List<District> result = (from dr in DB.ReadDS("DistrictDetailGet", parameter.ToArray()).Tables[0].AsEnumerable()
-                                          select new District()
-                                          {
-                                              DistrictID = dr.Field<int>("DistrictID"),
-                                              DistrictName = dr.Field<string>("DistrictName"),
-                                              DistrictCode = dr.Field<string>("DistrictCode"),
-                                              CreatedOn = dr.Field<DateTime?>("CreatedOn").ToString(),
-                                              CreatedBy = dr.Field<string>("CreatedBy"),
-                                              StateID = dr.Field<int>("StateID"),
-                                              StateCode = dr.Field<string>("StateCode"),
-                                              StateName = dr.Field<string>("StateName"),
-                                              CountryId = dr.Field<int>("CountryId"),
-                                              CountryName = dr.Field<string>("CountryName"),
-                                              Success = 1,
-                                              Message = ""
-                                          }).ToList();
-                
-
-                return result;
-            }
-            catch (Exception)
-            {
-                return null;
-            }
-            
-        }
-        #endregion
-
-        #region Cities
-        public List<City> GetCityDetail(int cityID,int districtID, int stateID, int countryID)
-        {
-            try
-            {
-                List<object> parameter = new List<object>();
-                parameter.Add("@CityID");
-                parameter.Add(cityID);
-                parameter.Add("@DistrictID");
-                parameter.Add(districtID);
-                parameter.Add("@StateID");
-                parameter.Add(stateID);
-                parameter.Add("@CountryID");
-                parameter.Add(countryID);
-
-                List<City> result = (from dr in DB.ReadDS("CityDetailGet", parameter.ToArray()).Tables[0].AsEnumerable()
-                                         select new City()
+                                         select new District()
                                          {
-                                             CityID = dr.Field<int>("CityID"),
-                                             CityName = dr.Field<string>("CityName"),
-                                             CityCode = dr.Field<string>("CityCode"),
-                                             CityPostalCode = dr.Field<string>("CityPostalCode"),
                                              DistrictID = dr.Field<int>("DistrictID"),
                                              DistrictName = dr.Field<string>("DistrictName"),
                                              DistrictCode = dr.Field<string>("DistrictCode"),
@@ -905,8 +858,55 @@ namespace ITInventory.Common
         }
         #endregion
 
+        #region Cities
+        public List<City> GetCityDetail(int cityID, int districtID, int stateID, int countryID)
+        {
+            try
+            {
+                List<object> parameter = new List<object>();
+                parameter.Add("@CityID");
+                parameter.Add(cityID);
+                parameter.Add("@DistrictID");
+                parameter.Add(districtID);
+                parameter.Add("@StateID");
+                parameter.Add(stateID);
+                parameter.Add("@CountryID");
+                parameter.Add(countryID);
+
+                List<City> result = (from dr in DB.ReadDS("CityDetailGet", parameter.ToArray()).Tables[0].AsEnumerable()
+                                     select new City()
+                                     {
+                                         CityID = dr.Field<int>("CityID"),
+                                         CityName = dr.Field<string>("CityName"),
+                                         CityCode = dr.Field<string>("CityCode"),
+                                         CityPostalCode = dr.Field<string>("CityPostalCode"),
+                                         DistrictID = dr.Field<int>("DistrictID"),
+                                         DistrictName = dr.Field<string>("DistrictName"),
+                                         DistrictCode = dr.Field<string>("DistrictCode"),
+                                         CreatedOn = dr.Field<DateTime?>("CreatedOn").ToString(),
+                                         CreatedBy = dr.Field<string>("CreatedBy"),
+                                         StateID = dr.Field<int>("StateID"),
+                                         StateCode = dr.Field<string>("StateCode"),
+                                         StateName = dr.Field<string>("StateName"),
+                                         CountryId = dr.Field<int>("CountryId"),
+                                         CountryName = dr.Field<string>("CountryName"),
+                                         Success = 1,
+                                         Message = ""
+                                     }).ToList();
+
+
+                return result;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+
+        }
+        #endregion
+
         #region Offices
-        public List<OfficeDetail> GetOfficeDetail(int officeID,int cityID, int districtID, int stateID, int countryID)
+        public List<OfficeDetail> GetOfficeDetail(int officeID, int cityID, int districtID, int stateID, int countryID)
         {
             try
             {
@@ -923,33 +923,33 @@ namespace ITInventory.Common
                 parameter.Add(countryID);
 
                 List<OfficeDetail> result = (from dr in DB.ReadDS("OfficeDetailGet", parameter.ToArray()).Tables[0].AsEnumerable()
-                                     select new OfficeDetail()
-                                     {
-                                         OfficeID = dr.Field<int>("OfficeID"),
-                                         OfficeName = dr.Field<string>("OfficeName"),
-                                         OfficeLattitute = dr.Field<double>("OfficeLattitute").ToString(),
-                                         OfficeLongitute = dr.Field<double>("OfficeLongitute").ToString(),
-                                         CityID = dr.Field<int>("CityID"),
-                                         CityName = dr.Field<string>("CityName"),
-                                         CityCode = dr.Field<string>("CityCode"),
-                                         CityPostalCode = dr.Field<string>("CityPostalCode"),
-                                         DistrictID = dr.Field<int>("DistrictID"),
-                                         DistrictName = dr.Field<string>("DistrictName"),
-                                         DistrictCode = dr.Field<string>("DistrictCode"),
-                                         CreatedOn = dr.Field<DateTime?>("CreatedOn").ToString(),
-                                         CreatedBy = dr.Field<string>("CreatedBy"),
-                                         StateID = dr.Field<int>("StateID"),
-                                         StateCode = dr.Field<string>("StateCode"),
-                                         StateName = dr.Field<string>("StateName"),
-                                         CountryId = dr.Field<int>("CountryId"),
-                                         CountryName = dr.Field<string>("CountryName"),
-                                         OfficeInTime = Convert.ToString(dr.Field<TimeSpan?>("InTime")),
-                                         OfficeOutTime = Convert.ToString(dr.Field<TimeSpan?>("OutTime")),
-                                         HalfDayTime = Convert.ToString(dr.Field<TimeSpan?>("HalfDayTime")),
-                                         ShortLeaveTime = Convert.ToString(dr.Field<TimeSpan?>("ShortLeaveTime")),
-                                         Success = 1,
-                                         Message = ""
-                                     }).ToList();
+                                             select new OfficeDetail()
+                                             {
+                                                 OfficeID = dr.Field<int>("OfficeID"),
+                                                 OfficeName = dr.Field<string>("OfficeName"),
+                                                 OfficeLattitute = dr.Field<double>("OfficeLattitute").ToString(),
+                                                 OfficeLongitute = dr.Field<double>("OfficeLongitute").ToString(),
+                                                 CityID = dr.Field<int>("CityID"),
+                                                 CityName = dr.Field<string>("CityName"),
+                                                 CityCode = dr.Field<string>("CityCode"),
+                                                 CityPostalCode = dr.Field<string>("CityPostalCode"),
+                                                 DistrictID = dr.Field<int>("DistrictID"),
+                                                 DistrictName = dr.Field<string>("DistrictName"),
+                                                 DistrictCode = dr.Field<string>("DistrictCode"),
+                                                 CreatedOn = dr.Field<DateTime?>("CreatedOn").ToString(),
+                                                 CreatedBy = dr.Field<string>("CreatedBy"),
+                                                 StateID = dr.Field<int>("StateID"),
+                                                 StateCode = dr.Field<string>("StateCode"),
+                                                 StateName = dr.Field<string>("StateName"),
+                                                 CountryId = dr.Field<int>("CountryId"),
+                                                 CountryName = dr.Field<string>("CountryName"),
+                                                 OfficeInTime = Convert.ToString(dr.Field<TimeSpan?>("InTime")),
+                                                 OfficeOutTime = Convert.ToString(dr.Field<TimeSpan?>("OutTime")),
+                                                 HalfDayTime = Convert.ToString(dr.Field<TimeSpan?>("HalfDayTime")),
+                                                 ShortLeaveTime = Convert.ToString(dr.Field<TimeSpan?>("ShortLeaveTime")),
+                                                 Success = 1,
+                                                 Message = ""
+                                             }).ToList();
 
 
                 return result;
@@ -972,15 +972,15 @@ namespace ITInventory.Common
                 parameter.Add(employeeTypeID);
 
                 List<EmployeeType> result = (from dr in DB.ReadDS("EmployeeTypeDetailGet", parameter.ToArray()).Tables[0].AsEnumerable()
-                                         select new EmployeeType()
-                                         {
-                                             EmployeeTypeID = dr.Field<int>("EmployeeTypeID"),
-                                             EmployeeTypeName = dr.Field<string>("EmployeeTypeName"),
-                                             CreatedOn = dr.Field<DateTime?>("CreatedOn").ToString(),
-                                             CreatedBy = dr.Field<string>("CreatedBy"),
-                                             Success = 1,
-                                             Message = ""
-                                         }).ToList();
+                                             select new EmployeeType()
+                                             {
+                                                 EmployeeTypeID = dr.Field<int>("EmployeeTypeID"),
+                                                 EmployeeTypeName = dr.Field<string>("EmployeeTypeName"),
+                                                 CreatedOn = dr.Field<DateTime?>("CreatedOn").ToString(),
+                                                 CreatedBy = dr.Field<string>("CreatedBy"),
+                                                 Success = 1,
+                                                 Message = ""
+                                             }).ToList();
 
 
                 return result;
@@ -1003,17 +1003,17 @@ namespace ITInventory.Common
                 parameter.Add(leaveTypeID);
 
                 List<LeaveType> result = (from dr in DB.ReadDS("AttendanceLeaveTypeGet", parameter.ToArray()).Tables[0].AsEnumerable()
-                                             select new LeaveType()
-                                             {
-                                                 LeaveTypeID = dr.Field<int>("LeaveTypeID"),
-                                                 LeaveTypeName = dr.Field<string>("LeaveTypeName"),
-                                                 LeaveTypeCode = dr.Field<string>("LeaveTypeCode"),
-                                                 CreatedOn = dr.Field<DateTime?>("CreatedOn").ToString(),
-                                                 CreatedBy = dr.Field<string>("CreatedBy"),
-                                                 IsAttachmentAllowed = dr.Field<bool>("IsAttachmentAllowed"),
-                                                 Success = 1,
-                                                 Message = ""
-                                             }).ToList();
+                                          select new LeaveType()
+                                          {
+                                              LeaveTypeID = dr.Field<int>("LeaveTypeID"),
+                                              LeaveTypeName = dr.Field<string>("LeaveTypeName"),
+                                              LeaveTypeCode = dr.Field<string>("LeaveTypeCode"),
+                                              CreatedOn = dr.Field<DateTime?>("CreatedOn").ToString(),
+                                              CreatedBy = dr.Field<string>("CreatedBy"),
+                                              IsAttachmentAllowed = dr.Field<bool>("IsAttachmentAllowed"),
+                                              Success = 1,
+                                              Message = ""
+                                          }).ToList();
 
 
                 return result;
@@ -1036,15 +1036,15 @@ namespace ITInventory.Common
                 parameter.Add(designationID);
 
                 List<DesignationDetail> result = (from dr in DB.ReadDS("DesignationDetailGet", parameter.ToArray()).Tables[0].AsEnumerable()
-                                          select new DesignationDetail()
-                                          {
-                                              DesignationID = dr.Field<int>("DesignationID"),
-                                              DesignationName = dr.Field<string>("DesignationName"),
-                                              CreatedOn = dr.Field<DateTime?>("CreatedOn").ToString(),
-                                              CreatedBy = dr.Field<string>("CreatedBy"),
-                                              Success = 1,
-                                              Message = ""
-                                          }).ToList();
+                                                  select new DesignationDetail()
+                                                  {
+                                                      DesignationID = dr.Field<int>("DesignationID"),
+                                                      DesignationName = dr.Field<string>("DesignationName"),
+                                                      CreatedOn = dr.Field<DateTime?>("CreatedOn").ToString(),
+                                                      CreatedBy = dr.Field<string>("CreatedBy"),
+                                                      Success = 1,
+                                                      Message = ""
+                                                  }).ToList();
 
 
                 return result;
@@ -1067,17 +1067,17 @@ namespace ITInventory.Common
                 parameter.Add(branchID);
 
                 List<BranchDetail> result = (from dr in DB.ReadDS("BranchDetailGet", parameter.ToArray()).Tables[0].AsEnumerable()
-                                                  select new BranchDetail()
-                                                  {
-                                                      BranchID = dr.Field<int>("BranchID"),
-                                                      BranchName = dr.Field<string>("BranchName"),
-                                                      CreatedOn = dr.Field<DateTime?>("CreatedOn").ToString(),
-                                                      CreatedBy = dr.Field<string>("CreatedBy"),
-                                                      UpdatedOn = dr.Field<DateTime?>("UpdatedOn").ToString(),
-                                                      UpdatedBy = dr.Field<string>("UpdatedBy"),
-                                                      Success = 1,
-                                                      Message = ""
-                                                  }).ToList();
+                                             select new BranchDetail()
+                                             {
+                                                 BranchID = dr.Field<int>("BranchID"),
+                                                 BranchName = dr.Field<string>("BranchName"),
+                                                 CreatedOn = dr.Field<DateTime?>("CreatedOn").ToString(),
+                                                 CreatedBy = dr.Field<string>("CreatedBy"),
+                                                 UpdatedOn = dr.Field<DateTime?>("UpdatedOn").ToString(),
+                                                 UpdatedBy = dr.Field<string>("UpdatedBy"),
+                                                 Success = 1,
+                                                 Message = ""
+                                             }).ToList();
 
 
                 return result;
@@ -1100,13 +1100,13 @@ namespace ITInventory.Common
                 parameter.Add(yearID);
 
                 List<YearDetail> result = (from dr in DB.ReadDS("YearDetailGet", parameter.ToArray()).Tables[0].AsEnumerable()
-                                             select new YearDetail()
-                                             {
-                                                 YearId = dr.Field<int>("YearId"),
-                                                 Year = dr.Field<string>("Year"),
-                                                 Success = 1,
-                                                 Message = ""
-                                             }).ToList();
+                                           select new YearDetail()
+                                           {
+                                               YearId = dr.Field<int>("YearId"),
+                                               Year = dr.Field<string>("Year"),
+                                               Success = 1,
+                                               Message = ""
+                                           }).ToList();
 
 
                 return result;
@@ -1120,7 +1120,7 @@ namespace ITInventory.Common
         #endregion
 
         #region AttendanceLeaveTypeCount
-        public List<LeaveTypeCount> GetLeaveTypeCount(int id,int yearID,int leaveTypeID)
+        public List<LeaveTypeCount> GetLeaveTypeCount(int id, int yearID, int leaveTypeID)
         {
             try
             {
@@ -1133,21 +1133,21 @@ namespace ITInventory.Common
                 parameter.Add(leaveTypeID);
 
                 List<LeaveTypeCount> result = (from dr in DB.ReadDS("AttendanceLeaveCountGet", parameter.ToArray()).Tables[0].AsEnumerable()
-                                           select new LeaveTypeCount()
-                                           {
-                                               ID = dr.Field<int>("ID"),
-                                               LeaveTypeID = dr.Field<int>("LeaveTypeID"),
-                                               LeaveTypeCode = dr.Field<string>("LeaveTypeCode"),
-                                               LeaveTypeName = dr.Field<string>("LeaveTypeName"),
-                                               CountForMale = dr.Field<float>("CountForMale"),
-                                               CountForFemale = dr.Field<float>("CountForFemale"),
-                                               YearId = dr.Field<int>("YearId"),
-                                               Year = dr.Field<string>("Year"),
-                                               CreatedBy = dr.Field<string>("CreatedBy"),
-                                               CreatedOn = dr.Field<DateTime?>("CreatedOn").ToString(),
-                                               Success = 1,
-                                               Message = ""
-                                           }).ToList();
+                                               select new LeaveTypeCount()
+                                               {
+                                                   ID = dr.Field<int>("ID"),
+                                                   LeaveTypeID = dr.Field<int>("LeaveTypeID"),
+                                                   LeaveTypeCode = dr.Field<string>("LeaveTypeCode"),
+                                                   LeaveTypeName = dr.Field<string>("LeaveTypeName"),
+                                                   CountForMale = dr.Field<float>("CountForMale"),
+                                                   CountForFemale = dr.Field<float>("CountForFemale"),
+                                                   YearId = dr.Field<int>("YearId"),
+                                                   Year = dr.Field<string>("Year"),
+                                                   CreatedBy = dr.Field<string>("CreatedBy"),
+                                                   CreatedOn = dr.Field<DateTime?>("CreatedOn").ToString(),
+                                                   Success = 1,
+                                                   Message = ""
+                                               }).ToList();
 
 
                 return result;
@@ -1172,16 +1172,16 @@ namespace ITInventory.Common
                 parameter.Add(authorityCategoryId);
 
                 List<ManagementCategoryDetail> result = (from dr in DB.ReadDS("ManagementCategoryGet", parameter.ToArray()).Tables[0].AsEnumerable()
-                                               select new ManagementCategoryDetail()
-                                               {
-                                                   CategoryID = dr.Field<int>("CategoryID"),
-                                                   CategoryName = dr.Field<string>("CategoryName"),
-                                                   BossID = dr.Field<int>("BossID"),
-                                                   AuthorityName = dr.Field<string>("AuthorityName"),
-                                                   IsActive = dr.Field<bool>("IsActive"),
-                                                   Success = 1,
-                                                   Message = ""
-                                               }).ToList();
+                                                         select new ManagementCategoryDetail()
+                                                         {
+                                                             CategoryID = dr.Field<int>("CategoryID"),
+                                                             CategoryName = dr.Field<string>("CategoryName"),
+                                                             BossID = dr.Field<int>("BossID"),
+                                                             AuthorityName = dr.Field<string>("AuthorityName"),
+                                                             IsActive = dr.Field<bool>("IsActive"),
+                                                             Success = 1,
+                                                             Message = ""
+                                                         }).ToList();
 
 
                 return result;
@@ -1195,7 +1195,7 @@ namespace ITInventory.Common
         #endregion
 
         #region Leave Category
-        public List<LeaveCategoryDetail> GetLeaveCategories(int categoryId,bool isVisible)
+        public List<LeaveCategoryDetail> GetLeaveCategories(int categoryId, bool isVisible)
         {
             try
             {
@@ -1206,14 +1206,14 @@ namespace ITInventory.Common
                 parameter.Add(isVisible);
 
                 List<LeaveCategoryDetail> result = (from dr in DB.ReadDS("LeaveCategoryGet", parameter.ToArray()).Tables[0].AsEnumerable()
-                                                         select new LeaveCategoryDetail()
-                                                         {
-                                                             CategoryID = dr.Field<int>("CategoryID"),
-                                                             CategoryName = dr.Field<string>("CategoryName"),
-                                                             IsVisible = dr.Field<bool>("IsVisible"),
-                                                             Success = 1,
-                                                             Message = ""
-                                                         }).ToList();
+                                                    select new LeaveCategoryDetail()
+                                                    {
+                                                        CategoryID = dr.Field<int>("CategoryID"),
+                                                        CategoryName = dr.Field<string>("CategoryName"),
+                                                        IsVisible = dr.Field<bool>("IsVisible"),
+                                                        Success = 1,
+                                                        Message = ""
+                                                    }).ToList();
 
 
                 return result;
@@ -1234,18 +1234,18 @@ namespace ITInventory.Common
                 parameter.Add(categoryId);
 
                 List<ApprovalCategory> result = (from dr in DB.ReadDS("ApprovalCategoryDetailGet", parameter.ToArray()).Tables[0].AsEnumerable()
-                                                    select new ApprovalCategory()
-                                                    {
-                                                        CategoryID = dr.Field<int>("CategoryID"),
-                                                        CategoryName = dr.Field<string>("CategoryName"),
-                                                        IsActive = dr.Field<bool>("IsActive"),
-                                                        CreatedBy = dr.Field<string>("CreatedBy"),
-                                                        CreatedOn = dr.Field<DateTime?>("CreatedOn").ToString(),
-                                                        UpdatedBy = dr.Field<string>("UpdatedBy"),
-                                                        UpdatedOn = dr.Field<DateTime?>("UpdatedOn").ToString(),
-                                                        Success = 1,
-                                                        Message = ""
-                                                    }).ToList();
+                                                 select new ApprovalCategory()
+                                                 {
+                                                     CategoryID = dr.Field<int>("CategoryID"),
+                                                     CategoryName = dr.Field<string>("CategoryName"),
+                                                     IsActive = dr.Field<bool>("IsActive"),
+                                                     CreatedBy = dr.Field<string>("CreatedBy"),
+                                                     CreatedOn = dr.Field<DateTime?>("CreatedOn").ToString(),
+                                                     UpdatedBy = dr.Field<string>("UpdatedBy"),
+                                                     UpdatedOn = dr.Field<DateTime?>("UpdatedOn").ToString(),
+                                                     Success = 1,
+                                                     Message = ""
+                                                 }).ToList();
 
 
                 return result;
@@ -1268,16 +1268,16 @@ namespace ITInventory.Common
                 parameter.Add(statusId);
 
                 List<LeaveStatusDetail> result = (from dr in DB.ReadDS("LeaveStatusGet", parameter.ToArray()).Tables[0].AsEnumerable()
-                                                    select new LeaveStatusDetail()
-                                                    {
-                                                        StatusID = dr.Field<int>("StatusID"),
-                                                        StatusName = dr.Field<string>("StatusName"),
-                                                        StatusCode = dr.Field<string>("StatusCode"),
-                                                        CreatedBy = dr.Field<string>("CreatedBy"),
-                                                        CreatedOn = dr.Field<DateTime?>("CreatedOn").ToString(),
-                                                        Success = 1,
-                                                        Message = ""
-                                                    }).ToList();
+                                                  select new LeaveStatusDetail()
+                                                  {
+                                                      StatusID = dr.Field<int>("StatusID"),
+                                                      StatusName = dr.Field<string>("StatusName"),
+                                                      StatusCode = dr.Field<string>("StatusCode"),
+                                                      CreatedBy = dr.Field<string>("CreatedBy"),
+                                                      CreatedOn = dr.Field<DateTime?>("CreatedOn").ToString(),
+                                                      Success = 1,
+                                                      Message = ""
+                                                  }).ToList();
 
 
                 return result;
@@ -1300,45 +1300,8 @@ namespace ITInventory.Common
                 parameter.Add(typeID);
 
                 List<HolidayType> result = (from dr in DB.ReadDS("HolidayTypeDetailGet", parameter.ToArray()).Tables[0].AsEnumerable()
-                                                  select new HolidayType()
-                                                  {
-                                                      TypeID = dr.Field<int>("TypeID"),
-                                                      TypeName = dr.Field<string>("TypeName"),
-                                                      UpdatedBy = dr.Field<string>("UpdatedBy"),
-                                                      UpdatedOn = dr.Field<DateTime?>("UpdatedOn").ToString(),
-                                                      CreatedBy = dr.Field<string>("CreatedBy"),
-                                                      CreatedOn = dr.Field<DateTime?>("CreatedOn").ToString(),
-                                                      IsActive = dr.Field<bool>("IsActive"),
-                                                      Success = 1,
-                                                      Message = ""
-                                                  }).ToList();
-
-
-                return result;
-            }
-            catch (Exception)
-            {
-                return null;
-            }
-
-        }
-        public List<HolidayDetail> GetHolidayDetail(int typeID,long id)
-        {
-            try
-            {
-                List<object> parameter = new List<object>();
-                parameter.Add("@TypeID");
-                parameter.Add(typeID);
-                parameter.Add("@ID");
-                parameter.Add(id);
-
-                List<HolidayDetail> result = (from dr in DB.ReadDS("HolidayDetailGet", parameter.ToArray()).Tables[0].AsEnumerable()
-                                            select new HolidayDetail()
+                                            select new HolidayType()
                                             {
-                                                ID = dr.Field<long>("ID"),
-                                                Date = dr.Field<DateTime?>("Date").ToString(),
-                                                Day = dr.Field<string>("Day"),
-                                                Holiday = dr.Field<string>("Holiday"),
                                                 TypeID = dr.Field<int>("TypeID"),
                                                 TypeName = dr.Field<string>("TypeName"),
                                                 UpdatedBy = dr.Field<string>("UpdatedBy"),
@@ -1359,6 +1322,43 @@ namespace ITInventory.Common
             }
 
         }
+        public List<HolidayDetail> GetHolidayDetail(int typeID, long id)
+        {
+            try
+            {
+                List<object> parameter = new List<object>();
+                parameter.Add("@TypeID");
+                parameter.Add(typeID);
+                parameter.Add("@ID");
+                parameter.Add(id);
+
+                List<HolidayDetail> result = (from dr in DB.ReadDS("HolidayDetailGet", parameter.ToArray()).Tables[0].AsEnumerable()
+                                              select new HolidayDetail()
+                                              {
+                                                  ID = dr.Field<long>("ID"),
+                                                  Date = dr.Field<DateTime?>("Date").ToString(),
+                                                  Day = dr.Field<string>("Day"),
+                                                  Holiday = dr.Field<string>("Holiday"),
+                                                  TypeID = dr.Field<int>("TypeID"),
+                                                  TypeName = dr.Field<string>("TypeName"),
+                                                  UpdatedBy = dr.Field<string>("UpdatedBy"),
+                                                  UpdatedOn = dr.Field<DateTime?>("UpdatedOn").ToString(),
+                                                  CreatedBy = dr.Field<string>("CreatedBy"),
+                                                  CreatedOn = dr.Field<DateTime?>("CreatedOn").ToString(),
+                                                  IsActive = dr.Field<bool>("IsActive"),
+                                                  Success = 1,
+                                                  Message = ""
+                                              }).ToList();
+
+
+                return result;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+
+        }
         #endregion
 
         #region Leave
@@ -1368,11 +1368,11 @@ namespace ITInventory.Common
             {
 
                 List<LeaveTourMaster> result = (from dr in DB.ReadDS("LeaveTourMasterDetailGet", null).Tables[0].AsEnumerable()
-                                            select new LeaveTourMaster()
-                                            {
-                                                MasterCode = dr.Field<string>("MasterCode"),
-                                                MasterName = dr.Field<string>("MasterName")
-                                            }).ToList();
+                                                select new LeaveTourMaster()
+                                                {
+                                                    MasterCode = dr.Field<string>("MasterCode"),
+                                                    MasterName = dr.Field<string>("MasterName")
+                                                }).ToList();
 
 
                 return result;
@@ -1418,46 +1418,48 @@ namespace ITInventory.Common
         {
             MessageHandle result = new MessageHandle();
             string extension = ld.fileExtension.ToLower();
-            if (ld.fileExtension != "" && (extension == "jpeg" || extension == "jpg" || extension == "pdf"))
+
+
+
+            List<object> parameter = new List<object>();
+            parameter.Add("@EmployeeID");
+            parameter.Add(ld.EmployeeID);
+            parameter = MapDate(ld.LeaveFromDate, parameter, "@LeaveFromDate");
+            parameter = MapDate(ld.LeaveToDate, parameter, "@LeaveToDate");
+
+            if (ld.LeaveFromTime != "" && ld.LeaveFromTime != null)
+            {
+                parameter.Add("@LeaveFromTime");
+                parameter.Add(ld.LeaveFromTime);
+            }
+            if (ld.LeaveToTime != "" && ld.LeaveToTime != null)
             {
 
-                string folder = System.Web.HttpContext.Current.Server.MapPath("/UploadattendanceDoc");
-
-                string filename = ld.HrmsNo + "LeaveAttachment" + DateTime.Now.ToString("dd-MM-yyyy");
-                //string filePath = folder + "/" + filename + "/" + filename + ".jpeg";
-                string filePath = folder + "/" + filename + "/" + filename + "." + (extension == "jpg" ? "jpeg" : extension);  //Allowed extensions .pdf and .jpeg/jpg
-
-                List<object> parameter = new List<object>();
-                parameter.Add("@EmployeeID");
-                parameter.Add(ld.EmployeeID);
-                parameter = MapDate(ld.LeaveFromDate, parameter, "@LeaveFromDate");
-                parameter = MapDate(ld.LeaveToDate, parameter, "@LeaveToDate");
-
-                if (ld.LeaveFromTime != "" && ld.LeaveFromTime != null)
+                parameter.Add("@LeaveToTime");
+                parameter.Add(ld.LeaveToTime);
+            }
+            parameter.Add("@LeaveCategoryID");
+            parameter.Add(ld.LeaveCategoryID);
+            parameter.Add("@LeaveTypeID");
+            parameter.Add(ld.LeaveTypeID);
+            parameter.Add("@LeaveTypeT");
+            parameter.Add(ld.LeaveTypeT);
+            parameter.Add("@LeaveReason");
+            parameter.Add(ld.LeaveReason);
+            parameter.Add("@ApprovingAuthorityID");
+            parameter.Add(ld.ApprovingAuthorityID);
+            parameter.Add("@IsAttachedDocumets");
+            parameter.Add(ld.IsAttachedDocumets);
+            if (ld.IsAttachedDocumets)
+            {
+                if (ld.fileExtension != "" && (extension == "jpeg" || extension == "jpg" || extension == "pdf"))
                 {
-                    parameter.Add("@LeaveFromTime");
-                    parameter.Add(ld.LeaveFromTime);
-                }
-                if (ld.LeaveToTime != "" && ld.LeaveToTime != null)
-                {
+                    string folder = System.Web.HttpContext.Current.Server.MapPath("/UploadattendanceDoc");
 
-                    parameter.Add("@LeaveToTime");
-                    parameter.Add(ld.LeaveToTime);
-                }
-                parameter.Add("@LeaveCategoryID");
-                parameter.Add(ld.LeaveCategoryID);
-                parameter.Add("@LeaveTypeID");
-                parameter.Add(ld.LeaveTypeID);
-                parameter.Add("@LeaveTypeT");
-                parameter.Add(ld.LeaveTypeT);
-                parameter.Add("@LeaveReason");
-                parameter.Add(ld.LeaveReason);
-                parameter.Add("@ApprovingAuthorityID");
-                parameter.Add(ld.ApprovingAuthorityID);
-                parameter.Add("@IsAttachedDocumets");
-                parameter.Add(ld.IsAttachedDocumets);
-                if (ld.IsAttachedDocumets)
-                {
+                    string filename = ld.HrmsNo + "LeaveAttachment" + DateTime.Now.ToString("dd-MM-yyyy");
+                    //string filePath = folder + "/" + filename + "/" + filename + ".jpeg";
+                    string filePath = folder + "/" + filename + "/" + filename + "." + (extension == "jpg" ? "jpeg" : extension);  //Allowed extensions .pdf and .jpeg/jpg
+
                     string im = image(ld.HrmsNo, ld.bytedata);
                     parameter.Add("@AttachDocUrls");
                     parameter.Add(filePath);
@@ -1465,23 +1467,25 @@ namespace ITInventory.Common
                 }
                 else
                 {
-                    parameter.Add("@AttachDocUrls");
-                    parameter.Add("");
+                    result.Success = 6;
+                    result.Message = "Invalid file uploaded";
+                    return result;
                 }
-
-                parameter.Add("@StatusUpdatedBy");
-                parameter.Add(ld.StatusUpdatedBy);
-
-                List<object> outParameter = OutputParams();
-                string[] output = DB.InsertorUpdateWithOutput("ApplyLeaveCreate", parameter.ToArray(), outParameter.ToArray());
-                result.Success = Convert.ToInt16(output[0]);
-                result.Message = output[1];
             }
             else
             {
-                result.Success = 6;
-                result.Message = "Invalid file uploaded";
+                parameter.Add("@AttachDocUrls");
+                parameter.Add("");
             }
+
+            parameter.Add("@StatusUpdatedBy");
+            parameter.Add(ld.StatusUpdatedBy);
+
+            List<object> outParameter = OutputParams();
+            string[] output = DB.InsertorUpdateWithOutput("ApplyLeaveCreate", parameter.ToArray(), outParameter.ToArray());
+            result.Success = Convert.ToInt16(output[0]);
+            result.Message = output[1];
+
             return result;
         }
 
@@ -1537,7 +1541,7 @@ namespace ITInventory.Common
                 parameter.Add(ld.LeaveFromTime);
             }
             parameter = MapDate(ld.LeaveToDate, parameter, "@LeaveToDate");
-            
+
             if (ld.LeaveToTime != "" && ld.LeaveToTime != null)
             {
 
@@ -1568,7 +1572,7 @@ namespace ITInventory.Common
                 parameter.Add(EmployeeID);
                 DataSet ds = DB.ReadDS("EmployeeLeaveBalanceDetail", parameter.ToArray());
                 DataTable dt = new DataTable();
-                
+
                 //ExpandoObject dynamicDto = new ExpandoObject();
                 //ArrayList columnName = new ArrayList();
                 //foreach (DataRow row in ds.Tables[0].Rows)
@@ -1589,21 +1593,21 @@ namespace ITInventory.Common
                         //columnName.Add(column.ColumnName+",");
                         //((IDictionary<String, Object>)dynamicDto).Add(column.ColumnName, row[column.ColumnName]);
                         string columnValue = column.ColumnName.Contains(" ") ? string.Concat(column.ColumnName.Where(c => !char.IsWhiteSpace(c))) : column.ColumnName;
-                        dr[columnValue] = row[column.ColumnName] ==null || row[column.ColumnName].ToString() == "" ? "0.00": row[column.ColumnName];
+                        dr[columnValue] = row[column.ColumnName] == null || row[column.ColumnName].ToString() == "" ? "0.00" : row[column.ColumnName];
                     }
                     dt.Rows.Add(dr);
                 }
-                    //int count = 0;
-                    //var result = (from dr in DB.ReadDS("EmployeeLeaveBalanceDetail", parameter.ToArray()).Tables[0].AsEnumerable()
-                    //              select new
-                    //              {
-                    //                  columnName[count++] = dr.Field<long>(columnName[count++].ToString())
+                //int count = 0;
+                //var result = (from dr in DB.ReadDS("EmployeeLeaveBalanceDetail", parameter.ToArray()).Tables[0].AsEnumerable()
+                //              select new
+                //              {
+                //                  columnName[count++] = dr.Field<long>(columnName[count++].ToString())
 
-                    //              }).ToList();
-                    //object d = result;
+                //              }).ToList();
+                //object d = result;
 
-                    //return dynamicDto;
-                    return dt;
+                //return dynamicDto;
+                return dt;
             }
             catch (Exception)
             {
@@ -1612,7 +1616,7 @@ namespace ITInventory.Common
             return null;
         }
 
-        public List<EmplyeeLeaveBalanceWithLeaveType> GetEmployeeLeaveBalanceDetailWithLeaveType(long EmployeeID,string YearName,int LeaveTypeID, string hrmsNo)
+        public List<EmplyeeLeaveBalanceWithLeaveType> GetEmployeeLeaveBalanceDetailWithLeaveType(long EmployeeID, string YearName, int LeaveTypeID, string hrmsNo)
         {
             try
             {
@@ -1629,25 +1633,25 @@ namespace ITInventory.Common
                 parameter.Add("@LeaveTypeID");
                 parameter.Add(LeaveTypeID);
                 List<EmplyeeLeaveBalanceWithLeaveType> result = (from dr in DB.ReadDS("EmployeeLeaveBalanceDetailForLeaveType", parameter.ToArray()).Tables[0].AsEnumerable()
-                                                        select new EmplyeeLeaveBalanceWithLeaveType()
-                                                        {
-                                                            EmployeeID = dr.Field<long>("EmployeeID"),
-                                                            HrmsNo = dr.Field<string>("HrmsNo"),
-                                                            EmployeeName = dr.Field<string>("EmployeeName"),
-                                                            OfficeID = dr.Field<int>("OfficeID"),
-                                                            LeaveTypeName = dr.Field<string>("LeaveTypeName"),
-                                                            LeaveBalance = dr.Field<decimal>("LeaveBalance"),
-                                                            DesignationID = dr.Field<int>("DesignationID"),
-                                                            DesignationName = dr.Field<string>("DesignationName"),
-                                                            EmployeeTypeID = dr.Field<int>("EmployeeTypeID"),
-                                                            EmployeeTypeName = dr.Field<string>("EmployeeTypeName"),
-                                                            GenderID = dr.Field<int>("GenderID"),
-                                                            GenderName = dr.Field<string>("GenderName"),
-                                                            BranchID = dr.Field<int>("BranchID"),
-                                                            OfficeName = dr.Field<string>("OfficeName"),
-                                                            Success = 1,
-                                                            Message = ""
-                                                        }).ToList();
+                                                                 select new EmplyeeLeaveBalanceWithLeaveType()
+                                                                 {
+                                                                     EmployeeID = dr.Field<long>("EmployeeID"),
+                                                                     HrmsNo = dr.Field<string>("HrmsNo"),
+                                                                     EmployeeName = dr.Field<string>("EmployeeName"),
+                                                                     OfficeID = dr.Field<int>("OfficeID"),
+                                                                     LeaveTypeName = dr.Field<string>("LeaveTypeName"),
+                                                                     LeaveBalance = dr.Field<decimal>("LeaveBalance"),
+                                                                     DesignationID = dr.Field<int>("DesignationID"),
+                                                                     DesignationName = dr.Field<string>("DesignationName"),
+                                                                     EmployeeTypeID = dr.Field<int>("EmployeeTypeID"),
+                                                                     EmployeeTypeName = dr.Field<string>("EmployeeTypeName"),
+                                                                     GenderID = dr.Field<int>("GenderID"),
+                                                                     GenderName = dr.Field<string>("GenderName"),
+                                                                     BranchID = dr.Field<int>("BranchID"),
+                                                                     OfficeName = dr.Field<string>("OfficeName"),
+                                                                     Success = 1,
+                                                                     Message = ""
+                                                                 }).ToList();
                 return result;
             }
             catch (Exception)
@@ -1670,20 +1674,20 @@ namespace ITInventory.Common
                     parameter.Add(hrmsNo);
                 }
                 List<LeaveUnlockDetail> result = (from dr in DB.ReadDS("LeaveDateUnlockGet", parameter.ToArray()).Tables[0].AsEnumerable()
-                                                                 select new LeaveUnlockDetail()
-                                                                 {
-                                                                     EmployeeID = dr.Field<long>("EmployeeID"),
-                                                                     HrmsNo = dr.Field<string>("HrmsNo"),
-                                                                     OfficeID = dr.Field<int>("OfficeID"),
-                                                                     DesignationID = dr.Field<int>("DesignationID"),
-                                                                     BranchID = dr.Field<int>("BranchID"),
-                                                                     FromDate = dr.Field<DateTime>("FromDate").ToString(),
-                                                                     ToDate = dr.Field<DateTime>("ToDate").ToString(),
-                                                                     EnteryDate = dr.Field<DateTime?>("EnteryDate").ToString(),
-                                                                     NoOfDays = dr.Field<int>("NoOfDays"),
-                                                                     Success = 1,
-                                                                     Message = ""
-                                                                 }).ToList();
+                                                  select new LeaveUnlockDetail()
+                                                  {
+                                                      EmployeeID = dr.Field<long>("EmployeeID"),
+                                                      HrmsNo = dr.Field<string>("HrmsNo"),
+                                                      OfficeID = dr.Field<int>("OfficeID"),
+                                                      DesignationID = dr.Field<int>("DesignationID"),
+                                                      BranchID = dr.Field<int>("BranchID"),
+                                                      FromDate = dr.Field<DateTime>("FromDate").ToString(),
+                                                      ToDate = dr.Field<DateTime>("ToDate").ToString(),
+                                                      EnteryDate = dr.Field<DateTime?>("EnteryDate").ToString(),
+                                                      NoOfDays = dr.Field<int>("NoOfDays"),
+                                                      Success = 1,
+                                                      Message = ""
+                                                  }).ToList();
                 return result;
             }
             catch (Exception)
@@ -1779,16 +1783,16 @@ namespace ITInventory.Common
                     parameter.Add(hrmsNo);
                 }
                 List<TechnicalErrorStatus> result = (from dr in DB.ReadDS("TechErrorStatusGet", parameter.ToArray()).Tables[0].AsEnumerable()
-                                                  select new TechnicalErrorStatus()
-                                                  {
-                                                      ErrorMessageDetail = dr.Field<string>("ErrorMessageDetail"),
-                                                      EmployeeName = dr.Field<string>("EmployeeName"),
-                                                      MobNo = dr.Field<string>("MobNo"),
-                                                      ErrorDate = dr.Field<DateTime>("ErrorDate").ToString(),
-                                                      ApprovalStatus = dr.Field<string>("ApprovalStatus"),
-                                                      StatusUpdationDate = dr.Field<DateTime>("StatusUpdationDate").ToString(),
-                                                      Remarks = dr.Field<string>("Remarks").ToString()
-                                                  }).ToList();
+                                                     select new TechnicalErrorStatus()
+                                                     {
+                                                         ErrorMessageDetail = dr.Field<string>("ErrorMessageDetail"),
+                                                         EmployeeName = dr.Field<string>("EmployeeName"),
+                                                         MobNo = dr.Field<string>("MobNo"),
+                                                         ErrorDate = dr.Field<DateTime>("ErrorDate").ToString(),
+                                                         ApprovalStatus = dr.Field<string>("ApprovalStatus"),
+                                                         StatusUpdationDate = dr.Field<DateTime>("StatusUpdationDate").ToString(),
+                                                         Remarks = dr.Field<string>("Remarks").ToString()
+                                                     }).ToList();
                 return result;
             }
             catch (Exception)
@@ -1810,14 +1814,14 @@ namespace ITInventory.Common
                 parameter.Add("@AuthorityID");
                 parameter.Add(EmployeeID);
                 List<DashboardAttendanceTotalCount> result = (from dr in DB.ReadDS("AttendanceTotalCountGet", parameter.ToArray()).Tables[0].AsEnumerable()
-                                                     select new DashboardAttendanceTotalCount()
-                                                     {
-                                                         AbsentTotal = dr.Field<int>("AbsentTotal"),
-                                                         PresentTotal = dr.Field<int>("PresentTotal"),
-                                                         TotalStrength = dr.Field<int>("TotalStrength"),
-                                                         LeaveTotal = dr.Field<int>("LeaveTotal"),
-                                                         TourTotal = dr.Field<int>("TourTotal")
-                                                     }).ToList();
+                                                              select new DashboardAttendanceTotalCount()
+                                                              {
+                                                                  AbsentTotal = dr.Field<int>("AbsentTotal"),
+                                                                  PresentTotal = dr.Field<int>("PresentTotal"),
+                                                                  TotalStrength = dr.Field<int>("TotalStrength"),
+                                                                  LeaveTotal = dr.Field<int>("LeaveTotal"),
+                                                                  TourTotal = dr.Field<int>("TourTotal")
+                                                              }).ToList();
                 return result;
             }
             catch (Exception)
@@ -1939,7 +1943,7 @@ namespace ITInventory.Common
             return outParameter;
         }
 
-        private List<object> MapDate(string date, List<object> parameter,string paramName)
+        private List<object> MapDate(string date, List<object> parameter, string paramName)
         {
             if (date != "")
             {
