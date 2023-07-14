@@ -19,10 +19,9 @@ namespace NHRMS_WebAPI.Controllers
             output result = new output();
             try
             {
-                MessageHandle obj = DAL.MarkAttendance(att);
-                result = result.GetResponsePost(obj, obj.Message);
-                result.IsSucess = Convert.ToBoolean(obj.Success);
-                result.Message = obj.Message;
+                List<EmployeeAttendanceMarkDetail> obj = DAL.MarkAttendance(att);
+                //result = result.GetResponsePost(obj, obj.Message);
+                result = result.GetResponse(obj);
             }
             catch (Exception ex)
             {
@@ -38,22 +37,22 @@ namespace NHRMS_WebAPI.Controllers
 
         }
 
-        [Route("app/GetAttendanceDetail/{EmployeeID}")]
-        public output GetAttendanceDetail(long EmployeeID)
-        {
-            output result = new output();
-            try
-            {
-                List<EmployeeAttendanceMarkDetail> obj = DAL.GetAttendanceDetail(EmployeeID);
-                result = result.GetResponse(obj);
-            }
-            catch (Exception ex)
-            {
-                result.IsSucess = false;
-                result.Message = ex.Message;
-            }
-            return result;
-        }
+        //[Route("app/GetAttendanceDetail/{EmployeeID}")]
+        //public output GetAttendanceDetail(long EmployeeID)
+        //{
+        //    output result = new output();
+        //    try
+        //    {
+        //        List<EmployeeAttendanceMarkDetail> obj = DAL.GetAttendanceDetail(EmployeeID);
+        //        result = result.GetResponse(obj);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        result.IsSucess = false;
+        //        result.Message = ex.Message;
+        //    }
+        //    return result;
+        //}
 
         [Route("app/GetApprovalCategory/{categoryId}")]
         public output GetApprovalCategory(int categoryId)

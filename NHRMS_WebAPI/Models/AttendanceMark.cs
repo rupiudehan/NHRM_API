@@ -31,6 +31,7 @@ namespace NHRMS_WebAPI.Models
         public int isHoliday { get; set; }
         public string AttInDate { get; set; }
         public string AttOutDate { get; set; }
+        public int result { get; set; }
     }
 
     public class AttendanceBalanceDetail:MessageHandle

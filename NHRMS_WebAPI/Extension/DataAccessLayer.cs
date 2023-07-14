@@ -588,9 +588,10 @@ namespace ITInventory.Common
         #endregion
 
         #region Attendance
-        public MessageHandle MarkAttendance(AttendanceMark att)
+        public List<EmployeeAttendanceMarkDetail> MarkAttendance(AttendanceMark att)
         {
             MessageHandle result = new MessageHandle();
+            List<EmployeeAttendanceMarkDetail> resultFinal = null;
             List<object> parameter = new List<object>();
             parameter.Add("@EmployeeId");
             parameter.Add(att.EmployeeId);
@@ -621,11 +622,23 @@ namespace ITInventory.Common
             string[] output = DB.InsertorUpdateWithOutput("AttendanceMark", parameter.ToArray(), outParameter.ToArray());
             result.Success = Convert.ToInt16(output[0]);
             result.Message = output[1];
+            if (result.Success==1 || result.Success==2)
+            {
+                resultFinal = new List<EmployeeAttendanceMarkDetail>();
+                resultFinal = GetAttendanceDetail(att.EmployeeId, result.Success, result.Message);
+            }
+            else
+            {
+                EmployeeAttendanceMarkDetail obj = new EmployeeAttendanceMarkDetail();
+                obj.result = result.Success;
+                obj.Message = result.Message;
+                resultFinal.Add(obj);
+            }
 
-            return result;
+            return resultFinal;
         }
 
-        public List<EmployeeAttendanceMarkDetail> GetAttendanceDetail(long EmployeeID)
+        public List<EmployeeAttendanceMarkDetail> GetAttendanceDetail(long EmployeeID,int output,string mesaage)
         {
             try
             {
@@ -656,7 +669,8 @@ namespace ITInventory.Common
                                                                  InTimeOld = dr.Field<TimeSpan?>("InTimeOld").ToString(),
                                                                  isHoliday = dr.Field<int>("isHoliday"),
                                                                  Success = 1,
-                                                                 Message = ""
+                                                                 Message = mesaage,
+                                                                 result= output
                                                              }).ToList();
 
 
