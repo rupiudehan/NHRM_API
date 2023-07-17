@@ -211,6 +211,7 @@
     <Compile Include="Models\ManufacturingTime.cs" />
     <Compile Include="Models\MessageHandle.cs" />
     <Compile Include="Models\OfficeDetail.cs" />
+    <Compile Include="Models\PendingLeaveDetail.cs" />
     <Compile Include="Models\ReportingAuthorityDetail.cs" />
     <Compile Include="Models\TechError.cs" />
     <Compile Include="Models\TechnicalErrorStatus.cs" />

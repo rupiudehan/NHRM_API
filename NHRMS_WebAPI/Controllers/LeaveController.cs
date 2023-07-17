@@ -188,5 +188,23 @@ namespace NHRMS_WebAPI.Controllers
             }
             return result;
         }
+
+        [HttpGet]
+        [Route("app/GetPendingLeaveDetail/{reportingOfficerID}/{leaveTour}/{designationid}")]
+        public output GetPendingLeaveDetail(long reportingOfficerID, string leaveTour, int designationid)
+        {
+            output result = new output();
+            try
+            {
+                List<PendingLeaveDetail> obj = DAL.GetPendingLeaveDetail(reportingOfficerID, leaveTour, designationid);
+                result = result.GetResponse(obj);
+            }
+            catch (Exception ex)
+            {
+                result.IsSucess = false;
+                result.Message = ex.Message;
+            }
+            return result;
+        }
     }
 }

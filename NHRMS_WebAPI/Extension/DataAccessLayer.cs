@@ -1713,6 +1713,58 @@ namespace ITInventory.Common
             }
             return null;
         }
+
+        public List<PendingLeaveDetail> GetPendingLeaveDetail(long reportingOfficerID,string leaveTour, int designationid=0)
+        {
+            try
+            {
+                List<object> parameter = new List<object>();
+                parameter.Add("@ReportingOfficerID");
+                parameter.Add(reportingOfficerID);
+                parameter.Add("@DesignationID");
+                parameter.Add(designationid);
+                parameter.Add("@LeaveTourCode");
+                parameter.Add(leaveTour);
+
+                List<PendingLeaveDetail> result = (from dr in DB.ReadDS("LeavePendingDetailGet", parameter.ToArray()).Tables[0].AsEnumerable()
+                                                        select new PendingLeaveDetail()
+                                                        {
+                                                            EmployeeID = dr.Field<long>("EmployeeID"),
+                                                            ID = dr.Field<long>("ID"),
+                                                            EmployeeName = dr.Field<string>("EmployeeName"),
+                                                            EmployeeMobNo = dr.Field<string>("EmployeeMobNo"),
+                                                            SimID = dr.Field<string>("SimID"),
+                                                            LeaveCategoryName = dr.Field<string>("LeaveCategoryName"),
+                                                            LeaveCategoryID = dr.Field<int>("LeaveCategoryID"),
+                                                            LeaveTypeName = dr.Field<string>("LeaveTypeName"),
+                                                            LeaveTypeID = dr.Field<int>("LeaveTypeID"),
+                                                            LeaveTourCode = dr.Field<string>("LeaveTourCode"),
+                                                            LeaveTour = dr.Field<string>("LeaveTour"),
+                                                            LeaveFromDate = dr.Field<DateTime?>("LeaveFromDate").ToString(),
+                                                            LeaveFromTime = dr.Field<TimeSpan?>("LeaveFromTime").ToString(),
+                                                            LeaveToDate = dr.Field<DateTime?>("LeaveToDate").ToString(),
+                                                            LeaveToTime = dr.Field<TimeSpan?>("LeaveToTime").ToString(),
+                                                            IsAttachedDocument = dr.Field<bool>("IsAttachedDocument"),
+                                                            LeaveReason = dr.Field<string>("LeaveReason"),
+                                                            ApplyDatetime = dr.Field<DateTime?>("ApplyDatetime").ToString(),
+                                                            ReportingOfficerID = dr.Field<long>("ReportingOfficerID"),
+                                                            ReportingOfficerName = dr.Field<string>("ReportingOfficerName"),
+                                                            LeaveStatus = dr.Field<string>("LeaveStatus"),
+                                                            ReportingOfficerDesignation = dr.Field<string>("ReportingOfficerDesignation"),
+                                                            ReportingOfficerMobNo = dr.Field<string>("ReportingOfficerMobNo"),
+                                                            ReportingOfficerHrms = dr.Field<string>("ReportingOfficerHrms"),
+                                                            EmployeeHrms = dr.Field<string>("EmployeeHrms")
+                                                        }).ToList();
+
+
+                return result;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+
+        }
         #endregion
 
         #region Technical Error
