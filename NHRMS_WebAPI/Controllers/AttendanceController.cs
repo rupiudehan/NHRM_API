@@ -21,7 +21,12 @@ namespace NHRMS_WebAPI.Controllers
             {
                 List<EmployeeAttendanceMarkDetail> obj = DAL.MarkAttendance(att);
                 //result = result.GetResponsePost(obj, obj.Message);
+
                 result = result.GetResponse(obj);
+                foreach (EmployeeAttendanceMarkDetail item in obj)
+                {
+                    result.Message = item.Message;
+                }
             }
             catch (Exception ex)
             {

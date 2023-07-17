@@ -591,7 +591,7 @@ namespace ITInventory.Common
         public List<EmployeeAttendanceMarkDetail> MarkAttendance(AttendanceMark att)
         {
             MessageHandle result = new MessageHandle();
-            List<EmployeeAttendanceMarkDetail> resultFinal = null;
+            List<EmployeeAttendanceMarkDetail> resultFinal = new List<EmployeeAttendanceMarkDetail>();
             List<object> parameter = new List<object>();
             parameter.Add("@EmployeeId");
             parameter.Add(att.EmployeeId);
@@ -624,7 +624,6 @@ namespace ITInventory.Common
             result.Message = output[1];
             if (result.Success==1 || result.Success==2)
             {
-                resultFinal = new List<EmployeeAttendanceMarkDetail>();
                 resultFinal = GetAttendanceDetail(att.EmployeeId, result.Success, result.Message);
             }
             else
@@ -658,8 +657,8 @@ namespace ITInventory.Common
                                                                  OutTime = dr.Field<TimeSpan?>("AttOutTime").ToString(),
                                                                  InLatitude = dr.Field<string>("INLatitude").ToString(),
                                                                  InLongitude = dr.Field<string>("INLongitude").ToString(),
-                                                                 OutLatitude = dr.Field<string>("OutLatitude").ToString(),
-                                                                 OutLongitude = dr.Field<string>("OutLongitude").ToString(),
+                                                                 OutLatitude = dr.Field<string>("OutLatitude") == null ? "" : dr.Field<string>("OutLatitude").ToString(),
+                                                                 OutLongitude = dr.Field<string>("OutLongitude") == null ? "" : dr.Field<string>("OutLongitude").ToString(),
                                                                  SimId = dr.Field<string>("SimID"),
                                                                  HrmsNo = dr.Field<string>("HrmsNo"),
                                                                  TimeDiff = dr.Field<string>("TimeDiff"),
@@ -670,7 +669,7 @@ namespace ITInventory.Common
                                                                  isHoliday = dr.Field<int>("isHoliday"),
                                                                  Success = 1,
                                                                  Message = mesaage,
-                                                                 result= output
+                                                                 result = output
                                                              }).ToList();
 
 
