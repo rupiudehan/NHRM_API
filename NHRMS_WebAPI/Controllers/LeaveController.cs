@@ -209,12 +209,12 @@ namespace NHRMS_WebAPI.Controllers
 
         [HttpGet]
         [Route("app/GetLeaveStatusDetailLevel1")]
-        public output GetLeaveStatusDetailLevel1(long EmployeeID, string hrmsNo, string startDate, string endDate, string leaveTour, long reportingOfficerID=0, int designationid = 0)
+        public output GetLeaveStatusDetailLevel1(long EmployeeID, string hrmsNo, string startDate, string endDate, string leaveTour)
         {
             output result = new output();
             try
             {
-                List<PendingLeaveDetail> obj = DAL.GetLeaveStatusDetailLevel1(EmployeeID, hrmsNo, startDate, endDate, leaveTour,reportingOfficerID, designationid);
+                List<PendingLeaveDetail> obj = DAL.GetLeaveStatusDetailLevel1(EmployeeID, hrmsNo, startDate, endDate, leaveTour,0, 0);
                 result = result.GetResponse(obj);
             }
             catch (Exception ex)
