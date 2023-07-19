@@ -1746,7 +1746,7 @@ namespace ITInventory.Common
                                                             LeaveToTime = dr.Field<TimeSpan?>("LeaveToTime").ToString(),
                                                             IsAttachedDocument = dr.Field<bool>("IsAttachedDocument"),
                                                             LeaveReason = dr.Field<string>("LeaveReason"),
-                                                            ApplyDatetime = dr.Field<DateTime?>("ApplyDatetime").ToString(),
+                                                            ApplyDatetime = string.Format("dd/MM/yyyy", dr.Field<DateTime?>("ApplyDatetime")),
                                                             ReportingOfficerID = dr.Field<long>("ReportingOfficerID"),
                                                             ReportingOfficerName = dr.Field<string>("ReportingOfficerName"),
                                                             LeaveStatus = dr.Field<string>("LeaveStatus"),
@@ -1872,6 +1872,46 @@ namespace ITInventory.Common
                 return null;
             }
             return null;
+        }
+
+        public List<PendingTechnicalError> GetPendingTechnicalErrorDetail(long reportingOfficerID, int designationid = 0)
+        {
+            try
+            {
+                List<object> parameter = new List<object>();
+                parameter.Add("@ReportingOfficerID");
+                parameter.Add(reportingOfficerID);
+                parameter.Add("@DesignationID");
+                parameter.Add(designationid);
+
+                List<PendingTechnicalError> result = (from dr in DB.ReadDS("TechnicalErrorPendingDetailGet", parameter.ToArray()).Tables[0].AsEnumerable()
+                                                   select new PendingTechnicalError()
+                                                   {
+                                                       EmployeeID = dr.Field<long>("EmployeeID"),
+                                                       ID = dr.Field<long>("ID"),
+                                                       EmployeeName = dr.Field<string>("EmployeeName"),
+                                                       EmployeeMobNo = dr.Field<string>("EmployeeMobNo"),
+                                                       SimID = dr.Field<string>("SimID"),
+                                                       ErrorMessageDetail = dr.Field<string>("ErrorMessageDetail"),
+                                                       ErrorDate = string.Format("dd/MM/yyyy", dr.Field<DateTime?>("ErrorDate")),
+                                                       ReportingOfficerID = dr.Field<long>("ReportingOfficerID"),
+                                                       ReportingOfficerName = dr.Field<string>("ReportingOfficerName"),
+                                                       TechErrorStatus = dr.Field<string>("TechErrorStatus"),
+                                                       ReportingOfficerDesignation = dr.Field<string>("ReportingOfficerDesignation"),
+                                                       AttachmentDocument = dr.Field<string>("AttachmentDocument"),
+                                                       ReportingOfficerMobNo = dr.Field<string>("ReportingOfficerMobNo"),
+                                                       ReportingOfficerHrms = dr.Field<string>("ReportingOfficerHrms"),
+                                                       EmployeeHrms = dr.Field<string>("EmployeeHrms")
+                                                   }).ToList();
+
+
+                return result;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+
         }
         #endregion
 

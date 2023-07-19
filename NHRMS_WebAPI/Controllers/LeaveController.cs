@@ -191,7 +191,7 @@ namespace NHRMS_WebAPI.Controllers
 
         [HttpGet]
         [Route("app/GetPendingLeaveDetail/{reportingOfficerID}/{leaveTour}/{designationid}")]
-        public output GetPendingLeaveDetail(long reportingOfficerID, string leaveTour, int designationid)
+        public output GetPendingLeaveDetail(long reportingOfficerID, string leaveTour, int designationid=0)
         {
             output result = new output();
             try

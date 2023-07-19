@@ -77,5 +77,22 @@ namespace NHRMS_WebAPI.Controllers
             }
             return result;
         }
+
+        [Route("app/GetPendingTechnicalErrorDetail/{reportingOfficerID}/{designationid}")]
+        public output GetPendingTechnicalErrorDetail(long reportingOfficerID, int designationid=0)
+        {
+            output result = new output();
+            try
+            {
+                List<PendingTechnicalError> obj = DAL.GetPendingTechnicalErrorDetail(reportingOfficerID, designationid);
+                result = result.GetResponse(obj);
+            }
+            catch (Exception ex)
+            {
+                result.IsSucess = false;
+                result.Message = ex.Message;
+            }
+            return result;
+        }
     }
 }
