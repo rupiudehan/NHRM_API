@@ -6,6 +6,7 @@ using System.Data;
 using System.Data.Common;
 using System.Data.SqlClient;
 using System.Dynamic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -651,8 +652,8 @@ namespace ITInventory.Common
                                                                  EmployeeId = dr.Field<long>("EmployeeID"),
                                                                  EmployeeName = dr.Field<string>("EmployeeName"),
                                                                  MobNo = dr.Field<string>("MobNo"),
-                                                                 AttInDate = dr.Field<DateTime?>("AttInDate").ToString(),
-                                                                 AttOutDate = dr.Field<DateTime?>("AttOutDate").ToString(),
+                                                                 AttInDate = string.Format("dd/MM/yyyy", dr.Field<DateTime?>("AttInDate")),
+                                                                 AttOutDate = string.Format("dd/MM/yyyy", dr.Field<DateTime?>("AttOutDate")),
                                                                  InTime = dr.Field<TimeSpan?>("AttInTime").ToString(),
                                                                  OutTime = dr.Field<TimeSpan?>("AttOutTime").ToString(),
                                                                  InLatitude = dr.Field<string>("INLatitude").ToString(),
@@ -667,7 +668,7 @@ namespace ITInventory.Common
                                                                  OutTimeOld = dr.Field<TimeSpan?>("OutTimeOld").ToString(),
                                                                  InTimeOld = dr.Field<TimeSpan?>("InTimeOld").ToString(),
                                                                  isHoliday = dr.Field<int>("isHoliday"),
-                                                                 Success = 1,
+                                                                 Success = output,
                                                                  Message = mesaage,
                                                                  result = output
                                                              }).ToList();
