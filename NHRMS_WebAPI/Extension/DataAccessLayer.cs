@@ -623,7 +623,7 @@ namespace ITInventory.Common
             string[] output = DB.InsertorUpdateWithOutput("AttendanceMark", parameter.ToArray(), outParameter.ToArray());
             result.Success = Convert.ToInt16(output[0]);
             result.Message = output[1];
-            if (result.Success==1 || result.Success==2)
+            if (result.Success == 1 || result.Success == 2)
             {
                 resultFinal = GetAttendanceDetail(att.EmployeeId, result.Success, result.Message);
             }
@@ -638,7 +638,7 @@ namespace ITInventory.Common
             return resultFinal;
         }
 
-        public List<EmployeeAttendanceMarkDetail> GetAttendanceDetail(long EmployeeID,int output,string mesaage)
+        public List<EmployeeAttendanceMarkDetail> GetAttendanceDetail(long EmployeeID, int output, string mesaage)
         {
             try
             {
@@ -652,8 +652,8 @@ namespace ITInventory.Common
                                                                  EmployeeId = dr.Field<long>("EmployeeID"),
                                                                  EmployeeName = dr.Field<string>("EmployeeName"),
                                                                  MobNo = dr.Field<string>("MobNo"),
-                                                                 AttInDate = string.Format("dd/MM/yyyy", dr.Field<DateTime?>("AttInDate")),
-                                                                 AttOutDate = string.Format("dd/MM/yyyy", dr.Field<DateTime?>("AttOutDate")),
+                                                                 AttInDate = string.Format("{0:dd/MM/yyyy}", dr.Field<DateTime?>("AttInDate")),
+                                                                 AttOutDate = string.Format("{0:dd/MM/yyyy}", dr.Field<DateTime?>("AttOutDate")),
                                                                  InTime = dr.Field<TimeSpan?>("AttInTime").ToString(),
                                                                  OutTime = dr.Field<TimeSpan?>("AttOutTime").ToString(),
                                                                  InLatitude = dr.Field<string>("INLatitude").ToString(),
@@ -1499,7 +1499,7 @@ namespace ITInventory.Common
             string[] output = DB.InsertorUpdateWithOutput("ApplyLeaveCreate", parameter.ToArray(), outParameter.ToArray());
             result.Success = Convert.ToInt16(output[0]);
             result.Message = output[1];
-            if (result.Success==2)
+            if (result.Success == 2)
             {
                 if (ld.IsAttachedDocumets) { string im = image(ld.HrmsNo, ld.bytedata); }
             }
@@ -1714,7 +1714,7 @@ namespace ITInventory.Common
             return null;
         }
 
-        public List<PendingLeaveDetail> GetPendingLeaveDetail(long reportingOfficerID,string leaveTour, int designationid=0)
+        public List<PendingLeaveDetail> GetPendingLeaveDetail(long reportingOfficerID, string leaveTour, int designationid = 0)
         {
             try
             {
@@ -1727,34 +1727,96 @@ namespace ITInventory.Common
                 parameter.Add(leaveTour);
 
                 List<PendingLeaveDetail> result = (from dr in DB.ReadDS("LeavePendingDetailGet", parameter.ToArray()).Tables[0].AsEnumerable()
-                                                        select new PendingLeaveDetail()
-                                                        {
-                                                            EmployeeID = dr.Field<long>("EmployeeID"),
-                                                            ID = dr.Field<long>("ID"),
-                                                            EmployeeName = dr.Field<string>("EmployeeName"),
-                                                            EmployeeMobNo = dr.Field<string>("EmployeeMobNo"),
-                                                            SimID = dr.Field<string>("SimID"),
-                                                            LeaveCategoryName = dr.Field<string>("LeaveCategoryName"),
-                                                            LeaveCategoryID = dr.Field<int>("LeaveCategoryID"),
-                                                            LeaveTypeName = dr.Field<string>("LeaveTypeName"),
-                                                            LeaveTypeID = dr.Field<int>("LeaveTypeID"),
-                                                            LeaveTourCode = dr.Field<string>("LeaveTourCode"),
-                                                            LeaveTour = dr.Field<string>("LeaveTour"),
-                                                            LeaveFromDate = string.Format("dd/MM/yyyy", dr.Field<DateTime?>("LeaveFromDate")),
-                                                            LeaveFromTime = dr.Field<TimeSpan?>("LeaveFromTime").ToString(),
-                                                            LeaveToDate = string.Format("dd/MM/yyyy", dr.Field<DateTime?>("LeaveToDate")),
-                                                            LeaveToTime = dr.Field<TimeSpan?>("LeaveToTime").ToString(),
-                                                            IsAttachedDocument = dr.Field<bool>("IsAttachedDocument"),
-                                                            LeaveReason = dr.Field<string>("LeaveReason"),
-                                                            ApplyDatetime = string.Format("dd/MM/yyyy", dr.Field<DateTime?>("ApplyDatetime")),
-                                                            ReportingOfficerID = dr.Field<long>("ReportingOfficerID"),
-                                                            ReportingOfficerName = dr.Field<string>("ReportingOfficerName"),
-                                                            LeaveStatus = dr.Field<string>("LeaveStatus"),
-                                                            ReportingOfficerDesignation = dr.Field<string>("ReportingOfficerDesignation"),
-                                                            ReportingOfficerMobNo = dr.Field<string>("ReportingOfficerMobNo"),
-                                                            ReportingOfficerHrms = dr.Field<string>("ReportingOfficerHrms"),
-                                                            EmployeeHrms = dr.Field<string>("EmployeeHrms")
-                                                        }).ToList();
+                                                   select new PendingLeaveDetail()
+                                                   {
+                                                       EmployeeID = dr.Field<long>("EmployeeID"),
+                                                       ID = dr.Field<long>("ID"),
+                                                       EmployeeName = dr.Field<string>("EmployeeName"),
+                                                       EmployeeMobNo = dr.Field<string>("EmployeeMobNo"),
+                                                       SimID = dr.Field<string>("SimID"),
+                                                       LeaveCategoryName = dr.Field<string>("LeaveCategoryName"),
+                                                       LeaveCategoryID = dr.Field<int>("LeaveCategoryID"),
+                                                       LeaveTypeName = dr.Field<string>("LeaveTypeName"),
+                                                       LeaveTypeID = dr.Field<int>("LeaveTypeID"),
+                                                       LeaveTourCode = dr.Field<string>("LeaveTourCode"),
+                                                       LeaveTour = dr.Field<string>("LeaveTour"),
+                                                       LeaveFromDate = string.Format("{0:dd/MM/yyyy}", dr.Field<DateTime?>("LeaveFromDate")),
+                                                       LeaveFromTime = dr.Field<TimeSpan?>("LeaveFromTime").ToString(),
+                                                       LeaveToDate = string.Format("{0:dd/MM/yyyy}", dr.Field<DateTime?>("LeaveToDate")),
+                                                       LeaveToTime = dr.Field<TimeSpan?>("LeaveToTime").ToString(),
+                                                       IsAttachedDocument = dr.Field<bool>("IsAttachedDocument"),
+                                                       LeaveReason = dr.Field<string>("LeaveReason"),
+                                                       ApplyDatetime = string.Format("{0:dd/MM/yyyy}", dr.Field<DateTime?>("ApplyDatetime")),
+                                                       ReportingOfficerID = dr.Field<long>("ReportingOfficerID"),
+                                                       ReportingOfficerName = dr.Field<string>("ReportingOfficerName"),
+                                                       LeaveStatus = dr.Field<string>("LeaveStatus"),
+                                                       ReportingOfficerDesignation = dr.Field<string>("ReportingOfficerDesignation"),
+                                                       ReportingOfficerMobNo = dr.Field<string>("ReportingOfficerMobNo"),
+                                                       ReportingOfficerHrms = dr.Field<string>("ReportingOfficerHrms"),
+                                                       EmployeeHrms = dr.Field<string>("EmployeeHrms")
+                                                   }).ToList();
+
+
+                return result;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+
+        }
+
+        public List<PendingLeaveDetail> GetLeaveStatusDetailLevel1(long EmployeeID, string hrmsNo, string startdate, string enddate, string leaveTour, long reportingOfficerID, int designationid)
+        {
+            try
+            {
+                List<object> parameter = new List<object>();
+                parameter.Add("@EmployeeID");
+                parameter.Add(EmployeeID);
+                if (EmployeeID == 0)
+                {
+                    parameter.Add("@hrms");
+                    parameter.Add(hrmsNo);
+                }
+                parameter = MapDate(startdate, parameter, "@startdate");
+                parameter = MapDate(enddate, parameter, "@enddate");
+                parameter.Add("@LeaveTourCode");
+                parameter.Add(leaveTour);
+
+                parameter.Add("@ReportingOfficerID");
+                parameter.Add(reportingOfficerID);
+                parameter.Add("@DesignationID");
+                parameter.Add(designationid);
+
+                List<PendingLeaveDetail> result = (from dr in DB.ReadDS("EmployeeLeaveStatusLevel1Get", parameter.ToArray()).Tables[0].AsEnumerable()
+                                                   select new PendingLeaveDetail()
+                                                   {
+                                                       EmployeeID = dr.Field<long>("EmployeeID"),
+                                                       ID = dr.Field<long>("ID"),
+                                                       EmployeeName = dr.Field<string>("EmployeeName"),
+                                                       EmployeeMobNo = dr.Field<string>("EmployeeMobNo"),
+                                                       SimID = dr.Field<string>("SimID"),
+                                                       LeaveCategoryName = dr.Field<string>("LeaveCategoryName"),
+                                                       LeaveCategoryID = dr.Field<int>("LeaveCategoryID"),
+                                                       LeaveTypeName = dr.Field<string>("LeaveTypeName"),
+                                                       LeaveTypeID = dr.Field<int>("LeaveTypeID"),
+                                                       LeaveTourCode = dr.Field<string>("LeaveTourCode"),
+                                                       LeaveTour = dr.Field<string>("LeaveTour"),
+                                                       LeaveFromDate = string.Format("{0:dd/MM/yyyy}", dr.Field<DateTime?>("LeaveFromDate")),
+                                                       LeaveFromTime = dr.Field<TimeSpan?>("LeaveFromTime").ToString(),
+                                                       LeaveToDate = string.Format("{0:dd/MM/yyyy}", dr.Field<DateTime?>("LeaveToDate")),
+                                                       LeaveToTime = dr.Field<TimeSpan?>("LeaveToTime").ToString(),
+                                                       IsAttachedDocument = dr.Field<bool>("IsAttachedDocument"),
+                                                       LeaveReason = dr.Field<string>("LeaveReason"),
+                                                       ApplyDatetime = string.Format("{0:dd/MM/yyyy}", dr.Field<DateTime?>("ApplyDatetime")),
+                                                       ReportingOfficerID = dr.Field<long>("ReportingOfficerID"),
+                                                       ReportingOfficerName = dr.Field<string>("ReportingOfficerName"),
+                                                       LeaveStatus = dr.Field<string>("LeaveStatus"),
+                                                       ReportingOfficerDesignation = dr.Field<string>("ReportingOfficerDesignation"),
+                                                       ReportingOfficerMobNo = dr.Field<string>("ReportingOfficerMobNo"),
+                                                       ReportingOfficerHrms = dr.Field<string>("ReportingOfficerHrms"),
+                                                       EmployeeHrms = dr.Field<string>("EmployeeHrms")
+                                                   }).ToList();
 
 
                 return result;
@@ -1874,6 +1936,41 @@ namespace ITInventory.Common
             return null;
         }
 
+        public List<TechnicalErrorStatus> GetTechErrorStatusLevel1(long EmployeeID, string hrmsNo, string startdate, string enddate)
+        {
+            try
+            {
+                List<object> parameter = new List<object>();
+                parameter.Add("@EmployeeID");
+                parameter.Add(EmployeeID);
+                if (EmployeeID == 0)
+                {
+                    parameter.Add("@hrms");
+                    parameter.Add(hrmsNo);
+                }
+                parameter = MapDate(startdate, parameter, "@startdate");
+                parameter = MapDate(enddate, parameter, "@enddate");
+                
+                List<TechnicalErrorStatus> result = (from dr in DB.ReadDS("TechErrorStatusLevel1Get", parameter.ToArray()).Tables[0].AsEnumerable()
+                                                     select new TechnicalErrorStatus()
+                                                     {
+                                                         ErrorMessageDetail = dr.Field<string>("ErrorMessageDetail"),
+                                                         EmployeeName = dr.Field<string>("EmployeeName"),
+                                                         MobNo = dr.Field<string>("MobNo"),
+                                                         ErrorDate = dr.Field<DateTime>("ErrorDate").ToString(),
+                                                         ApprovalStatus = dr.Field<string>("ApprovalStatus"),
+                                                         StatusUpdationDate = dr.Field<DateTime>("StatusUpdationDate").ToString(),
+                                                         Remarks = dr.Field<string>("Remarks").ToString()
+                                                     }).ToList();
+                return result;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+            return null;
+        }
+
         public List<PendingTechnicalError> GetPendingTechnicalErrorDetail(long reportingOfficerID, int designationid = 0)
         {
             try
@@ -1885,24 +1982,24 @@ namespace ITInventory.Common
                 parameter.Add(designationid);
 
                 List<PendingTechnicalError> result = (from dr in DB.ReadDS("TechnicalErrorPendingDetailGet", parameter.ToArray()).Tables[0].AsEnumerable()
-                                                   select new PendingTechnicalError()
-                                                   {
-                                                       EmployeeID = dr.Field<long>("EmployeeID"),
-                                                       ID = dr.Field<long>("ID"),
-                                                       EmployeeName = dr.Field<string>("EmployeeName"),
-                                                       EmployeeMobNo = dr.Field<string>("EmployeeMobNo"),
-                                                       SimID = dr.Field<string>("SimID"),
-                                                       ErrorMessageDetail = dr.Field<string>("ErrorMessageDetail"),
-                                                       ErrorDate = string.Format("dd/MM/yyyy", dr.Field<DateTime?>("ErrorDate")),
-                                                       ReportingOfficerID = dr.Field<long>("ReportingOfficerID"),
-                                                       ReportingOfficerName = dr.Field<string>("ReportingOfficerName"),
-                                                       TechErrorStatus = dr.Field<string>("TechErrorStatus"),
-                                                       ReportingOfficerDesignation = dr.Field<string>("ReportingOfficerDesignation"),
-                                                       AttachmentDocument = dr.Field<string>("AttachmentDocument"),
-                                                       ReportingOfficerMobNo = dr.Field<string>("ReportingOfficerMobNo"),
-                                                       ReportingOfficerHrms = dr.Field<string>("ReportingOfficerHrms"),
-                                                       EmployeeHrms = dr.Field<string>("EmployeeHrms")
-                                                   }).ToList();
+                                                      select new PendingTechnicalError()
+                                                      {
+                                                          EmployeeID = dr.Field<long>("EmployeeID"),
+                                                          ID = dr.Field<long>("ID"),
+                                                          EmployeeName = dr.Field<string>("EmployeeName"),
+                                                          EmployeeMobNo = dr.Field<string>("EmployeeMobNo"),
+                                                          SimID = dr.Field<string>("SimID"),
+                                                          ErrorMessageDetail = dr.Field<string>("ErrorMessageDetail"),
+                                                          ErrorDate = string.Format("{0:dd/MM/yyyy}", dr.Field<DateTime?>("ErrorDate")),
+                                                          ReportingOfficerID = dr.Field<long>("ReportingOfficerID"),
+                                                          ReportingOfficerName = dr.Field<string>("ReportingOfficerName"),
+                                                          TechErrorStatus = dr.Field<string>("TechErrorStatus"),
+                                                          ReportingOfficerDesignation = dr.Field<string>("ReportingOfficerDesignation"),
+                                                          AttachmentDocument = dr.Field<string>("AttachmentDocument"),
+                                                          ReportingOfficerMobNo = dr.Field<string>("ReportingOfficerMobNo"),
+                                                          ReportingOfficerHrms = dr.Field<string>("ReportingOfficerHrms"),
+                                                          EmployeeHrms = dr.Field<string>("EmployeeHrms")
+                                                      }).ToList();
 
 
                 return result;

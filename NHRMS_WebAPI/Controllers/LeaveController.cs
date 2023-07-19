@@ -206,5 +206,23 @@ namespace NHRMS_WebAPI.Controllers
             }
             return result;
         }
+
+        [HttpGet]
+        [Route("app/GetLeaveStatusDetailLevel1/{EmployeeID}/{hrmsNo}/{startDate}/{endDate}/{leaveTour}")]
+        public output GetLeaveStatusDetailLevel1(long EmployeeID, string hrmsNo, string startDate, string endDate, string leaveTour, long reportingOfficerID=0, int designationid = 0)
+        {
+            output result = new output();
+            try
+            {
+                List<PendingLeaveDetail> obj = DAL.GetLeaveStatusDetailLevel1(EmployeeID, hrmsNo, startDate, endDate, leaveTour,reportingOfficerID, designationid);
+                result = result.GetResponse(obj);
+            }
+            catch (Exception ex)
+            {
+                result.IsSucess = false;
+                result.Message = ex.Message;
+            }
+            return result;
+        }
     }
 }

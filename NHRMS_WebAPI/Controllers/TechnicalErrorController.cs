@@ -61,13 +61,13 @@ namespace NHRMS_WebAPI.Controllers
 
         }
 
-        [Route("app/GetTechErrorStatus")]
-        public output GetTechErrorStatus(long EmployeeID, string hrmsNo, string startDate, string endDate)
+        [Route("app/GetTechErrorStatusLevel1")]
+        public output GetTechErrorStatusLevel1(long EmployeeID, string hrmsNo, string startDate, string endDate)
         {
             output result = new output();
             try
             {
-                List<TechnicalErrorStatus> obj = DAL.GetTechErrorStatus(EmployeeID, hrmsNo, startDate, endDate);
+                List<TechnicalErrorStatus> obj = DAL.GetTechErrorStatusLevel1(EmployeeID, hrmsNo, startDate, endDate);
                 result = result.GetResponse(obj);
             }
             catch (Exception ex)
