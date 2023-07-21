@@ -1805,6 +1805,7 @@ namespace ITInventory.Common
                                                        LeaveFromDate = string.Format("{0:dd/MM/yyyy}", dr.Field<DateTime?>("LeaveFromDate")),
                                                        LeaveFromTime = dr.Field<TimeSpan?>("LeaveFromTime").ToString(),
                                                        LeaveToDate = string.Format("{0:dd/MM/yyyy}", dr.Field<DateTime?>("LeaveToDate")),
+                                                       ApprovalDateTime= string.Format("{0:dd/MM/yyyy HH:mm tt}", dr.Field<DateTime?>("ApprovalDateTime")),
                                                        LeaveToTime = dr.Field<TimeSpan?>("LeaveToTime").ToString(),
                                                        IsAttachedDocument = dr.Field<bool>("IsAttachedDocument"),
                                                        LeaveReason = dr.Field<string>("LeaveReason"),
@@ -1958,6 +1959,7 @@ namespace ITInventory.Common
                                                          EmployeeName = dr.Field<string>("EmployeeName"),
                                                          MobNo = dr.Field<string>("MobNo"),
                                                          ErrorDate = dr.Field<DateTime>("ErrorDate").ToString(),
+                                                         ApprovalDateTime = string.Format("{0:dd/MM/yyyy HH:mm tt}", dr.Field<DateTime?>("ApprovalDateTime")),
                                                          ApprovalStatus = dr.Field<string>("ApprovalStatus"),
                                                          StatusUpdationDate = dr.Field<DateTime>("StatusUpdationDate").ToString(),
                                                          Remarks = dr.Field<string>("Remarks").ToString()

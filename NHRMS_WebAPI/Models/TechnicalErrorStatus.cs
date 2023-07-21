@@ -14,5 +14,6 @@ namespace NHRMS_WebAPI.Models
         public string ApprovalStatus { get; set; }
         public string StatusUpdationDate { get; set; }
         public string Remarks { get; set; }
+        public string ApprovalDateTime { get; set; }
     }
 }

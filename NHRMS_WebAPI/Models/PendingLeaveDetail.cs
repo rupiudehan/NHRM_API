@@ -32,5 +32,6 @@ namespace NHRMS_WebAPI.Models
         public string LeaveToTime { get; set; }
         public bool IsAttachedDocument { get; set; }
         public string LeaveReason { get; set; }
+        public string ApprovalDateTime { get; set; }
     }
 }
