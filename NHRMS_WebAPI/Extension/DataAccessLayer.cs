@@ -492,6 +492,25 @@ namespace ITInventory.Common
             }
 
         }
+
+        public MessageHandle EmployeeSimAndMobNoChange(long EmployeeID,string SimID,string MobNo)
+        {
+            MessageHandle result = new MessageHandle();
+            List<object> parameter = new List<object>();
+            parameter.Add("@EmployeeID");
+            parameter.Add(EmployeeID);
+            parameter.Add("@SimID");
+            parameter.Add(SimID);
+            parameter.Add("@MobNo");
+            parameter.Add(MobNo);
+
+            List<object> outParameter = OutputParams();
+            string[] output = DB.InsertorUpdateWithOutput("EmployeeSimMobNoEdit", parameter.ToArray(), outParameter.ToArray());
+            result.Success = Convert.ToInt16(output[0]);
+            result.Message = output[1];
+
+            return result;
+        }
         #endregion
 
         #region Gender Detail

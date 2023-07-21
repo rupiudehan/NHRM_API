@@ -286,5 +286,32 @@ namespace NHRMS_WebAPI.Controllers
             }
             return result;
         }
+
+        [HttpPost]
+        [Route("app/EmployeeSimAndMobNoChangePost")]
+        public output EmployeeSimAndMobNoChange(long EmployeeID, string SimID, string MobNo)
+        {
+            output result = new output();
+            try
+            {
+                MessageHandle obj = DAL.EmployeeSimAndMobNoChange(EmployeeID,SimID,MobNo);
+                result = result.GetResponsePost(obj, obj.Message);
+                result.IsSucess = Convert.ToBoolean(obj.Success);
+                result.Message = obj.Message;
+            }
+            catch (Exception ex)
+            {
+                result.IsSucess = false;
+                result.Message = ex.Message;
+            }
+            finally
+            {
+                //result.ResponseData = 2;
+            }
+
+            return result;
+
+
+        }
     }
 }
