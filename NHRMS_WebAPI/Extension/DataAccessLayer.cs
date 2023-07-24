@@ -1515,7 +1515,7 @@ namespace ITInventory.Common
             parameter.Add(ld.StatusUpdatedBy);
 
             List<object> outParameter = OutputParams();
-            string[] output = DB.InsertorUpdateWithOutput("ApplyLeaveCreate", parameter.ToArray(), outParameter.ToArray());
+            string[] output = DB.InsertorUpdateWithOutput("LeaveCreate", parameter.ToArray(), outParameter.ToArray());
             result.Success = Convert.ToInt16(output[0]);
             result.Message = output[1];
             if (result.Success == 2)
@@ -1550,7 +1550,30 @@ namespace ITInventory.Common
             parameter.Add(ld.StatusUpdatedBy);
 
             List<object> outParameter = OutputParams();
-            string[] output = DB.InsertorUpdateWithOutput("ApplyLeaveEdit", parameter.ToArray(), outParameter.ToArray());
+            string[] output = DB.InsertorUpdateWithOutput("LeaveEdit", parameter.ToArray(), outParameter.ToArray());
+            result.Success = Convert.ToInt16(output[0]);
+            result.Message = output[1];
+
+            return result;
+        }
+
+        public MessageHandle CancelLeaveDetail(EditLeaveDetail ld)
+        {
+            if (ld.ApprovalFlow == null || ld.ApprovalFlow == "")
+                ld.ApprovalFlow = "N";// F=Forward   SB=Send Back    N=Normal
+            MessageHandle result = new MessageHandle();
+            List<object> parameter = new List<object>();
+            parameter.Add("@ID");
+            parameter.Add(ld.ID);
+            parameter.Add("@EmployeeID");
+            parameter.Add(ld.EmployeeID);
+            //parameter.Add("@ApprovalCategory");
+            //parameter.Add(ld.ApprovalFlow);
+            parameter.Add("@StatusUpdatedBy");
+            parameter.Add(ld.StatusUpdatedBy);
+
+            List<object> outParameter = OutputParams();
+            string[] output = DB.InsertorUpdateWithOutput("LeaveCancel", parameter.ToArray(), outParameter.ToArray());
             result.Success = Convert.ToInt16(output[0]);
             result.Message = output[1];
 

@@ -100,6 +100,30 @@ namespace NHRMS_WebAPI.Controllers
         }
 
         [HttpPost]
+        [Route("app/CancelLeaveDetailPost")]
+        public output CancelLeaveDetail(EditLeaveDetail ld)
+        {
+            output result = new output();
+            try
+            {
+                MessageHandle obj = DAL.CancelLeaveDetail(ld);
+                result = result.GetResponsePost(obj, obj.Message);
+            }
+            catch (Exception ex)
+            {
+                result.IsSucess = false;
+                result.Message = ex.Message;
+            }
+            finally
+            {
+
+            }
+
+            return result;
+
+        }
+
+        [HttpPost]
         [Route("app/LeaveAutoDeductPost")]
         public output LeaveAutoDeductPost(LeaveAutoDeductDetail ld)
         {

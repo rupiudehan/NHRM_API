@@ -42,22 +42,22 @@ namespace NHRMS_WebAPI.Controllers
 
         }
 
-        //[Route("app/GetAttendanceDetail/{EmployeeID}")]
-        //public output GetAttendanceDetail(long EmployeeID)
-        //{
-        //    output result = new output();
-        //    try
-        //    {
-        //        List<EmployeeAttendanceMarkDetail> obj = DAL.GetAttendanceDetail(EmployeeID);
-        //        result = result.GetResponse(obj);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        result.IsSucess = false;
-        //        result.Message = ex.Message;
-        //    }
-        //    return result;
-        //}
+        [Route("app/GetAttendanceDetail/{EmployeeID}")]
+        public output GetAttendanceDetail(long EmployeeID)
+        {
+            output result = new output();
+            try
+            {
+                List<EmployeeAttendanceMarkDetail> obj = DAL.GetAttendanceDetail(EmployeeID, 1, "test");
+                result = result.GetResponse(obj);
+            }
+            catch (Exception ex)
+            {
+                result.IsSucess = false;
+                result.Message = ex.Message;
+            }
+            return result;
+        }
 
         [Route("app/GetApprovalCategory/{categoryId}")]
         public output GetApprovalCategory(int categoryId)
