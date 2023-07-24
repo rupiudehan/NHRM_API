@@ -1515,7 +1515,7 @@ namespace ITInventory.Common
             parameter.Add(ld.StatusUpdatedBy);
 
             List<object> outParameter = OutputParams();
-            string[] output = DB.InsertorUpdateWithOutput("LeaveCreate", parameter.ToArray(), outParameter.ToArray());
+            string[] output = DB.InsertorUpdateWithOutput("LeaveTourCreate", parameter.ToArray(), outParameter.ToArray());
             result.Success = Convert.ToInt16(output[0]);
             result.Message = output[1];
             if (result.Success == 2)
@@ -1550,7 +1550,7 @@ namespace ITInventory.Common
             parameter.Add(ld.StatusUpdatedBy);
 
             List<object> outParameter = OutputParams();
-            string[] output = DB.InsertorUpdateWithOutput("LeaveEdit", parameter.ToArray(), outParameter.ToArray());
+            string[] output = DB.InsertorUpdateWithOutput("LeaveTourEdit", parameter.ToArray(), outParameter.ToArray());
             result.Success = Convert.ToInt16(output[0]);
             result.Message = output[1];
 
@@ -1573,7 +1573,7 @@ namespace ITInventory.Common
             parameter.Add(ld.StatusUpdatedBy);
 
             List<object> outParameter = OutputParams();
-            string[] output = DB.InsertorUpdateWithOutput("LeaveCancel", parameter.ToArray(), outParameter.ToArray());
+            string[] output = DB.InsertorUpdateWithOutput("LeaveTourCancel", parameter.ToArray(), outParameter.ToArray());
             result.Success = Convert.ToInt16(output[0]);
             result.Message = output[1];
 
@@ -1830,7 +1830,7 @@ namespace ITInventory.Common
                 parameter.Add("@DesignationID");
                 parameter.Add(designationid);
 
-                List<PendingLeaveDetail> result = (from dr in DB.ReadDS("EmployeeLeaveStatusLevel1Get", parameter.ToArray()).Tables[0].AsEnumerable()
+                List<PendingLeaveDetail> result = (from dr in DB.ReadDS("LeaveTourStatusLevel1Get", parameter.ToArray()).Tables[0].AsEnumerable()
                                                    select new PendingLeaveDetail()
                                                    {
                                                        EmployeeID = dr.Field<long>("EmployeeID"),
