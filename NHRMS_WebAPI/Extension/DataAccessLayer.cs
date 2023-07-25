@@ -1788,14 +1788,21 @@ namespace ITInventory.Common
                                                        LeaveToTime = dr.Field<TimeSpan?>("LeaveToTime").ToString(),
                                                        IsAttachedDocument = dr.Field<bool>("IsAttachedDocument"),
                                                        LeaveReason = dr.Field<string>("LeaveReason"),
-                                                       ApplyDatetime = string.Format("{0:dd/MM/yyyy}", dr.Field<DateTime?>("ApplyDatetime")),
+                                                       ApplyDatetime = string.Format("{0:dd/MM/yyyy HH:mm:ss tt}", dr.Field<DateTime?>("ApplyDatetime")),
                                                        ReportingOfficerID = dr.Field<long>("ReportingOfficerID"),
                                                        ReportingOfficerName = dr.Field<string>("ReportingOfficerName"),
                                                        LeaveStatus = dr.Field<string>("LeaveStatus"),
                                                        ReportingOfficerDesignation = dr.Field<string>("ReportingOfficerDesignation"),
                                                        ReportingOfficerMobNo = dr.Field<string>("ReportingOfficerMobNo"),
                                                        ReportingOfficerHrms = dr.Field<string>("ReportingOfficerHrms"),
-                                                       EmployeeHrms = dr.Field<string>("EmployeeHrms")
+                                                       EmployeeHrms = dr.Field<string>("EmployeeHrms"),
+                                                       EmployeeDesignation = dr.Field<string>("EmployeeDesignation"),
+                                                       EmpBranchID = dr.Field<int>("EmpBranchID"),
+                                                       EmpOfficeName = dr.Field<string>("EmpOfficeName"),
+                                                       EmpBranchName = dr.Field<string>("EmpBranchName"),
+                                                       AttachmentID = dr.Field<int>("AttachmentID"),
+                                                       AttachmentUrl = dr.Field<string>("AttachmentUrl"),
+                                                       ApprovalDateTime = string.Format("{0:dd/MM/yyyy HH:mm:ss tt}", dr.Field<DateTime?>("ApprovalDateTime"))
                                                    }).ToList();
 
 
@@ -1851,14 +1858,20 @@ namespace ITInventory.Common
                                                        LeaveToTime = dr.Field<TimeSpan?>("LeaveToTime").ToString(),
                                                        IsAttachedDocument = dr.Field<bool>("IsAttachedDocument"),
                                                        LeaveReason = dr.Field<string>("LeaveReason"),
-                                                       ApplyDatetime = string.Format("{0:dd/MM/yyyy}", dr.Field<DateTime?>("ApplyDatetime")),
+                                                       ApplyDatetime = string.Format("{0:dd/MM/yyyy HH:mm:ss tt}", dr.Field<DateTime?>("ApplyDatetime")),
                                                        ReportingOfficerID = dr.Field<long>("ReportingOfficerID"),
                                                        ReportingOfficerName = dr.Field<string>("ReportingOfficerName"),
                                                        LeaveStatus = dr.Field<string>("LeaveStatus"),
                                                        ReportingOfficerDesignation = dr.Field<string>("ReportingOfficerDesignation"),
                                                        ReportingOfficerMobNo = dr.Field<string>("ReportingOfficerMobNo"),
                                                        ReportingOfficerHrms = dr.Field<string>("ReportingOfficerHrms"),
-                                                       EmployeeHrms = dr.Field<string>("EmployeeHrms")
+                                                       EmployeeHrms = dr.Field<string>("EmployeeHrms"),
+                                                       EmployeeDesignation = dr.Field<string>("EmployeeDesignation"),
+                                                       EmpBranchID = dr.Field<int>("EmpBranchID"),
+                                                       EmpOfficeName = dr.Field<string>("EmpOfficeName"),
+                                                       EmpBranchName = dr.Field<string>("EmpBranchName"),
+                                                       AttachmentID = dr.Field<int>("AttachmentID"),
+                                                       AttachmentUrl = dr.Field<string>("AttachmentUrl")
                                                    }).ToList();
 
 
@@ -2004,7 +2017,12 @@ namespace ITInventory.Common
                                                          ApprovalDateTime = string.Format("{0:dd/MM/yyyy HH:mm tt}", dr.Field<DateTime?>("ApprovalDateTime")),
                                                          ApprovalStatus = dr.Field<string>("ApprovalStatus"),
                                                          StatusUpdationDate = dr.Field<DateTime>("StatusUpdationDate").ToString(),
-                                                         Remarks = dr.Field<string>("Remarks").ToString()
+                                                         Remarks = dr.Field<string>("Remarks").ToString(),
+                                                         EmployeeDesignation = dr.Field<string>("EmployeeDesignation"),
+                                                         EmpBranchID = dr.Field<int>("EmpBranchID"),
+                                                         EmpOfficeName = dr.Field<string>("EmpOfficeName"),
+                                                         EmpBranchName = dr.Field<string>("EmpBranchName"),
+                                                         AttachmentDocument = dr.Field<string>("AttachmentDocument")
                                                      }).ToList();
                 return result;
             }
@@ -2042,7 +2060,11 @@ namespace ITInventory.Common
                                                           AttachmentDocument = dr.Field<string>("AttachmentDocument"),
                                                           ReportingOfficerMobNo = dr.Field<string>("ReportingOfficerMobNo"),
                                                           ReportingOfficerHrms = dr.Field<string>("ReportingOfficerHrms"),
-                                                          EmployeeHrms = dr.Field<string>("EmployeeHrms")
+                                                          EmployeeHrms = dr.Field<string>("EmployeeHrms"),
+                                                          EmployeeDesignation = dr.Field<string>("EmployeeDesignation"),
+                                                          EmpBranchID = dr.Field<int>("EmpBranchID"),
+                                                          EmpBranchName = dr.Field<string>("EmpBranchName"),
+                                                          EmpOfficeName = dr.Field<string>("EmpOfficeName")
                                                       }).ToList();
 
 

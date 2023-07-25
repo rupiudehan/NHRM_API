@@ -33,5 +33,11 @@ namespace NHRMS_WebAPI.Models
         public bool IsAttachedDocument { get; set; }
         public string LeaveReason { get; set; }
         public string ApprovalDateTime { get; set; }
+        public string EmployeeDesignation { get; set; }
+        public int EmpBranchID { get; set; }
+        public string EmpBranchName { get; set; }
+        public string EmpOfficeName { get; set; }
+        public long AttachmentID { get; set; }
+        public string AttachmentUrl { get; set; }
     }
 }
