@@ -37,7 +37,7 @@ namespace NHRMS_WebAPI.Models
         public int EmpBranchID { get; set; }
         public string EmpBranchName { get; set; }
         public string EmpOfficeName { get; set; }
-        public long AttachmentID { get; set; }
+        public string AttachmentID { get; set; }
         public string AttachmentUrl { get; set; }
     }
 }

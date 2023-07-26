@@ -46,6 +46,8 @@ namespace NHRMS_WebAPI.Controllers
             {
                 MessageHandle obj = DAL.UpdateTechnicalErrorDetail(ld);
                 result = result.GetResponsePost(obj, obj.Message);
+                result.IsSucess = Convert.ToBoolean(obj.Success);
+                result.Message = obj.Message;
             }
             catch (Exception ex)
             {
