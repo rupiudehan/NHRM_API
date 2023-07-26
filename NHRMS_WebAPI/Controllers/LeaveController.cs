@@ -66,6 +66,8 @@ namespace NHRMS_WebAPI.Controllers
             {
                 result.IsSucess = false;
                 result.Message = ex.Message;
+                result.IsSucess = Convert.ToBoolean(obj.Success);
+                result.Message = obj.Message;
             }
             finally
             {
