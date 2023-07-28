@@ -1495,7 +1495,7 @@ namespace ITInventory.Common
 
                     string im = image(ld.HrmsNo, ld.bytedata);
                     parameter.Add("@AttachDocUrls");
-                    parameter.Add(filePath);
+                    parameter.Add("http://49.50.66.74:88/UploadattendanceDoc/" + filename + "/" + filename + "." + (extension == "jpg" ? "jpeg" : extension));
                     //parameter.Add("http://pswc.in/UploadattendanceDoc/" + filename + "/" + filename + ".jpeg");
                 }
                 else
@@ -1907,7 +1907,7 @@ namespace ITInventory.Common
                 parameter.Add("@ProcessedBy");
                 parameter.Add(ld.ProcessedBy);
                 parameter.Add("@Attachdocument");
-                parameter.Add(filePath);
+                parameter.Add("http://49.50.66.74:88/UploadattendanceDoc/" + filename + "/" + filename + ".jpeg");
                 //parameter.Add("http://pswc.in/UploadattendanceDoc/" + filename + "/" + filename + ".jpeg");
 
                 List<object> outParameter = OutputParams();
