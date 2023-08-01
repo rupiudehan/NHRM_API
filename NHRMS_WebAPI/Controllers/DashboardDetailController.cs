@@ -29,7 +29,7 @@ namespace NHRMS_WebAPI.Controllers
             return result;
         }
 
-        [Route("app/GetTotalPendingCount/{EmployeeID}/{DesignationID}")]
+        [Route("app/GetAttendanceTotalPendingCount/{EmployeeID}/{DesignationID}")]
         public output GetTotalPendingCount(long EmployeeID, int designationid)
         {
             output result = new output();
@@ -46,7 +46,7 @@ namespace NHRMS_WebAPI.Controllers
             return result;
         }
 
-        [Route("app/GetTotalPendingCount/{EmployeeID}/{DesignationID}")]
+        [Route("app/GetAttendanceTotalPendingCount/{EmployeeID}/{DesignationID}")]
         public output GetTotalCountPerAttendanceType(int officeID, int branchID, string typeData)
         {
             output result = new output();
