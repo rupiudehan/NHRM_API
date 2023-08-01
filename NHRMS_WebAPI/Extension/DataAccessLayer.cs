@@ -672,7 +672,6 @@ namespace ITInventory.Common
                                                                  EmployeeName = dr.Field<string>("EmployeeName"),
                                                                  MobNo = dr.Field<string>("MobNo"),
                                                                  AttInDate = string.Format("{0:dd/MM/yyyy}", dr.Field<DateTime?>("AttInDate")),
-                                                                 AttOutDate = string.Format("{0:dd/MM/yyyy}", dr.Field<DateTime?>("AttOutDate")),
                                                                  InTime = dr.Field<string>("AttInTime").ToString(),
                                                                  OutTime = dr.Field<string>("AttOutTime").ToString(),
                                                                  InLatitude = dr.Field<string>("INLatitude").ToString(),
@@ -2096,6 +2095,54 @@ namespace ITInventory.Common
                                                                   LeaveTotal = dr.Field<int>("LeaveTotal"),
                                                                   TourTotal = dr.Field<int>("TourTotal")
                                                               }).ToList();
+                return result;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+            return null;
+        }
+
+        public List<DashboardTotalPending> GetTotalPendingCount(long EmployeeID, int designationid)
+        {
+            try
+            {
+                List<object> parameter = new List<object>();
+                parameter.Add("@ReportingOfficerID");
+                parameter.Add(EmployeeID);
+                parameter.Add("@DesignationID");
+                parameter.Add(designationid);
+                List<DashboardTotalPending> result = (from dr in DB.ReadDS("PendingTotalCountGet", parameter.ToArray()).Tables[0].AsEnumerable()
+                                                              select new DashboardTotalPending()
+                                                              {
+                                                                  TotalCount = dr.Field<int>("TotalCount")
+                                                              }).ToList();
+                return result;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+            return null;
+        }
+
+        public List<DashboardTotalPending> GetTotalCountPerAttendanceType(int officeID, int branchID,string typeData)
+        {
+            try
+            {
+                List<object> parameter = new List<object>();
+                parameter.Add("@OfficeID");
+                parameter.Add(officeID);
+                parameter.Add("@BranchID");
+                parameter.Add(branchID);
+                parameter.Add("@TypeData");
+                parameter.Add(typeData);
+                List<DashboardTotalPending> result = (from dr in DB.ReadDS("EmployeeTotalCountPerAttendanceTypeGet", parameter.ToArray()).Tables[0].AsEnumerable()
+                                                      select new DashboardTotalPending()
+                                                      {
+                                                          TotalCount = dr.Field<int>("TotalCount")
+                                                      }).ToList();
                 return result;
             }
             catch (Exception)

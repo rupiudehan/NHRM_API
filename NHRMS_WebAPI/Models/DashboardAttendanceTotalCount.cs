@@ -13,4 +13,9 @@ namespace NHRMS_WebAPI.Models
         public int LeaveTotal { get; set; }
         public int TourTotal { get; set; }
     }
+
+    public class DashboardTotalPending
+    {
+        public int TotalCount { get; set; }
+    }
 }

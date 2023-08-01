@@ -28,5 +28,39 @@ namespace NHRMS_WebAPI.Controllers
             }
             return result;
         }
+
+        [Route("app/GetTotalPendingCount/{EmployeeID}/{DesignationID}")]
+        public output GetTotalPendingCount(long EmployeeID, int designationid)
+        {
+            output result = new output();
+            try
+            {
+                List<DashboardTotalPending> obj = DAL.GetTotalPendingCount(EmployeeID, designationid);
+                result = result.GetResponse(obj);
+            }
+            catch (Exception ex)
+            {
+                result.IsSucess = false;
+                result.Message = ex.Message;
+            }
+            return result;
+        }
+
+        [Route("app/GetTotalPendingCount/{EmployeeID}/{DesignationID}")]
+        public output GetTotalCountPerAttendanceType(int officeID, int branchID, string typeData)
+        {
+            output result = new output();
+            try
+            {
+                List<DashboardTotalPending> obj = DAL.GetTotalCountPerAttendanceType(officeID, branchID, typeData);
+                result = result.GetResponse(obj);
+            }
+            catch (Exception ex)
+            {
+                result.IsSucess = false;
+                result.Message = ex.Message;
+            }
+            return result;
+        }
     }
 }
