@@ -2100,7 +2100,6 @@ namespace ITInventory.Common
             {
                 return null;
             }
-            return null;
         }
 
         public List<DashboardTotalPending> GetTotalPendingCount(long EmployeeID, int designationid)
@@ -2123,10 +2122,33 @@ namespace ITInventory.Common
             {
                 return null;
             }
-            return null;
         }
 
-        public List<DashboardTotalPending> GetTotalCountPerAttendanceType(int officeID, int branchID,string typeData)
+        public List<DashboardTotalAttendance> GetTotalCountPerAttendanceType(int officeID, string typeData)
+        {
+            try
+            {
+                List<object> parameter = new List<object>();
+                parameter.Add("@OfficeID");
+                parameter.Add(officeID);
+                parameter.Add("@TypeData");
+                parameter.Add(typeData);
+                List<DashboardTotalAttendance> result = (from dr in DB.ReadDS("EmployeeTotalCountPerAttendanceTypeGet", parameter.ToArray()).Tables[0].AsEnumerable()
+                                                      select new DashboardTotalAttendance()
+                                                      {
+                                                          EmployeeCount = dr.Field<int>("EmployeeCount"),
+                                                          OfficeID = dr.Field<int>("OfficeID"),
+                                                          OfficeName = dr.Field<string>("OfficeName")
+                                                      }).ToList();
+                return result;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
+        public List<DashboardTotalAttendance> GetTotalCountPerBranchAttendanceType(int officeID, int branchID, string typeData)
         {
             try
             {
@@ -2137,18 +2159,21 @@ namespace ITInventory.Common
                 parameter.Add(branchID);
                 parameter.Add("@TypeData");
                 parameter.Add(typeData);
-                List<DashboardTotalPending> result = (from dr in DB.ReadDS("EmployeeTotalCountPerAttendanceTypeGet", parameter.ToArray()).Tables[0].AsEnumerable()
-                                                      select new DashboardTotalPending()
-                                                      {
-                                                          TotalCount = dr.Field<int>("TotalCount")
-                                                      }).ToList();
+                List<DashboardTotalAttendance> result = (from dr in DB.ReadDS("EmployeeTotalCountPerBranchAttendanceTypeGet", parameter.ToArray()).Tables[0].AsEnumerable()
+                                                         select new DashboardTotalAttendance()
+                                                         {
+                                                             EmployeeCount = dr.Field<int>("EmployeeCount"),
+                                                             OfficeID = dr.Field<int>("OfficeID"),
+                                                             OfficeName = dr.Field<string>("OfficeName"),
+                                                             BranchID = dr.Field<int>("BranchID"),
+                                                             BranchName = dr.Field<string>("BranchName")
+                                                         }).ToList();
                 return result;
             }
             catch (Exception)
             {
                 return null;
             }
-            return null;
         }
         #endregion
 

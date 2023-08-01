@@ -46,13 +46,30 @@ namespace NHRMS_WebAPI.Controllers
             return result;
         }
 
-        [Route("app/GetAttendanceTotalCountPerAttType/{EmployeeID}/{DesignationID}")]
-        public output GetTotalCountPerAttendanceType(int officeID, int branchID, string typeData)
+        [Route("app/GetAttendanceTotalCountPerAttType/{OfficeID}/{TypeData}")]
+        public output GetTotalCountPerAttendanceType(int officeID, string typeData)
         {
             output result = new output();
             try
             {
-                List<DashboardTotalPending> obj = DAL.GetTotalCountPerAttendanceType(officeID, branchID, typeData);
+                List<DashboardTotalAttendance> obj = DAL.GetTotalCountPerAttendanceType(officeID, typeData);
+                result = result.GetResponse(obj);
+            }
+            catch (Exception ex)
+            {
+                result.IsSucess = false;
+                result.Message = ex.Message;
+            }
+            return result;
+        }
+
+        [Route("app/GetTotalCountPerBranchAttendanceType/{OfficeID}/{BranchID}/{TypeData}")]
+        public output GetTotalCountPerBranchAttendanceType(int officeID, int branchID, string typeData)
+        {
+            output result = new output();
+            try
+            {
+                List<DashboardTotalAttendance> obj = DAL.GetTotalCountPerBranchAttendanceType(officeID, branchID, typeData);
                 result = result.GetResponse(obj);
             }
             catch (Exception ex)
