@@ -720,7 +720,6 @@ namespace ITInventory.Common
                                                                   EmployeeName = dr.Field<string>("EmployeeName"),
                                                                   MobNo = dr.Field<string>("MobNo"),
                                                                   AttInDate = dr.Field<DateTime?>("AttInDate").ToString(),
-                                                                  AttOutDate = dr.Field<DateTime?>("AttOutDate").ToString(),
                                                                   InTime = dr.Field<string>("AttInTime").ToString(),
                                                                   OutTime = dr.Field<string>("AttOutTime").ToString(),
                                                                   InLatitude = dr.Field<string>("INLatitude").ToString(),
@@ -744,11 +743,11 @@ namespace ITInventory.Common
                         foreach (EmployeeAttendanceMarkDetail item in obj)
                         {
                             //In Marked
-                            if (item.AttInDate != "" && item.AttOutDate == "")
+                            if (item.AttInDate != "" && item.OutTime == "")
                             {
                                 result = 3;
                             }
-                            else if (item.AttInDate != "" && item.AttOutDate != "") //In Marked and out marked
+                            else if (item.AttInDate != "" && item.OutTime != "") //In Marked and out marked
                             {
                                 result = 4;
                             }
