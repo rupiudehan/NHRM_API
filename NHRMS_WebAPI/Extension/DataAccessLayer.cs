@@ -2175,6 +2175,63 @@ namespace ITInventory.Common
                 return null;
             }
         }
+
+        public List<DashboardReport> GetEmployeeDailyAttendanceDetail(int officeID, int branchID, string typeData)
+        {
+            try
+            {
+                List<object> parameter = new List<object>();
+                parameter.Add("@BranchID");
+                parameter.Add(branchID);
+                parameter.Add("@OfficeID");
+                parameter.Add(officeID);
+                parameter.Add("@TypeData");
+                parameter.Add(typeData);
+
+                List<DashboardReport> result = (from dr in DB.ReadDS("EmployeeDailyAttendanceDetailGet", parameter.ToArray()).Tables[0].AsEnumerable()
+                                               select new DashboardReport()
+                                               {
+                                                   EmployeeID = dr.Field<long>("EmployeeID"),
+                                                   EmployeeName = dr.Field<string>("EmployeeName"),
+                                                   RegDate = Convert.ToString(dr.Field<DateTime?>("RegDate")),
+                                                   MobileNo = dr.Field<string>("MobNo"),
+                                                   ID = dr.Field<long>("ID"),
+                                                   DesignationID = dr.Field<int>("DesignationID"),
+                                                   DesignationName = dr.Field<string>("DesignationName"),
+                                                   GenderID = dr.Field<int>("GenderID"),
+                                                   GenderName = dr.Field<string>("GenderName"),
+                                                   OfficeID = dr.Field<int>("OfficeID"),
+                                                   OfficeName = dr.Field<string>("OfficeName"),
+                                                   OfficeLattitute = dr.Field<double>("OfficeLattitute").ToString(),
+                                                   OfficeLongitute = dr.Field<double>("OfficeLongitute").ToString(),
+                                                   SimID = dr.Field<string>("SimID"),
+                                                   Adharcard = dr.Field<string>("Adharcard"),
+                                                   HrmsNo = dr.Field<string>("HrmsNo"),
+                                                   BranchID = dr.Field<int>("BranchID"),
+                                                   BranchName = dr.Field<string>("BranchName"),
+                                                   EmployeeTypeID = dr.Field<int>("EmployeeTypeID"),
+                                                   EmployeeTypeName = dr.Field<string>("EmployeeTypeName"),
+                                                   DateOfInActive = dr.Field<DateTime?>("DateOfInActive").ToString(),
+                                                   DateofJoining = dr.Field<DateTime?>("DateofJoining").ToString(),
+                                                   DateOfServiceEnd = dr.Field<DateTime?>("DateOfServiceEnd").ToString(),
+                                                   InactiveForAttendance = dr.Field<bool>("InactiveForAttendance"),
+                                                   DateOfInactiveForAttendance = dr.Field<DateTime?>("DateOfInactiveForAttendance").ToString(),
+                                                   ISActive = dr.Field<bool>("IsActive"),
+                                                   AttInDate= dr.Field<string>("AttInDate"),
+                                                   AttInTime = dr.Field<string>("AttInTime"),
+                                                   AttOutTime = dr.Field<string>("AttOutTime"),
+                                                   TimeDiff= dr.Field<string>("TimeDiff")
+                                               }).ToList();
+
+
+                return result;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+
+        }
         #endregion
 
         #region Function
