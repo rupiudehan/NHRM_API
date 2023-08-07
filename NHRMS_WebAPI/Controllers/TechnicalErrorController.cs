@@ -19,7 +19,8 @@ namespace NHRMS_WebAPI.Controllers
             output result = new output();
             try
             {
-                MessageHandle obj = DAL.AddTechnicalErrorDetail(ld);
+                string urlDomain = Request.RequestUri.GetLeftPart(UriPartial.Authority);
+                MessageHandle obj = DAL.AddTechnicalErrorDetail(ld, urlDomain);
                 result = result.GetResponsePost(obj, obj.Message);
                 result.IsSucess = Convert.ToBoolean(obj.Success);
                 result.Message = obj.Message;

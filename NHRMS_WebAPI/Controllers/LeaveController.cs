@@ -57,7 +57,9 @@ namespace NHRMS_WebAPI.Controllers
             output result = new output();
             try
             {
-                MessageHandle obj = DAL.AddLeaveDetail(ld);
+                string urlDomain = Request.RequestUri.GetLeftPart(UriPartial.Authority);// + (Request.RequestUri.IsDefaultPort ? "" : ":" + Request.RequestUri.Port);
+                
+                MessageHandle obj = DAL.AddLeaveDetail(ld, urlDomain);
                 result = result.GetResponsePost(obj, obj.Message);
                 result.IsSucess = Convert.ToBoolean(obj.Success);
                 result.Message = obj.Message;

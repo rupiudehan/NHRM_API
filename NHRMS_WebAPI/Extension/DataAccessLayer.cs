@@ -16,10 +16,10 @@ using NHRMS_WebAPI.Models;
 
 namespace ITInventory.Common
 {
-    public class DataAccessLayer
+    public class DataAccessLayer: MastersDataAccessLayer
     {
-        DbProviderFactory Factory = DB.GetFactory();
-        DbConnection con = DB.GetConnection();
+        //DbProviderFactory Factory = DB.GetFactory();
+        //DbConnection con = DB.GetConnection();
 
         //SqlConnection con = Common.DataService.GetConnection();
         #region Generate HRMS Code
@@ -513,35 +513,6 @@ namespace ITInventory.Common
         }
         #endregion
 
-        #region Gender Detail
-        public List<Gender> GetGenderDetail(int genderID)
-        {
-            try
-            {
-                List<object> parameter = new List<object>();
-                parameter.Add("@GenderID");
-                parameter.Add(genderID);
-
-                List<Gender> result = (from dr in DB.ReadDS("GenderDetailGet", parameter.ToArray()).Tables[0].AsEnumerable()
-                                       select new Gender()
-                                       {
-                                           GenderID = dr.Field<int>("GenderID"),
-                                           GenderName = dr.Field<string>("GenderName"),
-                                           Success = 1,
-                                           Message = ""
-                                       }).ToList();
-
-
-                return result;
-            }
-            catch (Exception)
-            {
-                return null;
-            }
-
-        }
-        #endregion
-
         #region Reporting Authority
         public MessageHandle EmployeeReportingAuthorityPost(ReportingAuthorityDetail user)
         {
@@ -721,7 +692,7 @@ namespace ITInventory.Common
                                                                   MobNo = dr.Field<string>("MobNo"),
                                                                   AttInDate = dr.Field<DateTime?>("AttInDate").ToString(),
                                                                   InTime = dr.Field<string>("AttInTime").ToString(),
-                                                                  OutTime = dr.Field<string>("AttOutTime").ToString(),
+                                                                  OutTime = dr.Field<string>("AttOutTime") == null ? "" : dr.Field<string>("AttOutTime"),//.ToString(),
                                                                   InLatitude = dr.Field<string>("INLatitude").ToString(),
                                                                   InLongitude = dr.Field<string>("INLatitude"),
                                                                   OutLatitude = dr.Field<string>("OutLatitude"),
@@ -812,385 +783,6 @@ namespace ITInventory.Common
 
         #endregion
 
-        #region States
-        public List<State> GetStateDetail(int stateID, int countryID)
-        {
-            try
-            {
-                List<object> parameter = new List<object>();
-                parameter.Add("@StateID");
-                parameter.Add(stateID);
-                parameter.Add("@CountryID");
-                parameter.Add(countryID);
-
-                List<State> result = (from dr in DB.ReadDS("StateDetailGet", parameter.ToArray()).Tables[0].AsEnumerable()
-                                      select new State()
-                                      {
-                                          CreatedOn = dr.Field<DateTime?>("CreatedOn").ToString(),
-                                          CreatedBy = dr.Field<string>("CreatedBy"),
-                                          StateID = dr.Field<int>("StateID"),
-                                          StateCode = dr.Field<string>("StateCode"),
-                                          StateName = dr.Field<string>("StateName"),
-                                          CountryId = dr.Field<int>("CountryId"),
-                                          CountryName = dr.Field<string>("CountryName"),
-                                          Success = 1,
-                                          Message = ""
-                                      }).ToList();
-
-
-                return result;
-            }
-            catch (Exception)
-            {
-                return null;
-            }
-
-        }
-        #endregion
-
-        #region Districts
-        public List<District> GetDistrictDetail(int districtID, int stateID, int countryID)
-        {
-            try
-            {
-                List<object> parameter = new List<object>();
-                parameter.Add("@DistrictID");
-                parameter.Add(districtID);
-                parameter.Add("@StateID");
-                parameter.Add(stateID);
-                parameter.Add("@CountryID");
-                parameter.Add(countryID);
-
-                List<District> result = (from dr in DB.ReadDS("DistrictDetailGet", parameter.ToArray()).Tables[0].AsEnumerable()
-                                         select new District()
-                                         {
-                                             DistrictID = dr.Field<int>("DistrictID"),
-                                             DistrictName = dr.Field<string>("DistrictName"),
-                                             DistrictCode = dr.Field<string>("DistrictCode"),
-                                             CreatedOn = dr.Field<DateTime?>("CreatedOn").ToString(),
-                                             CreatedBy = dr.Field<string>("CreatedBy"),
-                                             StateID = dr.Field<int>("StateID"),
-                                             StateCode = dr.Field<string>("StateCode"),
-                                             StateName = dr.Field<string>("StateName"),
-                                             CountryId = dr.Field<int>("CountryId"),
-                                             CountryName = dr.Field<string>("CountryName"),
-                                             Success = 1,
-                                             Message = ""
-                                         }).ToList();
-
-
-                return result;
-            }
-            catch (Exception)
-            {
-                return null;
-            }
-
-        }
-        #endregion
-
-        #region Cities
-        public List<City> GetCityDetail(int cityID, int districtID, int stateID, int countryID)
-        {
-            try
-            {
-                List<object> parameter = new List<object>();
-                parameter.Add("@CityID");
-                parameter.Add(cityID);
-                parameter.Add("@DistrictID");
-                parameter.Add(districtID);
-                parameter.Add("@StateID");
-                parameter.Add(stateID);
-                parameter.Add("@CountryID");
-                parameter.Add(countryID);
-
-                List<City> result = (from dr in DB.ReadDS("CityDetailGet", parameter.ToArray()).Tables[0].AsEnumerable()
-                                     select new City()
-                                     {
-                                         CityID = dr.Field<int>("CityID"),
-                                         CityName = dr.Field<string>("CityName"),
-                                         CityCode = dr.Field<string>("CityCode"),
-                                         CityPostalCode = dr.Field<string>("CityPostalCode"),
-                                         DistrictID = dr.Field<int>("DistrictID"),
-                                         DistrictName = dr.Field<string>("DistrictName"),
-                                         DistrictCode = dr.Field<string>("DistrictCode"),
-                                         CreatedOn = dr.Field<DateTime?>("CreatedOn").ToString(),
-                                         CreatedBy = dr.Field<string>("CreatedBy"),
-                                         StateID = dr.Field<int>("StateID"),
-                                         StateCode = dr.Field<string>("StateCode"),
-                                         StateName = dr.Field<string>("StateName"),
-                                         CountryId = dr.Field<int>("CountryId"),
-                                         CountryName = dr.Field<string>("CountryName"),
-                                         Success = 1,
-                                         Message = ""
-                                     }).ToList();
-
-
-                return result;
-            }
-            catch (Exception)
-            {
-                return null;
-            }
-
-        }
-        #endregion
-
-        #region Offices
-        public List<OfficeDetail> GetOfficeDetail(int officeID, int cityID, int districtID, int stateID, int countryID)
-        {
-            try
-            {
-                List<object> parameter = new List<object>();
-                parameter.Add("@OfficeID");
-                parameter.Add(officeID);
-                parameter.Add("@CityID");
-                parameter.Add(cityID);
-                parameter.Add("@DistrictID");
-                parameter.Add(districtID);
-                parameter.Add("@StateID");
-                parameter.Add(stateID);
-                parameter.Add("@CountryID");
-                parameter.Add(countryID);
-
-                List<OfficeDetail> result = (from dr in DB.ReadDS("OfficeDetailGet", parameter.ToArray()).Tables[0].AsEnumerable()
-                                             select new OfficeDetail()
-                                             {
-                                                 OfficeID = dr.Field<int>("OfficeID"),
-                                                 OfficeName = dr.Field<string>("OfficeName"),
-                                                 OfficeLattitute = dr.Field<double>("OfficeLattitute").ToString(),
-                                                 OfficeLongitute = dr.Field<double>("OfficeLongitute").ToString(),
-                                                 CityID = dr.Field<int>("CityID"),
-                                                 CityName = dr.Field<string>("CityName"),
-                                                 CityCode = dr.Field<string>("CityCode"),
-                                                 CityPostalCode = dr.Field<string>("CityPostalCode"),
-                                                 DistrictID = dr.Field<int>("DistrictID"),
-                                                 DistrictName = dr.Field<string>("DistrictName"),
-                                                 DistrictCode = dr.Field<string>("DistrictCode"),
-                                                 CreatedOn = dr.Field<DateTime?>("CreatedOn").ToString(),
-                                                 CreatedBy = dr.Field<string>("CreatedBy"),
-                                                 StateID = dr.Field<int>("StateID"),
-                                                 StateCode = dr.Field<string>("StateCode"),
-                                                 StateName = dr.Field<string>("StateName"),
-                                                 CountryId = dr.Field<int>("CountryId"),
-                                                 CountryName = dr.Field<string>("CountryName"),
-                                                 OfficeInTime = Convert.ToString(dr.Field<TimeSpan?>("InTime")),
-                                                 OfficeOutTime = Convert.ToString(dr.Field<TimeSpan?>("OutTime")),
-                                                 HalfDayTime = Convert.ToString(dr.Field<TimeSpan?>("HalfDayTime")),
-                                                 ShortLeaveTime = Convert.ToString(dr.Field<TimeSpan?>("ShortLeaveTime")),
-                                                 Success = 1,
-                                                 Message = ""
-                                             }).ToList();
-
-
-                return result;
-            }
-            catch (Exception)
-            {
-                return null;
-            }
-
-        }
-        #endregion
-
-        #region Employee Types
-        public List<EmployeeType> GetEmployeetypeDetail(int employeeTypeID)
-        {
-            try
-            {
-                List<object> parameter = new List<object>();
-                parameter.Add("@EmployeeTypeID");
-                parameter.Add(employeeTypeID);
-
-                List<EmployeeType> result = (from dr in DB.ReadDS("EmployeeTypeDetailGet", parameter.ToArray()).Tables[0].AsEnumerable()
-                                             select new EmployeeType()
-                                             {
-                                                 EmployeeTypeID = dr.Field<int>("EmployeeTypeID"),
-                                                 EmployeeTypeName = dr.Field<string>("EmployeeTypeName"),
-                                                 CreatedOn = dr.Field<DateTime?>("CreatedOn").ToString(),
-                                                 CreatedBy = dr.Field<string>("CreatedBy"),
-                                                 Success = 1,
-                                                 Message = ""
-                                             }).ToList();
-
-
-                return result;
-            }
-            catch (Exception)
-            {
-                return null;
-            }
-
-        }
-        #endregion
-
-        #region Leave Types
-        public List<LeaveType> GetLeavetypeDetail(int leaveTypeID)
-        {
-            try
-            {
-                List<object> parameter = new List<object>();
-                parameter.Add("@LeaveTypeID");
-                parameter.Add(leaveTypeID);
-
-                List<LeaveType> result = (from dr in DB.ReadDS("AttendanceLeaveTypeGet", parameter.ToArray()).Tables[0].AsEnumerable()
-                                          select new LeaveType()
-                                          {
-                                              LeaveTypeID = dr.Field<int>("LeaveTypeID"),
-                                              LeaveTypeName = dr.Field<string>("LeaveTypeName"),
-                                              LeaveTypeCode = dr.Field<string>("LeaveTypeCode"),
-                                              CreatedOn = dr.Field<DateTime?>("CreatedOn").ToString(),
-                                              CreatedBy = dr.Field<string>("CreatedBy"),
-                                              IsAttachmentAllowed = dr.Field<bool>("IsAttachmentAllowed"),
-                                              Success = 1,
-                                              Message = ""
-                                          }).ToList();
-
-
-                return result;
-            }
-            catch (Exception)
-            {
-                return null;
-            }
-
-        }
-        #endregion
-
-        #region Designation
-        public List<DesignationDetail> GetDesignationDetail(int designationID)
-        {
-            try
-            {
-                List<object> parameter = new List<object>();
-                parameter.Add("@DesignationID");
-                parameter.Add(designationID);
-
-                List<DesignationDetail> result = (from dr in DB.ReadDS("DesignationDetailGet", parameter.ToArray()).Tables[0].AsEnumerable()
-                                                  select new DesignationDetail()
-                                                  {
-                                                      DesignationID = dr.Field<int>("DesignationID"),
-                                                      DesignationName = dr.Field<string>("DesignationName"),
-                                                      CreatedOn = dr.Field<DateTime?>("CreatedOn").ToString(),
-                                                      CreatedBy = dr.Field<string>("CreatedBy"),
-                                                      Success = 1,
-                                                      Message = ""
-                                                  }).ToList();
-
-
-                return result;
-            }
-            catch (Exception)
-            {
-                return null;
-            }
-
-        }
-        #endregion
-
-        #region Branch
-        public List<BranchDetail> GetBranchDetail(int branchID)
-        {
-            try
-            {
-                List<object> parameter = new List<object>();
-                parameter.Add("@BranchID");
-                parameter.Add(branchID);
-
-                List<BranchDetail> result = (from dr in DB.ReadDS("BranchDetailGet", parameter.ToArray()).Tables[0].AsEnumerable()
-                                             select new BranchDetail()
-                                             {
-                                                 BranchID = dr.Field<int>("BranchID"),
-                                                 BranchName = dr.Field<string>("BranchName"),
-                                                 CreatedOn = dr.Field<DateTime?>("CreatedOn").ToString(),
-                                                 CreatedBy = dr.Field<string>("CreatedBy"),
-                                                 UpdatedOn = dr.Field<DateTime?>("UpdatedOn").ToString(),
-                                                 UpdatedBy = dr.Field<string>("UpdatedBy"),
-                                                 Success = 1,
-                                                 Message = ""
-                                             }).ToList();
-
-
-                return result;
-            }
-            catch (Exception)
-            {
-                return null;
-            }
-
-        }
-        #endregion
-
-        #region Year
-        public List<YearDetail> GetYearDetail(int yearID)
-        {
-            try
-            {
-                List<object> parameter = new List<object>();
-                parameter.Add("@YearID");
-                parameter.Add(yearID);
-
-                List<YearDetail> result = (from dr in DB.ReadDS("YearDetailGet", parameter.ToArray()).Tables[0].AsEnumerable()
-                                           select new YearDetail()
-                                           {
-                                               YearId = dr.Field<int>("YearId"),
-                                               Year = dr.Field<string>("Year"),
-                                               Success = 1,
-                                               Message = ""
-                                           }).ToList();
-
-
-                return result;
-            }
-            catch (Exception)
-            {
-                return null;
-            }
-
-        }
-        #endregion
-
-        #region AttendanceLeaveTypeCount
-        public List<LeaveTypeCount> GetLeaveTypeCount(int id, int yearID, int leaveTypeID)
-        {
-            try
-            {
-                List<object> parameter = new List<object>();
-                parameter.Add("@ID");
-                parameter.Add(id);
-                parameter.Add("@YearID");
-                parameter.Add(yearID);
-                parameter.Add("@LeaveTypeID");
-                parameter.Add(leaveTypeID);
-
-                List<LeaveTypeCount> result = (from dr in DB.ReadDS("AttendanceLeaveCountGet", parameter.ToArray()).Tables[0].AsEnumerable()
-                                               select new LeaveTypeCount()
-                                               {
-                                                   ID = dr.Field<int>("ID"),
-                                                   LeaveTypeID = dr.Field<int>("LeaveTypeID"),
-                                                   LeaveTypeCode = dr.Field<string>("LeaveTypeCode"),
-                                                   LeaveTypeName = dr.Field<string>("LeaveTypeName"),
-                                                   CountForMale = dr.Field<float>("CountForMale"),
-                                                   CountForFemale = dr.Field<float>("CountForFemale"),
-                                                   YearId = dr.Field<int>("YearId"),
-                                                   Year = dr.Field<string>("Year"),
-                                                   CreatedBy = dr.Field<string>("CreatedBy"),
-                                                   CreatedOn = dr.Field<DateTime?>("CreatedOn").ToString(),
-                                                   Success = 1,
-                                                   Message = ""
-                                               }).ToList();
-
-
-                return result;
-            }
-            catch (Exception)
-            {
-                return null;
-            }
-
-        }
-        #endregion
-
         #region Management Category
         public List<ManagementCategoryDetail> GetManagementCategories(int categoryId, int authorityCategoryId)
         {
@@ -1213,173 +805,6 @@ namespace ITInventory.Common
                                                              Success = 1,
                                                              Message = ""
                                                          }).ToList();
-
-
-                return result;
-            }
-            catch (Exception)
-            {
-                return null;
-            }
-
-        }
-        #endregion
-
-        #region Leave Category
-        public List<LeaveCategoryDetail> GetLeaveCategories(int categoryId, bool isVisible)
-        {
-            try
-            {
-                List<object> parameter = new List<object>();
-                parameter.Add("@CategoryID");
-                parameter.Add(categoryId);
-                parameter.Add("@IsVisible");
-                parameter.Add(isVisible);
-
-                List<LeaveCategoryDetail> result = (from dr in DB.ReadDS("LeaveCategoryGet", parameter.ToArray()).Tables[0].AsEnumerable()
-                                                    select new LeaveCategoryDetail()
-                                                    {
-                                                        CategoryID = dr.Field<int>("CategoryID"),
-                                                        CategoryName = dr.Field<string>("CategoryName"),
-                                                        IsVisible = dr.Field<bool>("IsVisible"),
-                                                        Success = 1,
-                                                        Message = ""
-                                                    }).ToList();
-
-
-                return result;
-            }
-            catch (Exception)
-            {
-                return null;
-            }
-
-        }
-
-        public List<ApprovalCategory> GetApprovalCategories(int categoryId)
-        {
-            try
-            {
-                List<object> parameter = new List<object>();
-                parameter.Add("@CategoryID");
-                parameter.Add(categoryId);
-
-                List<ApprovalCategory> result = (from dr in DB.ReadDS("ApprovalCategoryDetailGet", parameter.ToArray()).Tables[0].AsEnumerable()
-                                                 select new ApprovalCategory()
-                                                 {
-                                                     CategoryID = dr.Field<int>("CategoryID"),
-                                                     CategoryName = dr.Field<string>("CategoryName"),
-                                                     IsActive = dr.Field<bool>("IsActive"),
-                                                     CreatedBy = dr.Field<string>("CreatedBy"),
-                                                     CreatedOn = dr.Field<DateTime?>("CreatedOn").ToString(),
-                                                     UpdatedBy = dr.Field<string>("UpdatedBy"),
-                                                     UpdatedOn = dr.Field<DateTime?>("UpdatedOn").ToString(),
-                                                     Success = 1,
-                                                     Message = ""
-                                                 }).ToList();
-
-
-                return result;
-            }
-            catch (Exception)
-            {
-                return null;
-            }
-
-        }
-        #endregion
-
-        #region Leave Status
-        public List<LeaveStatusDetail> GetLeaveStatus(int statusId)
-        {
-            try
-            {
-                List<object> parameter = new List<object>();
-                parameter.Add("@StatusID");
-                parameter.Add(statusId);
-
-                List<LeaveStatusDetail> result = (from dr in DB.ReadDS("LeaveStatusGet", parameter.ToArray()).Tables[0].AsEnumerable()
-                                                  select new LeaveStatusDetail()
-                                                  {
-                                                      StatusID = dr.Field<int>("StatusID"),
-                                                      StatusName = dr.Field<string>("StatusName"),
-                                                      StatusCode = dr.Field<string>("StatusCode"),
-                                                      CreatedBy = dr.Field<string>("CreatedBy"),
-                                                      CreatedOn = dr.Field<DateTime?>("CreatedOn").ToString(),
-                                                      Success = 1,
-                                                      Message = ""
-                                                  }).ToList();
-
-
-                return result;
-            }
-            catch (Exception)
-            {
-                return null;
-            }
-
-        }
-        #endregion
-
-        #region Holiday
-        public List<HolidayType> GetHolidayType(int typeID)
-        {
-            try
-            {
-                List<object> parameter = new List<object>();
-                parameter.Add("@TypeID");
-                parameter.Add(typeID);
-
-                List<HolidayType> result = (from dr in DB.ReadDS("HolidayTypeDetailGet", parameter.ToArray()).Tables[0].AsEnumerable()
-                                            select new HolidayType()
-                                            {
-                                                TypeID = dr.Field<int>("TypeID"),
-                                                TypeName = dr.Field<string>("TypeName"),
-                                                UpdatedBy = dr.Field<string>("UpdatedBy"),
-                                                UpdatedOn = dr.Field<DateTime?>("UpdatedOn").ToString(),
-                                                CreatedBy = dr.Field<string>("CreatedBy"),
-                                                CreatedOn = dr.Field<DateTime?>("CreatedOn").ToString(),
-                                                IsActive = dr.Field<bool>("IsActive"),
-                                                Success = 1,
-                                                Message = ""
-                                            }).ToList();
-
-
-                return result;
-            }
-            catch (Exception)
-            {
-                return null;
-            }
-
-        }
-        public List<HolidayDetail> GetHolidayDetail(int typeID, long id)
-        {
-            try
-            {
-                List<object> parameter = new List<object>();
-                parameter.Add("@TypeID");
-                parameter.Add(typeID);
-                parameter.Add("@ID");
-                parameter.Add(id);
-
-                List<HolidayDetail> result = (from dr in DB.ReadDS("HolidayDetailGet", parameter.ToArray()).Tables[0].AsEnumerable()
-                                              select new HolidayDetail()
-                                              {
-                                                  ID = dr.Field<long>("ID"),
-                                                  Date = dr.Field<DateTime?>("Date").ToString(),
-                                                  Day = dr.Field<string>("Day"),
-                                                  Holiday = dr.Field<string>("Holiday"),
-                                                  TypeID = dr.Field<int>("TypeID"),
-                                                  TypeName = dr.Field<string>("TypeName"),
-                                                  UpdatedBy = dr.Field<string>("UpdatedBy"),
-                                                  UpdatedOn = dr.Field<DateTime?>("UpdatedOn").ToString(),
-                                                  CreatedBy = dr.Field<string>("CreatedBy"),
-                                                  CreatedOn = dr.Field<DateTime?>("CreatedOn").ToString(),
-                                                  IsActive = dr.Field<bool>("IsActive"),
-                                                  Success = 1,
-                                                  Message = ""
-                                              }).ToList();
 
 
                 return result;
@@ -1445,10 +870,9 @@ namespace ITInventory.Common
 
         }
 
-        public MessageHandle AddLeaveDetail(LeaveDetail ld)
+        public MessageHandle AddLeaveDetail(LeaveDetail ld,string domainname)
         {
             MessageHandle result = new MessageHandle();
-            string extension = ld.fileExtension.ToLower();
 
 
 
@@ -1483,6 +907,7 @@ namespace ITInventory.Common
             parameter.Add(ld.IsAttachedDocumets);
             if (ld.IsAttachedDocumets)
             {
+                string extension = ld.fileExtension.ToLower();
                 if (ld.fileExtension != "" && (extension == "jpeg" || extension == "jpg" || extension == "pdf"))
                 {
                     string folder = System.Web.HttpContext.Current.Server.MapPath("/UploadattendanceDoc");
@@ -1493,7 +918,10 @@ namespace ITInventory.Common
 
                     string im = image(ld.HrmsNo, ld.bytedata);
                     parameter.Add("@AttachDocUrls");
-                    parameter.Add("http://49.50.66.74:88/UploadattendanceDoc/" + filename + "/" + filename + "." + (extension == "jpg" ? "jpeg" : extension));
+
+                    parameter.Add(domainname+"/UploadattendanceDoc/" + filename + "/" + filename + "." + (extension == "jpg" ? "jpeg" : extension));
+                    
+                    //parameter.Add("http://49.50.66.74:88/UploadattendanceDoc/" + filename + "/" + filename + "." + (extension == "jpg" ? "jpeg" : extension));
                     //parameter.Add("http://pswc.in/UploadattendanceDoc/" + filename + "/" + filename + ".jpeg");
                 }
                 else
@@ -1883,7 +1311,7 @@ namespace ITInventory.Common
         #endregion
 
         #region Technical Error
-        public MessageHandle AddTechnicalErrorDetail(TechErrorCreate ld)
+        public MessageHandle AddTechnicalErrorDetail(TechErrorCreate ld,string urlDomain)
         {
             MessageHandle result = new MessageHandle();
             string extension = ld.fileExtension.ToLower();
@@ -1905,7 +1333,8 @@ namespace ITInventory.Common
                 parameter.Add("@ProcessedBy");
                 parameter.Add(ld.ProcessedBy);
                 parameter.Add("@Attachdocument");
-                parameter.Add("http://49.50.66.74:88/UploadattendanceDoc/" + filename + "/" + filename + ".jpeg");
+                parameter.Add(urlDomain +"/UploadattendanceDoc/" + filename + "/" + filename + ".jpeg");
+                //parameter.Add("http://49.50.66.74:88/UploadattendanceDoc/" + filename + "/" + filename + ".jpeg");
                 //parameter.Add("http://pswc.in/UploadattendanceDoc/" + filename + "/" + filename + ".jpeg");
 
                 List<object> outParameter = OutputParams();

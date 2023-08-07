@@ -168,3 +168,6 @@ D:\Rupinder\HRMS\NHRMS_WebAPI\NHRMS_WebAPI\obj\Debug\NHRMS_WebAPI.csproj.CoreCom
 D:\Rupinder\HRMS\NHRMS_WebAPI\NHRMS_WebAPI\obj\Debug\NHRMS_WebAPI.csproj.CopyComplete
 D:\Rupinder\HRMS\NHRMS_WebAPI\NHRMS_WebAPI\obj\Debug\NHRMS_WebAPI.dll
 D:\Rupinder\HRMS\NHRMS_WebAPI\NHRMS_WebAPI\obj\Debug\NHRMS_WebAPI.pdb
+D:\Rupinder\HRMS\NHRMS_WebAPI\NHRMS_WebAPI\bin\System.Web.Cors.dll
+D:\Rupinder\HRMS\NHRMS_WebAPI\NHRMS_WebAPI\bin\System.Web.Http.Cors.dll
+D:\Rupinder\HRMS\NHRMS_WebAPI\NHRMS_WebAPI\bin\System.Web.Http.Cors.xml

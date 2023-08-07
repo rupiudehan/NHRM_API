@@ -22,7 +22,8 @@ namespace NHRMS_WebAPI
               new MediaTypeHeaderValue("text/html")
               );
             //config.Formatters.XmlFormatter.SupportedMediaTypes.Add(new System.Net.Http.Headers.MediaTypeHeaderValue("multipart/form-data"));
-
+            //Enable Cors
+            config.EnableCors();
             // Web API routes
             config.MapHttpAttributeRoutes();
 
