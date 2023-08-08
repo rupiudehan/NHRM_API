@@ -48,6 +48,41 @@ namespace ITInventory.Common
             }
         }
         #endregion
+
+        #region Manage Password
+        public List<EmployeeCredentialDetail> ForgetPassword(string hrmsno, string mobno, out string msg)
+        {
+            msg = string.Empty;
+            try
+            {
+                List<object> parameter = new List<object>();
+                parameter.Add("@hrmsno");
+                parameter.Add(hrmsno);
+                parameter.Add("@mobno");
+                parameter.Add(mobno);
+
+                List<EmployeeCredentialDetail> result = (from dr in DB.ReadDS("EmployeePasswordGet", parameter.ToArray()).Tables[0].AsEnumerable()
+                                               select new EmployeeCredentialDetail()
+                                               {
+                                                   EmployeeID = dr.Field<long>("EmployeeID"),
+                                                   EmployeeName = dr.Field<string>("EmployeeName"),
+                                                   EmpPassword = dr.Field<string>("EmpPassword"),
+                                                   HrmsNo = dr.Field<string>("HrmsNo")
+                                               }).ToList();
+                if (result.Count == 0)
+                {
+                    msg = "Invalid HRMS No./Mobile Number!";
+                }
+
+                return result.Count == 0 ? null : result;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+        #endregion
+
         #region Employee        
         public MessageHandle EmployeeRegiatrationForAttendance(EmployeeDetail User)
         {

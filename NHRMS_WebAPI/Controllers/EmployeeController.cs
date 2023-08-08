@@ -313,5 +313,26 @@ namespace NHRMS_WebAPI.Controllers
 
 
         }
+
+
+        [Route("app/GetEmployeeCredentails/{HRMS}/{MobileNo}")]
+        public output GetEmployeeCredentails(string hrmsno, string mobno)
+        {
+            output result = new output();
+            try
+            {
+                string msg = string.Empty;
+                List<EmployeeCredentialDetail> obj = DAL.ForgetPassword(hrmsno, mobno,out msg);
+                result = result.GetResponse(obj);
+                result.Message = msg;
+
+            }
+            catch (Exception ex)
+            {
+                result.IsSucess = false;
+                result.Message = ex.Message;
+            }
+            return result;
+        }
     }
 }
