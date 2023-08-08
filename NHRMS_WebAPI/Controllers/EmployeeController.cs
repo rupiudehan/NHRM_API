@@ -315,7 +315,7 @@ namespace NHRMS_WebAPI.Controllers
         }
 
 
-        [Route("app/GetEmployeeCredentails/{HRMS}/{MobileNo}")]
+        [Route("app/GetEmployeeCredentails/{hrmsno}/{mobno}")]
         public output GetEmployeeCredentails(string hrmsno, string mobno)
         {
             output result = new output();

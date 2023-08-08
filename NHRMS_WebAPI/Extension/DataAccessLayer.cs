@@ -1476,6 +1476,7 @@ namespace ITInventory.Common
                                                          EmployeeName = dr.Field<string>("EmployeeName"),
                                                          MobNo = dr.Field<string>("MobNo"),
                                                          ErrorDate = dr.Field<DateTime>("ErrorDate").ToString(),
+                                                         ApplyDay = string.Format("{0:dd}", dr.Field<DateTime>("ErrorDate")),
                                                          ApprovalDateTime = string.Format("{0:dd/MM/yyyy HH:mm tt}", dr.Field<DateTime?>("ApprovalDateTime")),
                                                          ApprovalStatus = dr.Field<string>("ApprovalStatus"),
                                                          StatusUpdationDate = dr.Field<DateTime>("StatusUpdationDate").ToString(),
