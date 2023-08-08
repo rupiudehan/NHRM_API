@@ -54,5 +54,6 @@ namespace NHRMS_WebAPI.Models
         public bool InactiveForAttendance { get; set; }
         public string DateOfInactiveForAttendance { get; set; }
         public string ProcessedBy { get; set; }
+        public bool HasApprovingAuthorization { get; set; }
     }
 }
