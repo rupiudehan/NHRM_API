@@ -1319,6 +1319,7 @@ namespace ITInventory.Common
                                                        IsAttachedDocument = dr.Field<bool>("IsAttachedDocument"),
                                                        LeaveReason = dr.Field<string>("LeaveReason"),
                                                        ApplyDatetime = string.Format("{0:dd/MM/yyyy HH:mm:ss tt}", dr.Field<DateTime?>("ApplyDatetime")),
+                                                       ApplyDate = string.Format("{0:dd}", dr.Field<DateTime?>("ApplyDatetime")),
                                                        ReportingOfficerID = dr.Field<long>("ReportingOfficerID"),
                                                        ReportingOfficerName = dr.Field<string>("ReportingOfficerName"),
                                                        LeaveStatus = dr.Field<string>("LeaveStatus"),

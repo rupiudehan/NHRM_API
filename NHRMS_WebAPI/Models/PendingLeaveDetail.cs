@@ -19,6 +19,7 @@ namespace NHRMS_WebAPI.Models
         public string LeaveTourCode { get; set; }
         public string LeaveTour { get; set; }
         public string ApplyDatetime { get; set; }
+        public string ApplyDate { get; set; }
         public long ReportingOfficerID { get; set; }
         public string ReportingOfficerName { get; set; }
         public string LeaveStatus { get; set; }
