@@ -15,6 +15,8 @@ namespace NHRMS_WebAPI.Models
         public int StateID { get; set; }
         public string StateCode { get; set; }
         public string StateName { get; set; }
+        public string PostalCode { get; set; }
+        public string ProcessedBy { get; set; }
     }
     public class District: State
     {

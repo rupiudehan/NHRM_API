@@ -111,6 +111,42 @@ namespace NHRMS_WebAPI.Extension
         #endregion
 
         #region States
+        public MessageHandle CreateUpdateStateDetail(State obj)
+        {
+            MessageHandle result = new MessageHandle();
+            List<object> parameter = new List<object>();
+            parameter.Add("@ID");
+            parameter.Add(obj.StateID);
+            parameter.Add("@CountryID");
+            parameter.Add(obj.CountryId);
+            parameter.Add("@StateCode");
+            parameter.Add(obj.StateCode);
+            parameter.Add("@StateName");
+            parameter.Add(obj.StateName);
+            parameter.Add("@PostalCode");
+            parameter.Add(obj.PostalCode);
+            parameter.Add("@ProcessedBy");
+            parameter.Add(obj.ProcessedBy);
+
+            List<object> outParameter = OutputParams();
+            string[] output = DB.InsertorUpdateWithOutput("StateDetailCreateEdit", parameter.ToArray(), outParameter.ToArray());
+            result.Success = Convert.ToInt16(output[0]);
+            result.Message = output[1];
+            return result;
+        }
+        public MessageHandle DeleteStateDetail(int stateID)
+        {
+            MessageHandle result = new MessageHandle();
+            List<object> parameter = new List<object>();
+            parameter.Add("@ID");
+            parameter.Add(stateID);
+
+            List<object> outParameter = OutputParams();
+            string[] output = DB.InsertorUpdateWithOutput("StateDetailDelete", parameter.ToArray(), outParameter.ToArray());
+            result.Success = Convert.ToInt16(output[0]);
+            result.Message = output[1];
+            return result;
+        }
         public List<State> GetStateDetail(int stateID, int countryID)
         {
             try
@@ -126,11 +162,14 @@ namespace NHRMS_WebAPI.Extension
                                       {
                                           CreatedOn = dr.Field<DateTime?>("CreatedOn").ToString(),
                                           CreatedBy = dr.Field<string>("CreatedBy"),
+                                          UpdatedOn = dr.Field<DateTime?>("UpdatedOn").ToString(),
+                                          UpdatedBy = dr.Field<string>("UpdatedBy"),
                                           StateID = dr.Field<int>("StateID"),
                                           StateCode = dr.Field<string>("StateCode"),
                                           StateName = dr.Field<string>("StateName"),
                                           CountryId = dr.Field<int>("CountryId"),
                                           CountryName = dr.Field<string>("CountryName"),
+                                          PostalCode = dr.Field<string>("PostalCode"),
                                           Success = 1,
                                           Message = ""
                                       }).ToList();
