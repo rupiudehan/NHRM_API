@@ -1318,7 +1318,7 @@ namespace ITInventory.Common
                                                        ApprovalDateTime = string.Format("{0:dd/MM/yyyy HH:mm tt}", dr.Field<DateTime?>("ApprovalDateTime")),
                                                        LeaveToTime = dr.Field<TimeSpan?>("LeaveToTime").ToString(),
                                                        IsAttachedDocument = dr.Field<bool>("IsAttachedDocument"),
-                                                       LeaveReason = dr.Field<string>("LeaveReason")??"",
+                                                       LeaveReason = dr.Field<string>("LeaveReason") ?? "",
                                                        ApplyDatetime = string.Format("{0:dd/MM/yyyy HH:mm:ss tt}", dr.Field<DateTime?>("ApplyDatetime")),
                                                        ApplyDate = string.Format("{0:dd}", dr.Field<DateTime?>("ApplyDatetime")),
                                                        ReportingOfficerID = dr.Field<long>("ReportingOfficerID"),
@@ -1329,12 +1329,13 @@ namespace ITInventory.Common
                                                        ReportingOfficerHrms = dr.Field<string>("ReportingOfficerHrms"),
                                                        EmployeeHrms = dr.Field<string>("EmployeeHrms"),
                                                        EmployeeDesignation = dr.Field<string>("EmployeeDesignation"),
-                                                       EmpBranchID = dr.Field<int>("EmpBranchID"),
+                                                       EmpBranchID = dr.Field<long>("EmpBranchID"),
                                                        EmpOfficeName = dr.Field<string>("EmpOfficeName"),
                                                        EmpBranchName = dr.Field<string>("EmpBranchName"),
                                                        AttachmentID = dr.Field<long?>("AttachmentID") == null ? "0" : dr.Field<long>("AttachmentID").ToString(),
                                                        AttachmentUrl = dr.Field<string>("AttachmentUrl"),
-                                                       LeaveDates=dr.Field<string>("DateStrings")
+                                                       LeaveDates = dr.Field<string>("DateStrings"),
+                                                       totalLeavedays = dr.Field<int>("totalLeavedays")
                                                    }).ToList();
 
 

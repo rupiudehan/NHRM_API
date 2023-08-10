@@ -35,11 +35,12 @@ namespace NHRMS_WebAPI.Models
         public string LeaveReason { get; set; }
         public string ApprovalDateTime { get; set; }
         public string EmployeeDesignation { get; set; }
-        public int EmpBranchID { get; set; }
+        public long EmpBranchID { get; set; }
         public string EmpBranchName { get; set; }
         public string EmpOfficeName { get; set; }
         public string AttachmentID { get; set; }
         public string AttachmentUrl { get; set; }
         public string LeaveDates { get; set; }
+        public int totalLeavedays { get; set; }
     }
 }
