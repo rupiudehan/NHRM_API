@@ -40,5 +40,6 @@ namespace NHRMS_WebAPI.Models
         public string EmpOfficeName { get; set; }
         public string AttachmentID { get; set; }
         public string AttachmentUrl { get; set; }
+        public string LeaveDates { get; set; }
     }
 }

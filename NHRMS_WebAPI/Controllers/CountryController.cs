@@ -11,7 +11,7 @@ using System.Web.Http.Cors;
 
 namespace NHRMS_WebAPI.Controllers
 {
-    [EnableCors(origins:"*",headers: "*", methods: "*")]
+    [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class CountryController : ApiController
     {
         MastersDataAccessLayer DAL = new MastersDataAccessLayer();
@@ -32,6 +32,65 @@ namespace NHRMS_WebAPI.Controllers
                 result.Message = ex.Message;
             }
             return result;
+        }
+
+        [HttpPost]
+        [Route("app/CreateUpdateCountryDetailPost")]
+        //public output CreateUpdateCountryDetail(CountryDetail countryDetail)
+        public output CreateUpdateCountryDetail(int countryid,string countrycode,string countryName,int commCode,string processedBy)
+        {
+            CountryDetail countryDetail=new CountryDetail();
+            countryDetail.CountryId = countryid;
+            countryDetail.CountryName = countryName;
+            countryDetail.CommCode = commCode;
+            countryDetail.ProcessedBy = processedBy;
+            countryDetail.CountryCode = countrycode;
+            output result = new output();
+            try
+            {
+                MessageHandle obj = DAL.CreateUpdateCountryDetail(countryDetail);
+                result = result.GetResponsePost(obj, obj.Message);
+                result.IsSucess = Convert.ToBoolean(obj.Success);
+                result.Message = obj.Message;
+            }
+            catch (Exception ex)
+            {
+                result.IsSucess = false;
+                result.Message = ex.Message;
+            }
+            finally
+            {
+
+            }
+
+            return result;
+
+        }
+
+        [HttpPost]
+        [Route("app/DeleteCountryDetail/{countryID}")]
+        public output DeleteCountryDetail(int countryID)
+        {
+            output result = new output();
+            try
+            {
+                MessageHandle obj = DAL.DeleteCountryDetail(countryID);
+                result = result.GetResponsePost(obj, obj.Message);
+                result.IsSucess = Convert.ToBoolean(obj.Success);
+                result.Message = obj.Message;
+            }
+            catch (Exception ex)
+            {
+                result.IsSucess = false;
+                result.Message = ex.Message;
+            }
+            finally
+            {
+
+            }
+
+            return result;
+
         }
     }
 }

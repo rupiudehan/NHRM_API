@@ -202,7 +202,7 @@ namespace ITInventory.Common
                                                    OfficeLattitute = dr.Field<double>("OfficeLattitute").ToString(),
                                                    OfficeLongitute = dr.Field<double>("OfficeLongitute").ToString(),
                                                    SimID = dr.Field<string>("SimID"),
-                                                   AdharCard = dr.Field<string>("Adharcard"),
+                                                   AdharCard = dr.Field<string>("Adharcard")??"",
                                                    HrmsNo = dr.Field<string>("HrmsNo"),
                                                    BranchIDs = dr.Field<string>("BranchIDs"),
                                                    BranchNames = dr.Field<string>("BranchNames"),
@@ -216,7 +216,7 @@ namespace ITInventory.Common
                                                    InactiveForAttendance = dr.Field<bool>("InactiveForAttendance"),
                                                    DateOfInactiveForAttendance = dr.Field<DateTime?>("DateOfInactiveForAttendance").ToString(),
                                                    isActive = dr.Field<bool>("IsActive"),
-                                                   HasApprovingAuthorization=dr.Field<bool>("HasApprovingAuthorization"),
+                                                   HasApprovingAuthorization = Convert.ToBoolean(dr.Field<int>("HasApprovingAuthorization")),
                                                    isDeleted = dr.Field<bool>("isDeleted"),
                                                    Success = 1,
                                                    Message = ""
@@ -1318,7 +1318,7 @@ namespace ITInventory.Common
                                                        ApprovalDateTime = string.Format("{0:dd/MM/yyyy HH:mm tt}", dr.Field<DateTime?>("ApprovalDateTime")),
                                                        LeaveToTime = dr.Field<TimeSpan?>("LeaveToTime").ToString(),
                                                        IsAttachedDocument = dr.Field<bool>("IsAttachedDocument"),
-                                                       LeaveReason = dr.Field<string>("LeaveReason"),
+                                                       LeaveReason = dr.Field<string>("LeaveReason")??"",
                                                        ApplyDatetime = string.Format("{0:dd/MM/yyyy HH:mm:ss tt}", dr.Field<DateTime?>("ApplyDatetime")),
                                                        ApplyDate = string.Format("{0:dd}", dr.Field<DateTime?>("ApplyDatetime")),
                                                        ReportingOfficerID = dr.Field<long>("ReportingOfficerID"),
@@ -1333,7 +1333,8 @@ namespace ITInventory.Common
                                                        EmpOfficeName = dr.Field<string>("EmpOfficeName"),
                                                        EmpBranchName = dr.Field<string>("EmpBranchName"),
                                                        AttachmentID = dr.Field<long?>("AttachmentID") == null ? "0" : dr.Field<long>("AttachmentID").ToString(),
-                                                       AttachmentUrl = dr.Field<string>("AttachmentUrl")
+                                                       AttachmentUrl = dr.Field<string>("AttachmentUrl"),
+                                                       LeaveDates=dr.Field<string>("DateStrings")
                                                    }).ToList();
 
 
