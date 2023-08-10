@@ -175,7 +175,7 @@ public class output
             else
             {
                 result.IsSucess = false;
-                result.Message = "";
+                result.Message = "An error occured";
                 result.ResponseData = null;
             }
         }
