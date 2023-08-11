@@ -186,6 +186,40 @@ namespace NHRMS_WebAPI.Extension
         #endregion
 
         #region Districts
+        public MessageHandle CreateUpdateDistrictDetail(District obj)
+        {
+            MessageHandle result = new MessageHandle();
+            List<object> parameter = new List<object>();
+            parameter.Add("@ID");
+            parameter.Add(obj.DistrictID);
+            parameter.Add("@StateID");
+            parameter.Add(obj.StateID);
+            parameter.Add("@DistrictCode");
+            parameter.Add(obj.DistrictCode);
+            parameter.Add("@DistrictName");
+            parameter.Add(obj.DistrictName);
+            parameter.Add("@ProcessedBy");
+            parameter.Add(obj.ProcessedBy);
+
+            List<object> outParameter = OutputParams();
+            string[] output = DB.InsertorUpdateWithOutput("DistrictDetailCreateEdit", parameter.ToArray(), outParameter.ToArray());
+            result.Success = Convert.ToInt16(output[0]);
+            result.Message = output[1];
+            return result;
+        }
+        public MessageHandle DeleteDistrictDetail(int districtID)
+        {
+            MessageHandle result = new MessageHandle();
+            List<object> parameter = new List<object>();
+            parameter.Add("@ID");
+            parameter.Add(districtID);
+
+            List<object> outParameter = OutputParams();
+            string[] output = DB.InsertorUpdateWithOutput("DistrictDetailDelete", parameter.ToArray(), outParameter.ToArray());
+            result.Success = Convert.ToInt16(output[0]);
+            result.Message = output[1];
+            return result;
+        }
         public List<District> GetDistrictDetail(int districtID, int stateID, int countryID)
         {
             try
@@ -206,6 +240,8 @@ namespace NHRMS_WebAPI.Extension
                                              DistrictCode = dr.Field<string>("DistrictCode"),
                                              CreatedOn = dr.Field<DateTime?>("CreatedOn").ToString(),
                                              CreatedBy = dr.Field<string>("CreatedBy"),
+                                             UpdatedOn = dr.Field<DateTime?>("UpdatedOn").ToString(),
+                                             UpdatedBy = dr.Field<string>("UpdatedBy"),
                                              StateID = dr.Field<int>("StateID"),
                                              StateCode = dr.Field<string>("StateCode"),
                                              StateName = dr.Field<string>("StateName"),
@@ -253,6 +289,8 @@ namespace NHRMS_WebAPI.Extension
                                          DistrictCode = dr.Field<string>("DistrictCode"),
                                          CreatedOn = dr.Field<DateTime?>("CreatedOn").ToString(),
                                          CreatedBy = dr.Field<string>("CreatedBy"),
+                                         UpdatedOn = dr.Field<DateTime?>("UpdatedOn").ToString(),
+                                         UpdatedBy = dr.Field<string>("UpdatedBy"),
                                          StateID = dr.Field<int>("StateID"),
                                          StateCode = dr.Field<string>("StateCode"),
                                          StateName = dr.Field<string>("StateName"),

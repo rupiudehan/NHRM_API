@@ -1485,7 +1485,7 @@ namespace ITInventory.Common
                                                          StatusUpdationDate = dr.Field<DateTime>("StatusUpdationDate").ToString(),
                                                          Remarks = dr.Field<string>("Remarks").ToString(),
                                                          EmployeeDesignation = dr.Field<string>("EmployeeDesignation"),
-                                                         EmpBranchID = dr.Field<int>("EmpBranchID"),
+                                                         EmpBranchID = dr.Field<long>("EmpBranchID"),
                                                          EmpOfficeName = dr.Field<string>("EmpOfficeName"),
                                                          EmpBranchName = dr.Field<string>("EmpBranchName"),
                                                          AttachmentDocument = dr.Field<string>("AttachmentDocument")
@@ -1713,7 +1713,8 @@ namespace ITInventory.Common
                 {
                     Directory.CreateDirectory(folder);
                 }
-                string filename = hrmsno + DateTime.Now.ToString("dd-MM-yyyy");
+                string filename = hrmsno + "TechnicalErrorAttachment" + DateTime.Now.ToString("dd-MM-yyyy");
+                //string filename = hrmsno + DateTime.Now.ToString("dd-MM-yyyy");
                 string filePath = folder + "/" + filename;
 
 

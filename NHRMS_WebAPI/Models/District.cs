@@ -8,7 +8,7 @@ namespace NHRMS_WebAPI.Models
     public class Country: ManufacturingTime
     {
         public int CountryId { get; set; }
-        public string CountryName { get; set; }        
+        public string CountryName { get; set; }
     }
     public class State:Country
     {
