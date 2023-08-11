@@ -7,7 +7,7 @@ namespace NHRMS_WebAPI.Models
 {
     public class BranchDetail:ManufacturingTime
     {
-        public int BranchID { get; set; }
+        public long BranchID { get; set; }
         public string BranchName { get; set; }
     }
 }

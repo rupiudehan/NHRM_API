@@ -10,7 +10,7 @@ namespace NHRMS_WebAPI.Models
         public string HrmsNo { get; set; }
         public long ID { get; set; }
         public int OfficeID { get; set; }
-        public int BranchID { get; set; }
+        public long BranchID { get; set; }
         public int DesignationID { get; set; }
         public long EmployeeID { get; set; }
         public string FromDate { get; set; }

@@ -509,7 +509,7 @@ namespace NHRMS_WebAPI.Extension
                 List<BranchDetail> result = (from dr in DB.ReadDS("BranchDetailGet", parameter.ToArray()).Tables[0].AsEnumerable()
                                              select new BranchDetail()
                                              {
-                                                 BranchID = dr.Field<int>("BranchID"),
+                                                 BranchID = dr.Field<long>("BranchID"),
                                                  BranchName = dr.Field<string>("BranchName"),
                                                  CreatedOn = dr.Field<DateTime?>("CreatedOn").ToString(),
                                                  CreatedBy = dr.Field<string>("CreatedBy"),

@@ -25,7 +25,7 @@ namespace NHRMS_WebAPI.Models
         public string OfficeName { get; set; }
         public int OfficeID { get; set; }
         public string BranchName { get; set; }
-        public int BranchID { get; set; }
+        public long BranchID { get; set; }
     }
 
     public class DashboardReport
@@ -37,7 +37,7 @@ namespace NHRMS_WebAPI.Models
         public string AttOutTime { get; set; }
         public string TimeDiff { get; set; }
         public string EmployeeName { get; set; }
-        public int BranchID { get; set; }
+        public long BranchID { get; set; }
         public string BranchName { get; set; }
         public int EmployeeTypeID { get; set; }
         public string EmployeeTypeName { get; set; }

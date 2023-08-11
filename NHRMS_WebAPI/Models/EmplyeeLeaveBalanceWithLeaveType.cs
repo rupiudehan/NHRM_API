@@ -20,6 +20,6 @@ namespace NHRMS_WebAPI.Models
         public string GenderName { get; set; }
         public int OfficeID { get; set; }
         public string OfficeName { get; set; }
-        public int BranchID { get; set; }
+        public long BranchID { get; set; }
     }
 }

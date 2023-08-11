@@ -353,7 +353,7 @@ namespace ITInventory.Common
                                                select new EmployeeBranch()
                                                {
                                                    EmployeeID = dr.Field<long>("EmployeeID"),
-                                                   BranchID = dr.Field<int>("BranchID"),
+                                                   BranchID = dr.Field<long>("BranchID"),
                                                    BranchName = dr.Field<string>("BranchName"),
                                                    ID = dr.Field<long>("ID"),
                                                    CreatedBy = dr.Field<string>("CreatedBy"),
@@ -1168,7 +1168,7 @@ namespace ITInventory.Common
                                                                      EmployeeTypeName = dr.Field<string>("EmployeeTypeName"),
                                                                      GenderID = dr.Field<int>("GenderID"),
                                                                      GenderName = dr.Field<string>("GenderName"),
-                                                                     BranchID = dr.Field<int>("BranchID"),
+                                                                     BranchID = dr.Field<long>("BranchID"),
                                                                      OfficeName = dr.Field<string>("OfficeName"),
                                                                      Success = 1,
                                                                      Message = ""
@@ -1201,7 +1201,7 @@ namespace ITInventory.Common
                                                       HrmsNo = dr.Field<string>("HrmsNo"),
                                                       OfficeID = dr.Field<int>("OfficeID"),
                                                       DesignationID = dr.Field<int>("DesignationID"),
-                                                      BranchID = dr.Field<int>("BranchID"),
+                                                      BranchID = dr.Field<long>("BranchID"),
                                                       FromDate = dr.Field<DateTime>("FromDate").ToString(),
                                                       ToDate = dr.Field<DateTime>("ToDate").ToString(),
                                                       EnteryDate = dr.Field<DateTime?>("EnteryDate").ToString(),
@@ -1634,7 +1634,7 @@ namespace ITInventory.Common
                                                              EmployeeCount = dr.Field<int>("EmployeeCount"),
                                                              OfficeID = dr.Field<int>("OfficeID"),
                                                              OfficeName = dr.Field<string>("OfficeName"),
-                                                             BranchID = dr.Field<int>("BranchID"),
+                                                             BranchID = dr.Field<long>("BranchID"),
                                                              BranchName = dr.Field<string>("BranchName")
                                                          }).ToList();
                 return result;
@@ -1676,7 +1676,7 @@ namespace ITInventory.Common
                                                    SimID = dr.Field<string>("SimID"),
                                                    Adharcard = dr.Field<string>("Adharcard"),
                                                    HrmsNo = dr.Field<string>("HrmsNo"),
-                                                   BranchID = dr.Field<int>("BranchID"),
+                                                   BranchID = dr.Field<long>("BranchID"),
                                                    BranchName = dr.Field<string>("BranchName"),
                                                    EmployeeTypeID = dr.Field<int>("EmployeeTypeID"),
                                                    EmployeeTypeName = dr.Field<string>("EmployeeTypeName"),
