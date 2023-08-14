@@ -239,6 +239,7 @@ namespace ITInventory.Common
                                                    isActive = dr.Field<bool>("IsActive"),
                                                    HasApprovingAuthorization = Convert.ToBoolean(dr.Field<int>("HasApprovingAuthorization")),
                                                    isDeleted = dr.Field<bool>("isDeleted"),
+                                                   DesignationLevel = dr.Field<int>("DesignationLevel"),
                                                    Success = 1,
                                                    Message = ""
                                                }).ToList();
@@ -292,6 +293,7 @@ namespace ITInventory.Common
                                                    DateofTransfer = dr.Field<DateTime?>("DateOfTransfer").ToString(),
                                                    InactiveForAttendance = dr.Field<bool>("InactiveForAttendance"),
                                                    DateOfInactiveForAttendance = dr.Field<DateTime?>("DateOfInactiveForAttendance").ToString(),
+                                                   DesignationLevel = dr.Field<int>("DesignationLevel"),
                                                    isActive = dr.Field<bool>("IsActive"),
                                                    isDeleted = dr.Field<bool>("isDeleted"),
                                                    Success = 1,
@@ -1280,7 +1282,7 @@ namespace ITInventory.Common
                                                        ReportingOfficerHrms = dr.Field<string>("ReportingOfficerHrms"),
                                                        EmployeeHrms = dr.Field<string>("EmployeeHrms"),
                                                        EmployeeDesignation = dr.Field<string>("EmployeeDesignation"),
-                                                       EmpBranchID = dr.Field<int>("EmpBranchID"),
+                                                       EmpBranchID = dr.Field<long>("EmpBranchID"),
                                                        EmpOfficeName = dr.Field<string>("EmpOfficeName"),
                                                        EmpBranchName = dr.Field<string>("EmpBranchName"),
                                                        AttachmentID = dr.Field<long?>("AttachmentID") == null ? "0" : dr.Field<long>("AttachmentID").ToString(),
