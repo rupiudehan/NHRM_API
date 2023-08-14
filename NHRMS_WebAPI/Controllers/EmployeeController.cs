@@ -94,6 +94,33 @@ namespace NHRMS_WebAPI.Controllers
 
         }
 
+        [HttpPost]
+        [Route("app/EmployeeSimMobUpdationpost")]
+        public output EmployeeSimMobUpdationpost(long employeeID, string mobno, string simID, string processedBy)
+        {
+            output result = new output();
+            try
+            {
+                MessageHandle obj = DAL.EmployeeSimMobUpdation(employeeID, mobno, simID, processedBy);
+                result = result.GetResponsePost(obj, obj.Message);
+                result.IsSucess = Convert.ToBoolean(obj.Success);
+                result.Message = obj.Message;
+            }
+            catch (Exception ex)
+            {
+                result.IsSucess = false;
+                result.Message = ex.Message;
+            }
+            finally
+            {
+                //result.ResponseData = 2;
+            }
+
+            return result;
+
+
+        }
+
         [HttpGet]
         [Route("app/GenerateHrmsCode/{Prefix}")]
         public output GenerateHrmsCode(string Prefix)

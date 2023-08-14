@@ -263,36 +263,38 @@ namespace NHRMS_WebAPI.Extension
         #endregion
 
         #region Cities
-        public MessageHandle CreateUpdateCityDetail(District obj)
+        public MessageHandle CreateUpdateCityDetail(City obj)
         {
             MessageHandle result = new MessageHandle();
             List<object> parameter = new List<object>();
             parameter.Add("@ID");
+            parameter.Add(obj.CityID);
+            parameter.Add("@DistrictID");
             parameter.Add(obj.DistrictID);
-            parameter.Add("@StateID");
-            parameter.Add(obj.StateID);
-            parameter.Add("@DistrictCode");
-            parameter.Add(obj.DistrictCode);
-            parameter.Add("@DistrictName");
-            parameter.Add(obj.DistrictName);
+            parameter.Add("@CityCode");
+            parameter.Add(obj.CityCode);
+            parameter.Add("@CityName");
+            parameter.Add(obj.CityName);
+            parameter.Add("@PostalCode");
+            parameter.Add(obj.PostalCode);
             parameter.Add("@ProcessedBy");
             parameter.Add(obj.ProcessedBy);
 
             List<object> outParameter = OutputParams();
-            string[] output = DB.InsertorUpdateWithOutput("DistrictDetailCreateEdit", parameter.ToArray(), outParameter.ToArray());
+            string[] output = DB.InsertorUpdateWithOutput("CityDetailCreateEdit", parameter.ToArray(), outParameter.ToArray());
             result.Success = Convert.ToInt16(output[0]);
             result.Message = output[1];
             return result;
         }
-        public MessageHandle DeleteCityDetail(int districtID)
+        public MessageHandle DeleteCityDetail(int cityID)
         {
             MessageHandle result = new MessageHandle();
             List<object> parameter = new List<object>();
             parameter.Add("@ID");
-            parameter.Add(districtID);
+            parameter.Add(cityID);
 
             List<object> outParameter = OutputParams();
-            string[] output = DB.InsertorUpdateWithOutput("DistrictDetailDelete", parameter.ToArray(), outParameter.ToArray());
+            string[] output = DB.InsertorUpdateWithOutput("CityDetailDelete", parameter.ToArray(), outParameter.ToArray());
             result.Success = Convert.ToInt16(output[0]);
             result.Message = output[1];
             return result;

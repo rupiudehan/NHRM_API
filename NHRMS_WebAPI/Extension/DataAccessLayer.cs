@@ -162,6 +162,27 @@ namespace ITInventory.Common
             return result;
         }
 
+        public MessageHandle EmployeeSimMobUpdation(long employeeID,string mobno,string simID,string processedBy)
+        {
+            MessageHandle result = new MessageHandle();
+            List<object> parameter = new List<object>();
+            parameter.Add("@EmployeeID");
+            parameter.Add(employeeID);
+            parameter.Add("@MobNo");
+            parameter.Add(mobno);
+            parameter.Add("@SimID");
+            parameter.Add(simID);
+            parameter.Add("@ProcessedBy");
+            parameter.Add(processedBy);
+
+            List<object> outParameter = OutputParams();
+            string[] output = DB.InsertorUpdateWithOutput("EmployeeDetailSimMobEdit", parameter.ToArray(), outParameter.ToArray());
+            result.Success = Convert.ToInt16(output[0]);
+            result.Message = output[1];
+
+            return result;
+        }
+
         public List<EmployeeDetail> GetEmployeeLoginDetail(string username, string password, out string msg)
         {
             msg = string.Empty;
@@ -1482,7 +1503,7 @@ namespace ITInventory.Common
                                                          ApplyDay = string.Format("{0:dd}", dr.Field<DateTime>("ErrorDate")),
                                                          ApprovalDateTime = string.Format("{0:dd/MM/yyyy HH:mm tt}", dr.Field<DateTime?>("ApprovalDateTime")),
                                                          ApprovalStatus = dr.Field<string>("ApprovalStatus"),
-                                                         StatusUpdationDate = dr.Field<DateTime>("StatusUpdationDate").ToString(),
+                                                         StatusUpdationDate = string.Format("{0:dd/MM/yyyy}", dr.Field<DateTime>("StatusUpdationDate")).ToString(),
                                                          Remarks = dr.Field<string>("Remarks").ToString(),
                                                          EmployeeDesignation = dr.Field<string>("EmployeeDesignation"),
                                                          EmpBranchID = dr.Field<long>("EmpBranchID"),
