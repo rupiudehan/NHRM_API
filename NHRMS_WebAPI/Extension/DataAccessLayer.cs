@@ -1706,7 +1706,7 @@ namespace ITInventory.Common
                                                    DateOfInActive = dr.Field<DateTime?>("DateOfInActive").ToString(),
                                                    DateofJoining = dr.Field<DateTime?>("DateofJoining").ToString(),
                                                    DateOfServiceEnd = dr.Field<DateTime?>("DateOfServiceEnd").ToString(),
-                                                   InactiveForAttendance = dr.Field<bool>("InactiveForAttendance"),
+                                                   InactiveForAttendance = dr.Field<bool?>("InactiveForAttendance") == null ? false : dr.Field<bool>("InactiveForAttendance"),
                                                    DateOfInactiveForAttendance = dr.Field<DateTime?>("DateOfInactiveForAttendance").ToString(),
                                                    ISActive = dr.Field<bool>("IsActive"),
                                                    AttInDate= dr.Field<string>("AttInDate"),
