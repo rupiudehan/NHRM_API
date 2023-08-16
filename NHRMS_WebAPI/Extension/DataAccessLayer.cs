@@ -1640,7 +1640,7 @@ namespace ITInventory.Common
             }
         }
 
-        public List<DashboardTotalAttendance> GetTotalCountPerBranchAttendanceType(int officeID, int branchID, string typeData)
+        public List<DashboardTotalAttendance> GetTotalCountPerBranchAttendanceType( int officeID, int branchID, string typeData)
         {
             try
             {
@@ -1668,11 +1668,13 @@ namespace ITInventory.Common
             }
         }
 
-        public List<DashboardReport> GetEmployeeDailyAttendanceDetail(int officeID, int branchID, string typeData)
+        public List<DashboardReport> GetEmployeeDailyAttendanceDetail(long EmployeeID, int officeID, int branchID, string typeData)
         {
             try
             {
                 List<object> parameter = new List<object>();
+                parameter.Add("@AuthorityID");
+                parameter.Add(EmployeeID);
                 parameter.Add("@BranchID");
                 parameter.Add(branchID);
                 parameter.Add("@OfficeID");

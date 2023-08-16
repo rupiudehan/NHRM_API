@@ -80,13 +80,13 @@ namespace NHRMS_WebAPI.Controllers
             return result;
         }
 
-        [Route("app/GetEmployeeDailyAttendanceDetail/{OfficeID}/{BranchID}/{TypeData}")]
-        public output GetEmployeeDailyAttendanceDetail(int officeID, int branchID, string typeData)
+        [Route("app/GetEmployeeDailyAttendanceDetail/{EmployeeID}/{OfficeID}/{BranchID}/{TypeData}")]
+        public output GetEmployeeDailyAttendanceDetail(long EmployeeID, int officeID, int branchID, string typeData)
         {
             output result = new output();
             try
             {
-                List<DashboardReport> obj = DAL.GetEmployeeDailyAttendanceDetail(officeID, branchID, typeData);
+                List<DashboardReport> obj = DAL.GetEmployeeDailyAttendanceDetail(EmployeeID,officeID, branchID, typeData);
                 result = result.GetResponse(obj);
             }
             catch (Exception ex)
