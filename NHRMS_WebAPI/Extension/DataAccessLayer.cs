@@ -1748,8 +1748,8 @@ namespace ITInventory.Common
                                                    DateOfInactiveForAttendance = dr.Field<DateTime?>("DateOfInactiveForAttendance").ToString(),
                                                    ISActive = dr.Field<bool>("IsActive"),
                                                    AttInDate= dr.Field<string>("AttInDate").Replace("-","/"),
-                                                   AttInTime = dr.Field<string>("AttInTime"),
-                                                   AttOutTime = dr.Field<string>("AttOutTime")==null?"0": dr.Field<string>("AttOutTime"),
+                                                   AttInTime = typeData.ToLower()=="p"? string.Format("{0:HH:MM:ss}", Convert.ToDateTime(dr.Field<string>("AttInTime"))) : dr.Field<string>("AttInTime"),
+                                                   AttOutTime = typeData.ToLower() == "p" ? string.Format("{0:HH:MM:ss}", Convert.ToDateTime(dr.Field<string>("AttOutTime"))) : dr.Field<string>("AttOutTime"),
                                                    TimeDiff= dr.Field<string>("TimeDiff")
                                                }).ToList();
 
