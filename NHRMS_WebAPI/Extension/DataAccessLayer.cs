@@ -1747,9 +1747,9 @@ namespace ITInventory.Common
                                                    InactiveForAttendance = dr.Field<bool?>("InactiveForAttendance") == null ? false : dr.Field<bool>("InactiveForAttendance"),
                                                    DateOfInactiveForAttendance = dr.Field<DateTime?>("DateOfInactiveForAttendance").ToString(),
                                                    ISActive = dr.Field<bool>("IsActive"),
-                                                   AttInDate= dr.Field<string>("AttInDate"),
+                                                   AttInDate= dr.Field<string>("AttInDate").Replace("-","/"),
                                                    AttInTime = dr.Field<string>("AttInTime"),
-                                                   AttOutTime = dr.Field<string>("AttOutTime"),
+                                                   AttOutTime = dr.Field<string>("AttOutTime")==null?"0": dr.Field<string>("AttOutTime"),
                                                    TimeDiff= dr.Field<string>("TimeDiff")
                                                }).ToList();
 
