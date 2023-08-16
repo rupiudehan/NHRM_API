@@ -139,6 +139,23 @@ namespace ITInventory.Common
             return result;
         }
 
+        public MessageHandle EmployeeMasterDataCreate(string empHrms, string ReportingAuthorityHrms)
+        {
+            MessageHandle result = new MessageHandle();
+            List<object> parameter = new List<object>();
+            parameter.Add("@Hrms");
+            parameter.Add(empHrms);
+            parameter.Add("@ReportingAutority");
+            parameter.Add(ReportingAuthorityHrms);
+
+            List<object> outParameter = OutputParams();
+            string[] output = DB.InsertorUpdateWithOutput("EmployeeMasterDataCreate", parameter.ToArray(), outParameter.ToArray());
+            result.Success = Convert.ToInt16(output[0]);
+            result.Message = output[1];
+
+            return result;
+        }
+
         public MessageHandle EmployeeUpdationForAttendance(EmployeeDetail User)
         {
             MessageHandle result = new MessageHandle();
