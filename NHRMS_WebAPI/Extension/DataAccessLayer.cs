@@ -1568,13 +1568,15 @@ namespace ITInventory.Common
         #endregion
 
         #region Dashboard
-        public List<DashboardAttendanceTotalCount> GetTotalAttendanceCount(long EmployeeID, int Officeid)
+        public List<DashboardAttendanceTotalCount> GetTotalAttendanceCount(long EmployeeID, int Officeid,long branchID)
         {
             try
             {
                 List<object> parameter = new List<object>();
                 parameter.Add("@OfficeID");
                 parameter.Add(Officeid);
+                parameter.Add("@BranchID");
+                parameter.Add(branchID);
                 parameter.Add("@AuthorityID");
                 parameter.Add(EmployeeID);
                 List<DashboardAttendanceTotalCount> result = (from dr in DB.ReadDS("AttendanceTotalCountGet", parameter.ToArray()).Tables[0].AsEnumerable()

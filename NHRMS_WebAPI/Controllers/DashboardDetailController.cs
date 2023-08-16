@@ -12,13 +12,13 @@ namespace NHRMS_WebAPI.Controllers
     public class DashboardDetailController : ApiController
     {
         DataAccessLayer DAL = new DataAccessLayer();
-        [Route("app/GetTotalAttendanceCount/{EmployeeID}/{Officeid}")]
-        public output GetTotalAttendanceCount(long EmployeeID, int Officeid)
+        [Route("app/GetTotalAttendanceCount/{EmployeeID}/{Officeid}/{BranchID}")]
+        public output GetTotalAttendanceCount(long EmployeeID, int Officeid,long BranchID)
         {
             output result = new output();
             try
             {
-                List<DashboardAttendanceTotalCount> obj = DAL.GetTotalAttendanceCount(EmployeeID, Officeid);
+                List<DashboardAttendanceTotalCount> obj = DAL.GetTotalAttendanceCount(EmployeeID, Officeid, BranchID);
                 result = result.GetResponse(obj);
             }
             catch (Exception ex)
