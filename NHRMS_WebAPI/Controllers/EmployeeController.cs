@@ -68,6 +68,33 @@ namespace NHRMS_WebAPI.Controllers
         }
 
         [HttpPost]
+        [Route("app/EmployeeSimUpdate/{simInput}/{simOutput}")]
+        public output EmployeeSimUpdate(string simInput, string simOutput)
+        {
+            output result = new output();
+            try
+            {
+                MessageHandle obj = DAL.EmployeeSimUpdate(simInput, simOutput);
+                result = result.GetResponsePost(obj, obj.Message);
+                result.IsSucess = Convert.ToBoolean(obj.Success);
+                result.Message = obj.Message;
+            }
+            catch (Exception ex)
+            {
+                result.IsSucess = false;
+                result.Message = ex.Message;
+            }
+            finally
+            {
+                //result.ResponseData = 2;
+            }
+
+            return result;
+
+
+        }
+
+        [HttpPost]
         [Route("app/EmpRegUpdatepost")]
         public output EmpRegUpdatepost(EmployeeDetail user)
         {

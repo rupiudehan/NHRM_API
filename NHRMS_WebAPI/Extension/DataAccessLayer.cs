@@ -122,6 +122,23 @@ namespace ITInventory.Common
             return result;
         }
 
+        public MessageHandle EmployeeSimUpdate(string simInput, string simOutput)
+        {
+            MessageHandle result = new MessageHandle();
+            List<object> parameter = new List<object>();
+            parameter.Add("@SimIDIn");
+            parameter.Add(simInput);
+            parameter.Add("@SimIDOut");
+            parameter.Add(simOutput);
+
+            List<object> outParameter = OutputParams();
+            string[] output = DB.InsertorUpdateWithOutput("EmployeeSimIDEdit", parameter.ToArray(), outParameter.ToArray());
+            result.Success = Convert.ToInt16(output[0]);
+            result.Message = output[1];
+
+            return result;
+        }
+
         public MessageHandle EmployeeUpdationForAttendance(EmployeeDetail User)
         {
             MessageHandle result = new MessageHandle();
@@ -1691,7 +1708,7 @@ namespace ITInventory.Common
                                                    EmployeeName = dr.Field<string>("EmployeeName"),
                                                    RegDate = Convert.ToString(dr.Field<DateTime?>("RegDate")),
                                                    MobileNo = dr.Field<string>("MobNo"),
-                                                   ID = dr.Field<long>("ID"),
+                                                   ID = typeData.ToLower() == "a" ? dr.Field<int>("ID") : dr.Field<long>("ID"),
                                                    DesignationID = dr.Field<int>("DesignationID"),
                                                    DesignationName = dr.Field<string>("DesignationName"),
                                                    GenderID = dr.Field<int>("GenderID"),
