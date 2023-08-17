@@ -24,7 +24,7 @@ namespace NHRMS_WebAPI.Models
         public string ErrorMessageDetail { get; set; }
         public string EmployeeDesignation { get; set; }
         public string EmpBranchName { get; set; }
-        public int EmpBranchID { get; set; }
+        public long EmpBranchID { get; set; }
         public string EmpOfficeName { get; set; }
     }
 }

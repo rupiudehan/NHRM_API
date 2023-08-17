@@ -1585,7 +1585,7 @@ namespace ITInventory.Common
                                                           ReportingOfficerHrms = dr.Field<string>("ReportingOfficerHrms"),
                                                           EmployeeHrms = dr.Field<string>("EmployeeHrms"),
                                                           EmployeeDesignation = dr.Field<string>("EmployeeDesignation"),
-                                                          EmpBranchID = dr.Field<int>("EmpBranchID"),
+                                                          EmpBranchID = dr.Field<long>("EmpBranchID"),
                                                           EmpBranchName = dr.Field<string>("EmpBranchName"),
                                                           EmpOfficeName = dr.Field<string>("EmpOfficeName")
                                                       }).ToList();
@@ -1749,7 +1749,7 @@ namespace ITInventory.Common
                                                    ISActive = dr.Field<bool>("IsActive"),
                                                    AttInDate= dr.Field<string>("AttInDate").Replace("-","/"),
                                                    AttInTime = typeData.ToLower()=="p"? string.Format("{0:HH:MM:ss}", Convert.ToDateTime(dr.Field<string>("AttInTime"))) : dr.Field<string>("AttInTime"),
-                                                   AttOutTime = typeData.ToLower() == "p" ? string.Format("{0:HH:MM:ss}", Convert.ToDateTime(dr.Field<string>("AttOutTime"))) : dr.Field<string>("AttOutTime"),
+                                                   AttOutTime = typeData.ToLower() == "p" ? dr.Field<string>("AttOutTime")!="0"?string.Format("{0:HH:MM:ss}", Convert.ToDateTime(dr.Field<string>("AttOutTime"))):"0" : dr.Field<string>("AttOutTime"),
                                                    TimeDiff= dr.Field<string>("TimeDiff")
                                                }).ToList();
 
