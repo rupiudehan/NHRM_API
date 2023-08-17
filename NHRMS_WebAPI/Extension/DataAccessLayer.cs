@@ -1005,7 +1005,7 @@ namespace ITInventory.Common
                 {
                     string folder = System.Web.HttpContext.Current.Server.MapPath("/UploadattendanceDoc");
 
-                    string filename = ld.HrmsNo + "LeaveAttachment" + DateTime.Now.ToString("dd-MM-yyyy");
+                    string filename = ld.HrmsNo + "LeaveAttachment" + DateTime.Now.ToString("yyyyMMddHHmmss");
                     //string filePath = folder + "/" + filename + "/" + filename + ".jpeg";
                     string filePath = folder + "/" + filename + "/" + filename + "." + (extension == "jpg" ? "jpeg" : extension);  //Allowed extensions .pdf and .jpeg/jpg
 
@@ -1415,7 +1415,7 @@ namespace ITInventory.Common
             {
                 string folder = System.Web.HttpContext.Current.Server.MapPath("/UploadattendanceDoc");
 
-                string filename = ld.HrmsNo + "TechnicalErrorAttachment" + DateTime.Now.ToString("dd-MM-yyyy");
+                string filename = ld.HrmsNo + "TechnicalErrorAttachment" + DateTime.Now.ToString("yyyyMMddHHmmss");
                 string filePath = folder + "/" + filename + "/" + filename + ".jpeg";
 
                 List<object> parameter = new List<object>();
@@ -1774,7 +1774,7 @@ namespace ITInventory.Common
                 {
                     Directory.CreateDirectory(folder);
                 }
-                string filename = hrmsno + "TechnicalErrorAttachment" + DateTime.Now.ToString("dd-MM-yyyy");
+                string filename = hrmsno + "TechnicalErrorAttachment" + DateTime.Now.ToString("yyyyMMddHHmmss");
                 //string filename = hrmsno + DateTime.Now.ToString("dd-MM-yyyy");
                 string filePath = folder + "/" + filename;
 
@@ -1827,7 +1827,7 @@ namespace ITInventory.Common
                     Directory.CreateDirectory(folder);
                 }
                 //string filename = hrmsno + DateTime.Now.ToString("dd-MM-yyyy");
-                string filename = hrmsno + "LeaveAttachment" + DateTime.Now.ToString("dd-MM-yyyy");
+                string filename = hrmsno + "LeaveAttachment" + DateTime.Now.ToString("yyyyMMddHHmmss");
                 string filePath = folder + "/" + filename;
 
 
