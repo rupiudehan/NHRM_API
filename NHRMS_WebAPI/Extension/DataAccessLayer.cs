@@ -1796,12 +1796,12 @@ namespace ITInventory.Common
                 //set the image path
                 string imgPath = Path.Combine(filePath, imageName);
 
-                int mod4 = bytedata.Length % 4;
+                //int mod4 = bytedata.Length % 4;
 
-                if (mod4 > 0)
-                {
-                    bytedata += new string('=', 4 - mod4);
-                }
+                //if (mod4 > 0)
+                //{
+                //    bytedata += new string('=', 4 - mod4);
+                //}
 
 
                 byte[] imageBytes = Convert.FromBase64String(bytedata);
