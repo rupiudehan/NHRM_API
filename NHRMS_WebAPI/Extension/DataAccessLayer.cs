@@ -1128,10 +1128,10 @@ namespace ITInventory.Common
             }
             parameter.Add("@ApprovingAuthorityID");
             parameter.Add(ld.ApprovingAuthorityID);
-            parameter.Add("@ROfficerDesignationID");
-            parameter.Add(ld.ROfficerDesignationID);
-            parameter.Add("@ROfficeDeptID");
-            parameter.Add(ld.ROfficeDeptID);
+            //parameter.Add("@ROfficerDesignationID");
+            //parameter.Add(ld.ROfficerDesignationID);
+            //parameter.Add("@ROfficeDeptID");
+            //parameter.Add(ld.ROfficeDeptID);
 
             List<object> outParameter = OutputParams();
             string[] output = DB.InsertorUpdateWithOutput("LeaveAutoDeductCreate", parameter.ToArray(), outParameter.ToArray());
