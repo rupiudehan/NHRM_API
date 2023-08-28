@@ -1113,9 +1113,9 @@ namespace ITInventory.Common
             List<object> parameter = new List<object>();
             parameter.Add("@EmployeeID");
             parameter.Add(ld.EmployeeID);
-            parameter.Add("@LeaveCategoryID");
+            parameter.Add("@LeaveCategoryCode");
             parameter.Add(ld.LeaveCategoryID);
-            parameter.Add("@LeaveTypeID");
+            parameter.Add("@LeaveTypeCode");
             parameter.Add(ld.LeaveTypeID);
             parameter.Add("@LeaveTourCode");
             parameter.Add(ld.LeaveTypeT);
