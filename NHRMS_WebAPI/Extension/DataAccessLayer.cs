@@ -274,6 +274,11 @@ namespace ITInventory.Common
                                                    HasApprovingAuthorization = Convert.ToBoolean(dr.Field<int>("HasApprovingAuthorization")),
                                                    isDeleted = dr.Field<bool>("isDeleted"),
                                                    DesignationLevel = dr.Field<int>("DesignationLevel"),
+                                                   OfficeInTime = dr.Field<string>("OfficeInTime").ToString(),
+                                                   OfficeOutTime = dr.Field<string>("OfficeOutTime"),
+                                                   OfficeHalfDayTime = dr.Field<string>("OfficeHalfDayTime") ?? "",
+                                                   OfficeShortLeaveTime = dr.Field<string>("OfficeShortLeaveTime") ?? "",
+                                                   OfficeTimingID = dr.Field<int>("OfficeTimingID"),
                                                    Success = 1,
                                                    Message = ""
                                                }).ToList();

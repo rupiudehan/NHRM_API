@@ -56,5 +56,10 @@ namespace NHRMS_WebAPI.Models
         public string ProcessedBy { get; set; }
         public bool HasApprovingAuthorization { get; set; }
         public int DesignationLevel { get; set; }
+        public string OfficeInTime { get; set; }
+        public string OfficeOutTime { get; set; }
+        public string OfficeHalfDayTime { get; set; }
+        public string OfficeShortLeaveTime { get; set; }
+        public int OfficeTimingID { get; set; }
     }
 }
