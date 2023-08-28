@@ -61,5 +61,7 @@ namespace NHRMS_WebAPI.Models
         public string OfficeHalfDayTime { get; set; }
         public string OfficeShortLeaveTime { get; set; }
         public int OfficeTimingID { get; set; }
+        public long ReportingAuthorityID { get; set; }
+        public string ReportingAuthorityName { get; set; }
     }
 }

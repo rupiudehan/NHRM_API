@@ -279,6 +279,8 @@ namespace ITInventory.Common
                                                    OfficeHalfDayTime = dr.Field<string>("OfficeHalfDayTime") ?? "",
                                                    OfficeShortLeaveTime = dr.Field<string>("OfficeShortLeaveTime") ?? "",
                                                    OfficeTimingID = dr.Field<int>("OfficeTimingID"),
+                                                   ReportingAuthorityID = dr.Field<long>("ReportingAuthorityID"),
+                                                   ReportingAuthorityName = dr.Field<string>("ReportingAuthorityName"),
                                                    Success = 1,
                                                    Message = ""
                                                }).ToList();
