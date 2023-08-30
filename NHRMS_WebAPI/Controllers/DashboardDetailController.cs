@@ -46,13 +46,13 @@ namespace NHRMS_WebAPI.Controllers
             return result;
         }
 
-        [Route("app/GetAttendanceTotalCountPerAttType/{OfficeID}/{TypeData}")]
-        public output GetTotalCountPerAttendanceType(int officeID, string typeData)
+        [Route("app/GetAttendanceTotalCountPerAttType/{OfficeID}/{TypeData}/{EmployeeID}")]
+        public output GetTotalCountPerAttendanceType(int officeID, string typeData, long employeeID)
         {
             output result = new output();
             try
             {
-                List<DashboardTotalAttendance> obj = DAL.GetTotalCountPerAttendanceType(officeID, typeData);
+                List<DashboardTotalAttendance> obj = DAL.GetTotalCountPerAttendanceType(officeID, typeData, employeeID);
                 result = result.GetResponse(obj);
             }
             catch (Exception ex)
@@ -63,13 +63,13 @@ namespace NHRMS_WebAPI.Controllers
             return result;
         }
 
-        [Route("app/GetTotalCountPerBranchAttendanceType/{OfficeID}/{BranchID}/{TypeData}")]
-        public output GetTotalCountPerBranchAttendanceType(int officeID, int branchID, string typeData)
+        [Route("app/GetTotalCountPerBranchAttendanceType/{OfficeID}/{BranchID}/{TypeData}/{EmployeeID}")]
+        public output GetTotalCountPerBranchAttendanceType(int officeID, int branchID, string typeData, long employeeID)
         {
             output result = new output();
             try
             {
-                List<DashboardTotalAttendance> obj = DAL.GetTotalCountPerBranchAttendanceType(officeID, branchID, typeData);
+                List<DashboardTotalAttendance> obj = DAL.GetTotalCountPerBranchAttendanceType(officeID, branchID, typeData, employeeID);
                 result = result.GetResponse(obj);
             }
             catch (Exception ex)

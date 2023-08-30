@@ -39,5 +39,6 @@ namespace NHRMS_WebAPI.Models
         public string Remarks { get; set; }
         public string ApprovalFlow { get; set; }
         public long StatusUpdatedBy { get; set; }
+        public int IsCancelRequest { get; set; }
     }
 }

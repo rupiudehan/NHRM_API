@@ -1097,6 +1097,8 @@ namespace ITInventory.Common
             //parameter.Add(ld.ApprovalFlow);
             parameter.Add("@StatusUpdatedBy");
             parameter.Add(ld.StatusUpdatedBy);
+            parameter.Add("@CancelRequest");
+            parameter.Add(ld.IsCancelRequest);
 
             List<object> outParameter = OutputParams();
             string[] output = DB.InsertorUpdateWithOutput("LeaveTourCancel", parameter.ToArray(), outParameter.ToArray());
@@ -1111,7 +1113,7 @@ namespace ITInventory.Common
             MessageHandle result = new MessageHandle();
 
             List<object> parameter = new List<object>();
-            parameter.Add("@EmployeeID");
+            parameter.Add("@Employeeid");
             parameter.Add(ld.EmployeeID);
             parameter.Add("@LeaveCategoryCode");
             parameter.Add(ld.LeaveCategoryID);
@@ -1133,7 +1135,7 @@ namespace ITInventory.Common
                 parameter.Add("@LeaveToTime");
                 parameter.Add(ld.LeaveToTime);
             }
-            parameter.Add("@ApprovingAuthorityID");
+            parameter.Add("@AppovingAuthorityID");
             parameter.Add(ld.ApprovingAuthorityID);
             //parameter.Add("@ROfficerDesignationID");
             //parameter.Add(ld.ROfficerDesignationID);
@@ -1659,7 +1661,7 @@ namespace ITInventory.Common
             }
         }
 
-        public List<DashboardTotalAttendance> GetTotalCountPerAttendanceType(int officeID, string typeData)
+        public List<DashboardTotalAttendance> GetTotalCountPerAttendanceType(int officeID, string typeData,long employeeid)
         {
             try
             {
@@ -1668,6 +1670,8 @@ namespace ITInventory.Common
                 parameter.Add(officeID);
                 parameter.Add("@TypeData");
                 parameter.Add(typeData);
+                parameter.Add("@EmployeeID");
+                parameter.Add(employeeid);
                 List<DashboardTotalAttendance> result = (from dr in DB.ReadDS("EmployeeTotalCountPerAttendanceTypeGet", parameter.ToArray()).Tables[0].AsEnumerable()
                                                       select new DashboardTotalAttendance()
                                                       {
@@ -1683,7 +1687,7 @@ namespace ITInventory.Common
             }
         }
 
-        public List<DashboardTotalAttendance> GetTotalCountPerBranchAttendanceType( int officeID, int branchID, string typeData)
+        public List<DashboardTotalAttendance> GetTotalCountPerBranchAttendanceType( int officeID, int branchID, string typeData, long employeeID)
         {
             try
             {
@@ -1694,6 +1698,8 @@ namespace ITInventory.Common
                 parameter.Add(branchID);
                 parameter.Add("@TypeData");
                 parameter.Add(typeData);
+                parameter.Add("@EmployeeID");
+                parameter.Add(employeeID);
                 List<DashboardTotalAttendance> result = (from dr in DB.ReadDS("EmployeeTotalCountPerBranchAttendanceTypeGet", parameter.ToArray()).Tables[0].AsEnumerable()
                                                          select new DashboardTotalAttendance()
                                                          {
