@@ -466,5 +466,31 @@ namespace NHRMS_WebAPI.Controllers
             return result;
 
         }
+
+        [HttpPost]
+        [Route("app/EmployeeBranchCreateEditPost")]
+        public output EmployeeBranchCreateEditPost(long Id, long EmployeeID, long Branchid, int IsAdditional, string ProcessedBy)
+        {
+            output result = new output();
+            try
+            {
+                MessageHandle obj = DAL.EmployeeBranchCreateEdit(Id, EmployeeID, Branchid, IsAdditional, ProcessedBy);
+                result = result.GetResponsePost(obj, obj.Message);
+                result.IsSucess = Convert.ToBoolean(obj.Success);
+                result.Message = obj.Message;
+            }
+            catch (Exception ex)
+            {
+                result.IsSucess = false;
+                result.Message = ex.Message;
+            }
+            finally
+            {
+
+            }
+
+            return result;
+
+        }
     }
 }

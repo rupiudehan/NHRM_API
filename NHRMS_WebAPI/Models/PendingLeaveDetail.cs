@@ -42,5 +42,6 @@ namespace NHRMS_WebAPI.Models
         public string AttachmentUrl { get; set; }
         public string LeaveDates { get; set; }
         public int totalLeavedays { get; set; }
+        public bool IsRequestSend { get; set; }
     }
 }

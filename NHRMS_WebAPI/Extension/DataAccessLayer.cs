@@ -644,6 +644,29 @@ namespace ITInventory.Common
             }
 
         }
+
+        public MessageHandle EmployeeBranchCreateEdit(long Id,long EmployeeID, long Branchid,int IsAdditional,string ProcessedBy)
+        {
+            MessageHandle result = new MessageHandle();
+            List<object> parameter = new List<object>();
+            parameter.Add("@ID");
+            parameter.Add(Id);
+            parameter.Add("@EmployeeID");
+            parameter.Add(EmployeeID);
+            parameter.Add("@BranchID");
+            parameter.Add(Branchid);
+            parameter.Add("@isAdditional");
+            parameter.Add(IsAdditional);
+            parameter.Add("@ProcessedBy");
+            parameter.Add(ProcessedBy);
+
+            List<object> outParameter = OutputParams();
+            string[] output = DB.InsertorUpdateWithOutput("EmployeeBranchCreateEdit", parameter.ToArray(), outParameter.ToArray());
+            result.Success = Convert.ToInt16(output[0]);
+            result.Message = output[1];
+
+            return result;
+        }
         #endregion
 
         #region Reporting Authority
@@ -1380,7 +1403,8 @@ namespace ITInventory.Common
                                                        EmpOfficeName = dr.Field<string>("EmpOfficeName"),
                                                        EmpBranchName = dr.Field<string>("EmpBranchName"),
                                                        AttachmentID = dr.Field<long?>("AttachmentID") == null ? "0" : dr.Field<long>("AttachmentID").ToString(),
-                                                       AttachmentUrl = dr.Field<string>("AttachmentUrl")
+                                                       AttachmentUrl = dr.Field<string>("AttachmentUrl"),
+                                                       IsRequestSend = dr.Field<bool>("IsRequestSend")
                                                    }).ToList();
 
 
