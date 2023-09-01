@@ -11,6 +11,9 @@ namespace NHRMS_WebAPI.Models
         public long EmployeeID { get; set; }
         public long BranchID { get; set; }
         public string BranchName { get; set; }
+        public string EmployeeName { get; set; }
+        public string HrmsNo { get; set; }
         public bool IsActive { get; set; }
+        public bool IsAdditional { get; set; }
     }
 }

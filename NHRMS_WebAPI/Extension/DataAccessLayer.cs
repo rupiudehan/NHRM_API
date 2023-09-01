@@ -419,10 +419,13 @@ namespace ITInventory.Common
                                                    EmployeeID = dr.Field<long>("EmployeeID"),
                                                    BranchID = dr.Field<long>("BranchID"),
                                                    BranchName = dr.Field<string>("BranchName"),
+                                                   EmployeeName = dr.Field<string>("EmployeeName"),
+                                                   HrmsNo = dr.Field<string>("HrmsNo"),
                                                    ID = dr.Field<long>("ID"),
                                                    CreatedBy = dr.Field<string>("CreatedBy"),
                                                    CreatedOn = dr.Field<DateTime?>("CreatedOn").ToString(),
                                                    IsActive = dr.Field<bool>("IsActive"),
+                                                   IsAdditional = dr.Field<bool>("IsAdditional"),
                                                    Success = 1,
                                                    Message = ""
                                                }).ToList();
@@ -645,7 +648,7 @@ namespace ITInventory.Common
 
         }
 
-        public MessageHandle EmployeeBranchCreateEdit(long Id,long EmployeeID, long Branchid,int IsAdditional,string ProcessedBy)
+        public MessageHandle EmployeeBranchCreateEdit(long Id,long EmployeeID, long Branchid,bool IsAdditional,string ProcessedBy)
         {
             MessageHandle result = new MessageHandle();
             List<object> parameter = new List<object>();
@@ -665,6 +668,19 @@ namespace ITInventory.Common
             result.Success = Convert.ToInt16(output[0]);
             result.Message = output[1];
 
+            return result;
+        }
+        public MessageHandle DeleteEmployeeBranch(long ID)
+        {
+            MessageHandle result = new MessageHandle();
+            List<object> parameter = new List<object>();
+            parameter.Add("@ID");
+            parameter.Add(ID);
+
+            List<object> outParameter = OutputParams();
+            string[] output = DB.InsertorUpdateWithOutput("EmployeeBranchDelete", parameter.ToArray(), outParameter.ToArray());
+            result.Success = Convert.ToInt16(output[0]);
+            result.Message = output[1];
             return result;
         }
         #endregion
@@ -1476,7 +1492,8 @@ namespace ITInventory.Common
                                                        AttachmentID = dr.Field<long?>("AttachmentID") == null ? "0" : dr.Field<long>("AttachmentID").ToString(),
                                                        AttachmentUrl = dr.Field<string>("AttachmentUrl"),
                                                        LeaveDates = dr.Field<string>("DateStrings"),
-                                                       totalLeavedays = dr.Field<int>("totalLeavedays")
+                                                       totalLeavedays = dr.Field<int>("totalLeavedays"),
+                                                       IsRequestSend = dr.Field<bool>("IsRequestSend")
                                                    }).ToList();
 
 
