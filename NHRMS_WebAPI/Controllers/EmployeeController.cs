@@ -287,11 +287,17 @@ namespace NHRMS_WebAPI.Controllers
 
         [HttpPost]
         [Route("app/EmployeeReportingAuthorityPost")]
-        public output EmployeeReportingAuthorityPost(ReportingAuthorityDetail user)
+        public output EmployeeReportingAuthorityPost(long id,long employeeID, long authorityID, string processedBy)
         {
             output result = new output();
             try
             {
+                ReportingAuthorityDetail user=new ReportingAuthorityDetail();
+                user.ID = id;
+                user.EmployeeID = employeeID;
+                user.AuthorityID = authorityID;
+                user.ProcessedBy = processedBy;
+
                 MessageHandle obj = DAL.EmployeeReportingAuthorityPost(user);
                 result = result.GetResponsePost(obj,obj.Message);
                 result.IsSucess = Convert.ToBoolean(obj.Success);
@@ -329,12 +335,12 @@ namespace NHRMS_WebAPI.Controllers
 
         [HttpPost]
         [Route("app/EmployeeLeaveTypeMasterPost")]
-        public output EmployeeLeaveTypeMasterPost(long LeaveID, int YearID, long EmployeeID, int LeaveTypeID, decimal LeaveCount, string ProcessedBy)
+        public output EmployeeLeaveTypeMasterPost(long LeaveID, long EmployeeID, int LeaveTypeID, decimal LeaveCount, string ProcessedBy)
         {
             output result = new output();
             try
             {
-                MessageHandle obj = DAL.EmployeeLeaveTypeMasterEditCreate(LeaveID, YearID, EmployeeID, LeaveTypeID, LeaveCount, ProcessedBy);
+                MessageHandle obj = DAL.EmployeeLeaveTypeMasterEditCreate(LeaveID, EmployeeID, LeaveTypeID, LeaveCount, ProcessedBy);
                 result = result.GetResponsePost(obj, obj.Message);
                 result.IsSucess = Convert.ToBoolean(obj.Success);
                 result.Message = obj.Message;
@@ -416,6 +422,49 @@ namespace NHRMS_WebAPI.Controllers
                 result.Message = ex.Message;
             }
             return result;
+        }
+
+        [Route("app/GetEmployeeDetailSearch/{Search}")]
+        public output GetEmployeeDetailAutoComplete(string Search)
+        {
+            output result = new output();
+            try
+            {
+                List<EmployeeDetail> obj = DAL.GetEmployeeDetailAutoComplete(Search);
+                result = result.GetResponse(obj);
+            }
+            catch (Exception ex)
+            {
+                result.IsSucess = false;
+                result.Message = ex.Message;
+            }
+            return result;
+        }
+
+        [HttpPost]
+        [Route("app/DeleteEmployeeReportingAuthority/{id}")]
+        public output DeleteEmployeeReportingAuthority(int id)
+        {
+            output result = new output();
+            try
+            {
+                MessageHandle obj = DAL.DeleteEmployeeReportingAuthority(id);
+                result = result.GetResponsePost(obj, obj.Message);
+                result.IsSucess = Convert.ToBoolean(obj.Success);
+                result.Message = obj.Message;
+            }
+            catch (Exception ex)
+            {
+                result.IsSucess = false;
+                result.Message = ex.Message;
+            }
+            finally
+            {
+
+            }
+
+            return result;
+
         }
     }
 }

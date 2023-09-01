@@ -233,7 +233,7 @@ namespace ITInventory.Common
                                                {
                                                    EmployeeID = dr.Field<long>("EmployeeID"),
                                                    EmployeeName = dr.Field<string>("EmployeeName"),
-                                                   RegDate = Convert.ToString(dr.Field<DateTime?>("RegDate")),
+                                                   RegDate = string.Format("{0:dd/MM/yyyy}", dr.Field<DateTime?>("RegDate")),
                                                    MobileNo = dr.Field<string>("MobNo"),
                                                    EmpPassword = dr.Field<string>("EmpPassword"),
                                                    DesignationID = dr.Field<int>("DesignationID"),
@@ -311,7 +311,7 @@ namespace ITInventory.Common
                                                {
                                                    EmployeeID = dr.Field<long>("EmployeeID"),
                                                    EmployeeName = dr.Field<string>("EmployeeName"),
-                                                   RegDate = Convert.ToString(dr.Field<DateTime?>("RegDate")),
+                                                   RegDate = string.Format("{0:dd/MM/yyyy}", dr.Field<DateTime?>("RegDate")),
                                                    MobileNo = dr.Field<string>("MobNo"),
                                                    EmpPassword = dr.Field<string>("EmpPassword"),
                                                    DesignationID = dr.Field<int>("DesignationID"),
@@ -364,7 +364,7 @@ namespace ITInventory.Common
                                                {
                                                    EmployeeID = dr.Field<long>("EmployeeID"),
                                                    EmployeeName = dr.Field<string>("EmployeeName"),
-                                                   RegDate = Convert.ToString(dr.Field<DateTime?>("RegDate")),
+                                                   RegDate = string.Format("{0:dd/MM/yyyy}", dr.Field<DateTime?>("RegDate")),
                                                    MobileNo = dr.Field<string>("MobNo"),
                                                    EmpPassword = dr.Field<string>("EmpPassword"),
                                                    DesignationID = dr.Field<int>("DesignationID"),
@@ -524,15 +524,15 @@ namespace ITInventory.Common
 
         }
 
-        public MessageHandle EmployeeLeaveTypeMasterEditCreate(long LeaveID, int YearID, long EmployeeID, int LeaveTypeID, decimal LeaveCount, string ProcessedBy)
+        public MessageHandle EmployeeLeaveTypeMasterEditCreate(long LeaveID, /*int YearID,*/ long EmployeeID, int LeaveTypeID, decimal LeaveCount, string ProcessedBy)
         {
             int success = 0; string msg = "";
             MessageHandle result = new MessageHandle();
             List<object> parameter = new List<object>();
             parameter.Add("@LeaveID");
             parameter.Add(LeaveID);
-            parameter.Add("@YearID");
-            parameter.Add(YearID);
+            //parameter.Add("@YearID");
+            //parameter.Add(YearID);
             parameter.Add("@EmployeeID");
             parameter.Add(EmployeeID);
             parameter.Add("@LeaveTypeID");
@@ -611,6 +611,39 @@ namespace ITInventory.Common
 
             return result;
         }
+
+        public List<EmployeeDetail> GetEmployeeDetailAutoComplete(string Search)
+        {
+            try
+            {
+                List<object> parameter = new List<object>();
+                parameter.Add("@LookUP");
+                parameter.Add(Search);
+
+                List<EmployeeDetail> result = (from dr in DB.ReadDS("EmployeeSearchAutoComplete", parameter.ToArray()).Tables[0].AsEnumerable()
+                                               select new EmployeeDetail()
+                                               {
+                                                   EmployeeID = dr.Field<long>("EmployeeID"),
+                                                   EmployeeName = dr.Field<string>("EmployeeName")+"/"+ dr.Field<long>("EmployeeID"),
+                                                   HrmsNo = dr.Field<string>("HrmsNo"),
+                                                   DesignationID = dr.Field<int>("DesignationID"),
+                                                   DesignationName = dr.Field<string>("DesignationName"),
+                                                   OfficeID = dr.Field<int>("OfficeID"),
+                                                   OfficeName = dr.Field<string>("OfficeName"),
+                                                   DesignationLevel = dr.Field<int>("DesignationLevel"),
+                                                   Success = 1,
+                                                   Message = ""
+                                               }).ToList();
+
+
+                return result;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+
+        }
         #endregion
 
         #region Reporting Authority
@@ -618,6 +651,8 @@ namespace ITInventory.Common
         {
             MessageHandle result = new MessageHandle();
             List<object> parameter = new List<object>();
+            parameter.Add("@ID");
+            parameter.Add(user.ID);
             parameter.Add("@EmployeeID");
             parameter.Add(user.EmployeeID);
             parameter.Add("@AuthorityID");
@@ -661,6 +696,8 @@ namespace ITInventory.Common
                                                                   CreatedBy = dr.Field<string>("CreatedBy"),
                                                                   CreatedOn = dr.Field<DateTime?>("CreatedOn").ToString(),
                                                                   UpdatedBy = dr.Field<string>("UpdatedBy"),
+                                                                  AuthorityHrms = dr.Field<string>("AuthorityHrms"),
+                                                                  EmployeeHrms = dr.Field<string>("EmployeeHrms"),
                                                                   UpdatedOn = dr.Field<DateTime?>("UpdatedOn").ToString(),
                                                                   IsActive = dr.Field<bool>("IsActive"),
                                                                   Success = 1,
@@ -675,6 +712,20 @@ namespace ITInventory.Common
                 return null;
             }
 
+        }
+
+        public MessageHandle DeleteEmployeeReportingAuthority(int id)
+        {
+            MessageHandle result = new MessageHandle();
+            List<object> parameter = new List<object>();
+            parameter.Add("@ID");
+            parameter.Add(id);
+
+            List<object> outParameter = OutputParams();
+            string[] output = DB.InsertorUpdateWithOutput("EmployeeReportingAuthorityDetailDelete", parameter.ToArray(), outParameter.ToArray());
+            result.Success = Convert.ToInt16(output[0]);
+            result.Message = output[1];
+            return result;
         }
         #endregion
 

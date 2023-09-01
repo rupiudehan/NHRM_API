@@ -7,6 +7,7 @@ namespace NHRMS_WebAPI.Models
 {
     public class ReportingAuthorityDetail:MessageHandle
     {
+        public long ID { get; set; }
         public long EmployeeID { get; set; }
         public long AuthorityID { get; set; }
         public string ProcessedBy { get; set; }
@@ -28,5 +29,7 @@ namespace NHRMS_WebAPI.Models
         public int OfficeID { get; set; }
         public string OfficeName { get; set; }
         public bool IsActive { get; set; }
+        public string AuthorityHrms { get; set; }
+        public string EmployeeHrms { get; set; }
     }
 }
