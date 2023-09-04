@@ -385,10 +385,97 @@ namespace NHRMS_WebAPI.Extension
                                                  StateName = dr.Field<string>("StateName"),
                                                  CountryId = dr.Field<int>("CountryId"),
                                                  CountryName = dr.Field<string>("CountryName"),
-                                                 OfficeInTime = Convert.ToString(dr.Field<TimeSpan?>("InTime")),
-                                                 OfficeOutTime = Convert.ToString(dr.Field<TimeSpan?>("OutTime")),
-                                                 HalfDayTime = Convert.ToString(dr.Field<TimeSpan?>("HalfDayTime")),
-                                                 ShortLeaveTime = Convert.ToString(dr.Field<TimeSpan?>("ShortLeaveTime")),
+                                                 OfficeInTime = dr.Field<TimeSpan?>("InTime")==null?"":dr.Field<TimeSpan?>("InTime").ToString(),
+                                                 OfficeOutTime = dr.Field<TimeSpan?>("OutTime")==null?"": dr.Field<TimeSpan?>("OutTime").ToString(),
+                                                 HalfDayTime = dr.Field<TimeSpan?>("HalfDayTime")==null?"": dr.Field<TimeSpan?>("HalfDayTime").ToString(),
+                                                 ShortLeaveTime = dr.Field<TimeSpan?>("ShortLeaveTime")==null?"": dr.Field<TimeSpan?>("ShortLeaveTime").ToString(),
+                                                 Success = 1,
+                                                 Message = ""
+                                             }).ToList();
+
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+
+        }
+        public MessageHandle CreateUpdateOfficeDetail(int id,int cityID,string officeName,string latitute,string longitute,string processedBy)
+        {
+            MessageHandle result = new MessageHandle();
+            List<object> parameter = new List<object>();
+            parameter.Add("@ID");
+            parameter.Add(id);
+            parameter.Add("@CityID");
+            parameter.Add(cityID);
+            parameter.Add("@OfficeName");
+            parameter.Add(officeName);
+            parameter.Add("@OfficeLattitute");
+            parameter.Add(latitute);
+            parameter.Add("@OfficeLongitute");
+            parameter.Add(longitute);
+            parameter.Add("@ProcessedBy");
+            parameter.Add(processedBy);
+
+            List<object> outParameter = OutputParams();
+            string[] output = DB.InsertorUpdateWithOutput("OfficeDetailCreateEdit", parameter.ToArray(), outParameter.ToArray());
+            result.Success = Convert.ToInt16(output[0]);
+            result.Message = output[1];
+            return result;
+        }
+        public MessageHandle DeleteOfficeDetail(int id)
+        {
+            MessageHandle result = new MessageHandle();
+            List<object> parameter = new List<object>();
+            parameter.Add("@ID");
+            parameter.Add(id);
+
+            List<object> outParameter = OutputParams();
+            string[] output = DB.InsertorUpdateWithOutput("OfficeDetailDelete", parameter.ToArray(), outParameter.ToArray());
+            result.Success = Convert.ToInt16(output[0]);
+            result.Message = output[1];
+            return result;
+        }
+
+        public List<OfficeDetail> GetOfficeDetailWithoutTiming(int officeID, int cityID, int districtID, int stateID, int countryID)
+        {
+            try
+            {
+                List<object> parameter = new List<object>();
+                parameter.Add("@OfficeID");
+                parameter.Add(officeID);
+                parameter.Add("@CityID");
+                parameter.Add(cityID);
+                parameter.Add("@DistrictID");
+                parameter.Add(districtID);
+                parameter.Add("@StateID");
+                parameter.Add(stateID);
+                parameter.Add("@CountryID");
+                parameter.Add(countryID);
+
+                List<OfficeDetail> result = (from dr in DB.ReadDS("OfficeDetailWithoutTimingGet", parameter.ToArray()).Tables[0].AsEnumerable()
+                                             select new OfficeDetail()
+                                             {
+                                                 OfficeID = dr.Field<int>("OfficeID"),
+                                                 OfficeName = dr.Field<string>("OfficeName"),
+                                                 OfficeLattitute = dr.Field<double>("OfficeLattitute").ToString(),
+                                                 OfficeLongitute = dr.Field<double>("OfficeLongitute").ToString(),
+                                                 CityID = dr.Field<int>("CityID"),
+                                                 CityName = dr.Field<string>("CityName"),
+                                                 CityCode = dr.Field<string>("CityCode"),
+                                                 CityPostalCode = dr.Field<string>("CityPostalCode"),
+                                                 DistrictID = dr.Field<int>("DistrictID"),
+                                                 DistrictName = dr.Field<string>("DistrictName"),
+                                                 DistrictCode = dr.Field<string>("DistrictCode"),
+                                                 CreatedOn = dr.Field<DateTime?>("CreatedOn").ToString(),
+                                                 CreatedBy = dr.Field<string>("CreatedBy"),
+                                                 StateID = dr.Field<int>("StateID"),
+                                                 StateCode = dr.Field<string>("StateCode"),
+                                                 StateName = dr.Field<string>("StateName"),
+                                                 CountryId = dr.Field<int>("CountryId"),
+                                                 CountryName = dr.Field<string>("CountryName"),
                                                  Success = 1,
                                                  Message = ""
                                              }).ToList();

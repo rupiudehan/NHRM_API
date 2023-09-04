@@ -683,6 +683,36 @@ namespace ITInventory.Common
             result.Message = output[1];
             return result;
         }
+
+        public MessageHandle EmployeeActivateDeactivateEdit(long EmployeeID)
+        {
+            MessageHandle result = new MessageHandle();
+            List<object> parameter = new List<object>();
+            parameter.Add("@EmployeeID");
+            parameter.Add(EmployeeID);
+
+            List<object> outParameter = OutputParams();
+            string[] output = DB.InsertorUpdateWithOutput("EmployeeActivateDeactivateForAttendance", parameter.ToArray(), outParameter.ToArray());
+            result.Success = Convert.ToInt16(output[0]);
+            result.Message = output[1];
+
+            return result;
+        }
+        public MessageHandle EmployeeServiceEndEdit(long EmployeeID,string DateOfServiceEnd)
+        {
+            MessageHandle result = new MessageHandle();
+            List<object> parameter = new List<object>();
+            parameter.Add("@EmployeeID");
+            parameter.Add(EmployeeID);
+            parameter = MapDate(DateOfServiceEnd, parameter, "@DateOfServiceEnd");
+
+            List<object> outParameter = OutputParams();
+            string[] output = DB.InsertorUpdateWithOutput("EmployeeRetiredFromService", parameter.ToArray(), outParameter.ToArray());
+            result.Success = Convert.ToInt16(output[0]);
+            result.Message = output[1];
+
+            return result;
+        }
         #endregion
 
         #region Reporting Authority

@@ -518,5 +518,59 @@ namespace NHRMS_WebAPI.Controllers
             return result;
 
         }
+
+        [HttpPost]
+        [Route("app/EmployeeActivateDeactivatePost")]
+        public output EmployeeActivateDeactivatePost(long EmployeeID)
+        {
+            output result = new output();
+            try
+            {
+                MessageHandle obj = DAL.EmployeeActivateDeactivateEdit(EmployeeID);
+                result = result.GetResponsePost(obj, obj.Message);
+                result.IsSucess = Convert.ToBoolean(obj.Success);
+                result.Message = obj.Message;
+            }
+            catch (Exception ex)
+            {
+                result.IsSucess = false;
+                result.Message = ex.Message;
+            }
+            finally
+            {
+                //result.ResponseData = 2;
+            }
+
+            return result;
+
+
+        }
+
+        [HttpPost]
+        [Route("app/EmployeeServiceEndPost")]
+        public output EmployeeServiceEndPost(long EmployeeID, string DateOfServiceEnd)
+        {
+            output result = new output();
+            try
+            {
+                MessageHandle obj = DAL.EmployeeServiceEndEdit(EmployeeID, DateOfServiceEnd);
+                result = result.GetResponsePost(obj, obj.Message);
+                result.IsSucess = Convert.ToBoolean(obj.Success);
+                result.Message = obj.Message;
+            }
+            catch (Exception ex)
+            {
+                result.IsSucess = false;
+                result.Message = ex.Message;
+            }
+            finally
+            {
+                //result.ResponseData = 2;
+            }
+
+            return result;
+
+
+        }
     }
 }
