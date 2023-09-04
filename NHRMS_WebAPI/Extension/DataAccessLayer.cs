@@ -1358,9 +1358,9 @@ namespace ITInventory.Common
                                                       OfficeID = dr.Field<int>("OfficeID"),
                                                       DesignationID = dr.Field<int>("DesignationID"),
                                                       BranchID = dr.Field<long>("BranchID"),
-                                                      FromDate = dr.Field<DateTime>("FromDate").ToString(),
-                                                      ToDate = dr.Field<DateTime>("ToDate").ToString(),
-                                                      EnteryDate = dr.Field<DateTime?>("EnteryDate").ToString(),
+                                                      FromDate = string.Format("{0:dd/MM/yyyy}", dr.Field<DateTime>("FromDate").ToString()),
+                                                      ToDate = string.Format("{0:dd/MM/yyyy}", dr.Field<DateTime>("ToDate").ToString()),
+                                                      EnteryDate = string.Format("{0:dd/MM/yyyy}", dr.Field<DateTime?>("EnteryDate").ToString()),
                                                       NoOfDays = dr.Field<int>("NoOfDays"),
                                                       Success = 1,
                                                       Message = ""
