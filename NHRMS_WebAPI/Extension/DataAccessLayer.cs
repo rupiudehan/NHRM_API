@@ -713,6 +713,117 @@ namespace ITInventory.Common
 
             return result;
         }
+
+        public MessageHandle EmployeeSimDetailDelete(long EmployeeID, string ProcessedBy)
+        {
+            MessageHandle result = new MessageHandle();
+            List<object> parameter = new List<object>();
+            parameter.Add("@EmployeeID");
+            parameter.Add(EmployeeID);
+            parameter.Add("@ProcessedBy");
+            parameter.Add(ProcessedBy);
+
+            List<object> outParameter = OutputParams();
+            string[] output = DB.InsertorUpdateWithOutput("EmployeeSimDetailDelete", parameter.ToArray(), outParameter.ToArray());
+            result.Success = Convert.ToInt16(output[0]);
+            result.Message = output[1];
+
+            return result;
+        }
+
+        public MessageHandle EmployeeSimDetailReRegister(string MobileNo,string SimId, string ProcessedBy)
+        {
+            MessageHandle result = new MessageHandle();
+            List<object> parameter = new List<object>();
+            parameter.Add("@MobileNo");
+            parameter.Add(MobileNo);
+            parameter.Add("@SimID");
+            parameter.Add(SimId);
+            parameter.Add("@ProcessedBy");
+            parameter.Add(ProcessedBy);
+
+            List<object> outParameter = OutputParams();
+            string[] output = DB.InsertorUpdateWithOutput("EmployeeSimDetailCreate", parameter.ToArray(), outParameter.ToArray());
+            result.Success = Convert.ToInt16(output[0]);
+            result.Message = output[1];
+
+            return result;
+        }
+
+        public List<EmployeeDetail> GetEmployeeDetailForSimMismatch(bool IsSimMismatch, out string msg)
+        {
+            msg = string.Empty;
+            try
+            {
+                List<object> parameter = new List<object>();
+                parameter.Add("@IsSimMismatch");
+                parameter.Add(IsSimMismatch);
+
+                List<EmployeeDetail> result = (from dr in DB.ReadDS("EmployeeDetailForSimMismatchGet", parameter.ToArray()).Tables[0].AsEnumerable()
+                                               select new EmployeeDetail()
+                                               {
+                                                   EmployeeID = dr.Field<long>("EmployeeID"),
+                                                   EmployeeName = dr.Field<string>("EmployeeName"),
+                                                   RegDate = string.Format("{0:dd/MM/yyyy}", dr.Field<DateTime?>("RegDate")),
+                                                   MobileNo = dr.Field<string>("MobNo"),
+                                                   EmpPassword = dr.Field<string>("EmpPassword"),
+                                                   DesignationID = dr.Field<int>("DesignationID"),
+                                                   DesignationName = dr.Field<string>("DesignationName"),
+                                                   GenderID = dr.Field<int>("GenderID"),
+                                                   GenderName = dr.Field<string>("GenderName"),
+                                                   OfficeID = dr.Field<int>("OfficeID"),
+                                                   OfficeName = dr.Field<string>("OfficeName"),
+                                                   CityID = dr.Field<int>("CityID"),
+                                                   CityCode = dr.Field<string>("CityCode"),
+                                                   CityName = dr.Field<string>("CityName"),
+                                                   DistrictID = dr.Field<int>("DistrictID"),
+                                                   DistrictCode = dr.Field<string>("DistrictCode"),
+                                                   DistrictName = dr.Field<string>("DistrictName"),
+                                                   StateID = dr.Field<int>("StateID"),
+                                                   StateCode = dr.Field<string>("StateCode"),
+                                                   StateName = dr.Field<string>("StateName"),
+                                                   CountryID = dr.Field<int>("CountryID"),
+                                                   CountryCode = dr.Field<string>("CountryCode"),
+                                                   CountryName = dr.Field<string>("CountryName"),
+                                                   OfficeLattitute = dr.Field<double>("OfficeLattitute").ToString(),
+                                                   OfficeLongitute = dr.Field<double>("OfficeLongitute").ToString(),
+                                                   SimID = dr.Field<string>("SimID"),
+                                                   AdharCard = dr.Field<string>("Adharcard") ?? "",
+                                                   HrmsNo = dr.Field<string>("HrmsNo"),
+                                                   //BranchIDs = dr.Field<string>("BranchIDs"),
+                                                   //BranchNames = dr.Field<string>("BranchNames"),
+                                                   //DesignationIDs = dr.Field<string>("DesignationIDs"),
+                                                   //DesignationNames = dr.Field<string>("DesignationNames"),
+                                                   EmployeeTypeID = dr.Field<int>("EmployeeTypeID"),
+                                                   //EmployeeTypeName = dr.Field<string>("EmployeeTypeName"),
+                                                   DateofInActive = dr.Field<DateTime?>("DateOfInActive").ToString(),
+                                                   DateofJoining = dr.Field<DateTime?>("DateofJoining").ToString(),
+                                                   DateofTransfer = dr.Field<DateTime?>("DateOfTransfer").ToString(),
+                                                   InactiveForAttendance = dr.Field<bool>("InactiveForAttendance"),
+                                                   DateOfInactiveForAttendance = dr.Field<DateTime?>("DateOfInactiveForAttendance").ToString(),
+                                                   isActive = dr.Field<bool>("IsActive"),
+                                                   HasApprovingAuthorization = Convert.ToBoolean(dr.Field<int>("HasApprovingAuthorization")),
+                                                   isDeleted = dr.Field<bool>("isDeleted"),
+                                                   DesignationLevel = dr.Field<int>("DesignationLevel"),
+                                                   //OfficeInTime = dr.Field<string>("OfficeInTime").ToString(),
+                                                   //OfficeOutTime = dr.Field<string>("OfficeOutTime"),
+                                                   //OfficeHalfDayTime = dr.Field<string>("OfficeHalfDayTime") ?? "",
+                                                   //OfficeShortLeaveTime = dr.Field<string>("OfficeShortLeaveTime") ?? "",
+                                                   //OfficeTimingID = dr.Field<int>("OfficeTimingID"),
+                                                   //ReportingAuthorityID = dr.Field<long>("ReportingAuthorityID"),
+                                                   //ReportingAuthorityName = dr.Field<string>("ReportingAuthorityName"),
+                                                   Success = 1,
+                                                   Message = ""
+                                               }).ToList();
+                
+                return result;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+
+        }
         #endregion
 
         #region Reporting Authority
@@ -1388,9 +1499,9 @@ namespace ITInventory.Common
                                                       OfficeID = dr.Field<int>("OfficeID"),
                                                       DesignationID = dr.Field<int>("DesignationID"),
                                                       BranchID = dr.Field<long>("BranchID"),
-                                                      FromDate = string.Format("{0:dd/MM/yyyy}", dr.Field<DateTime>("FromDate").ToString()),
-                                                      ToDate = string.Format("{0:dd/MM/yyyy}", dr.Field<DateTime>("ToDate").ToString()),
-                                                      EnteryDate = string.Format("{0:dd/MM/yyyy}", dr.Field<DateTime?>("EnteryDate").ToString()),
+                                                      FromDate = string.Format("{0:dd/MM/yyyy}", dr.Field<DateTime>("FromDate")),
+                                                      ToDate = string.Format("{0:dd/MM/yyyy}", dr.Field<DateTime>("ToDate")),
+                                                      EnteryDate = string.Format("{0:dd/MM/yyyy}", dr.Field<DateTime?>("EnteryDate")),
                                                       NoOfDays = dr.Field<int>("NoOfDays"),
                                                       Success = 1,
                                                       Message = ""
@@ -1534,6 +1645,26 @@ namespace ITInventory.Common
                 return null;
             }
 
+        }
+
+        public MessageHandle CreateEmployeeLeaveDateUnlock(long employeeID, string startdate, string enddate,string processedBy)
+        {
+            MessageHandle result = new MessageHandle();
+
+            List<object> parameter = new List<object>();
+            parameter.Add("@Employeeid");
+            parameter.Add(employeeID);
+            parameter = MapDate(startdate, parameter, "@FromDate");
+            parameter = MapDate(enddate, parameter, "@ToDate");
+            parameter.Add("@ProcessedBy");
+            parameter.Add(processedBy);
+
+            List<object> outParameter = OutputParams();
+            string[] output = DB.InsertorUpdateWithOutput("EmployeeLeaveDateUnlockCreate", parameter.ToArray(), outParameter.ToArray());
+            result.Success = Convert.ToInt16(output[0]);
+            result.Message = output[1];
+
+            return result;
         }
         #endregion
 

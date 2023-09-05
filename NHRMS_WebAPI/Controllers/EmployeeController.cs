@@ -572,5 +572,77 @@ namespace NHRMS_WebAPI.Controllers
 
 
         }
+
+        [HttpPost]
+        [Route("app/EmployeeSimDetailDeletePost")]
+        public output EmployeeSimDetailDeletePost(long employeeID, string processedBy)
+        {
+            output result = new output();
+            try
+            {
+                MessageHandle obj = DAL.EmployeeSimDetailDelete(employeeID,processedBy);
+                result = result.GetResponsePost(obj, obj.Message);
+                result.IsSucess = Convert.ToBoolean(obj.Success);
+                result.Message = obj.Message;
+            }
+            catch (Exception ex)
+            {
+                result.IsSucess = false;
+                result.Message = ex.Message;
+            }
+            finally
+            {
+
+            }
+
+            return result;
+
+        }
+
+        [HttpPost]
+        [Route("app/EmployeeSimDetailReRegisterPost")]
+        public output EmployeeSimDetailReRegisterPost(string mobileNo, string simId, string processedBy)
+        {
+            output result = new output();
+            try
+            {
+                MessageHandle obj = DAL.EmployeeSimDetailReRegister(mobileNo, simId, processedBy);
+                result = result.GetResponsePost(obj, obj.Message);
+                result.IsSucess = Convert.ToBoolean(obj.Success);
+                result.Message = obj.Message;
+            }
+            catch (Exception ex)
+            {
+                result.IsSucess = false;
+                result.Message = ex.Message;
+            }
+            finally
+            {
+
+            }
+
+            return result;
+
+        }
+
+        [Route("app/GetEmployeeDetailForSimMismatch/{IsSimMismatch}")]
+        public output GetEmployeeDetailForSimMismatch(bool IsSimMismatch)
+        {
+            output result = new output();
+            try
+            {
+                string msg = string.Empty;
+                List<EmployeeDetail> obj = DAL.GetEmployeeDetailForSimMismatch(IsSimMismatch, out msg);
+                result = result.GetResponse(obj);
+                //result.IsSucess = false;
+                result.Message = msg;
+            }
+            catch (Exception ex)
+            {
+                result.IsSucess = false;
+                result.Message = ex.Message;
+            }
+            return result;
+        }
     }
 }
