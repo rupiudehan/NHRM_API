@@ -101,5 +101,31 @@ namespace NHRMS_WebAPI.Controllers
             return result;
         }
 
+        [HttpPost]
+        [Route("app/SetOfficeTimeDetailPost")]
+        public output SetOfficeTimeDetailPost(int officeID, string inTime, string outTime, string halfTime, string shortTime, string processedBy)
+        {
+            output result = new output();
+            try
+            {
+                MessageHandle obj = DAL.SetOfficeTimeDetail(officeID, inTime, outTime, halfTime, shortTime, processedBy);
+                result = result.GetResponsePost(obj, obj.Message);
+                result.IsSucess = Convert.ToBoolean(obj.Success);
+                result.Message = obj.Message;
+            }
+            catch (Exception ex)
+            {
+                result.IsSucess = false;
+                result.Message = ex.Message;
+            }
+            finally
+            {
+
+            }
+
+            return result;
+
+        }
+
     }
 }

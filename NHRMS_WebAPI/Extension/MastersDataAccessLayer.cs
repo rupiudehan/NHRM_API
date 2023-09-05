@@ -489,6 +489,30 @@ namespace NHRMS_WebAPI.Extension
             }
 
         }
+
+        public MessageHandle SetOfficeTimeDetail(int officeID, string inTime, string outTime, string halfTime, string shortTime, string processedBy)
+        {
+            MessageHandle result = new MessageHandle();
+            List<object> parameter = new List<object>();
+            parameter.Add("@OfficeID");
+            parameter.Add(officeID);
+            parameter.Add("@InTime");
+            parameter.Add(inTime);
+            parameter.Add("@OutTime");
+            parameter.Add(outTime);
+            parameter.Add("@HalfDayTime");
+            parameter.Add(halfTime);
+            parameter.Add("@ShortLeaveTime");
+            parameter.Add(shortTime);
+            parameter.Add("@ProcessedBy");
+            parameter.Add(processedBy);
+
+            List<object> outParameter = OutputParams();
+            string[] output = DB.InsertorUpdateWithOutput("OfficeTimingDetailEdit", parameter.ToArray(), outParameter.ToArray());
+            result.Success = Convert.ToInt16(output[0]);
+            result.Message = output[1];
+            return result;
+        }
         #endregion
 
         #region Employee Types
