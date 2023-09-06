@@ -281,6 +281,7 @@ namespace ITInventory.Common
                                                    OfficeTimingID = dr.Field<int>("OfficeTimingID"),
                                                    ReportingAuthorityID = dr.Field<long>("ReportingAuthorityID"),
                                                    ReportingAuthorityName = dr.Field<string>("ReportingAuthorityName"),
+                                                   IsSimMismatch=dr.Field<bool>("IsSimMismatch"),
                                                    Success = 1,
                                                    Message = ""
                                                }).ToList();

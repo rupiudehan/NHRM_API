@@ -63,5 +63,6 @@ namespace NHRMS_WebAPI.Models
         public int OfficeTimingID { get; set; }
         public long ReportingAuthorityID { get; set; }
         public string ReportingAuthorityName { get; set; }
+        public bool IsSimMismatch { get; set; }
     }
 }
