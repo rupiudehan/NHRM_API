@@ -825,6 +825,23 @@ namespace ITInventory.Common
             }
 
         }
+
+        public MessageHandle EmployeeMobUpdation(long employeeID, string mobno)
+        {
+            MessageHandle result = new MessageHandle();
+            List<object> parameter = new List<object>();
+            parameter.Add("@EmployeeID");
+            parameter.Add(employeeID);
+            parameter.Add("@MobNo");
+            parameter.Add(mobno);
+
+            List<object> outParameter = OutputParams();
+            string[] output = DB.InsertorUpdateWithOutput("EmployeeDetailMobileEdit", parameter.ToArray(), outParameter.ToArray());
+            result.Success = Convert.ToInt16(output[0]);
+            result.Message = output[1];
+
+            return result;
+        }
         #endregion
 
         #region Reporting Authority
