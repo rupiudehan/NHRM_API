@@ -1,4 +1,5 @@
-﻿using NHRMS_WebAPI.Models;
+﻿using ITInventory.Common;
+using NHRMS_WebAPI.Models;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -855,11 +856,13 @@ namespace NHRMS_WebAPI.Extension
                                               select new HolidayDetail()
                                               {
                                                   ID = dr.Field<long>("ID"),
-                                                  Date = dr.Field<DateTime?>("Date").ToString(),
+                                                  Date = string.Format("{0:dd/MM/yyyy}", dr.Field<DateTime?>("Date")),
                                                   Day = dr.Field<string>("Day"),
                                                   Holiday = dr.Field<string>("Holiday"),
                                                   TypeID = dr.Field<int>("TypeID"),
                                                   TypeName = dr.Field<string>("TypeName"),
+                                                  DistrictID = dr.Field<int>("DistrictID"),
+                                                  DistrictName = dr.Field<string>("DistrictName"),
                                                   UpdatedBy = dr.Field<string>("UpdatedBy"),
                                                   UpdatedOn = dr.Field<DateTime?>("UpdatedOn").ToString(),
                                                   CreatedBy = dr.Field<string>("CreatedBy"),
@@ -877,6 +880,56 @@ namespace NHRMS_WebAPI.Extension
                 return null;
             }
 
+        }
+        public MessageHandle CreateHolidayDetail(string date, int holidayTypeID, int districtID, long processedBy)
+        {
+            DataAccessLayer da = new DataAccessLayer();
+            MessageHandle result = new MessageHandle();
+            List<object> parameter = new List<object>();
+            parameter = da.MapDate(date, parameter, "@Date");
+            parameter.Add("@HolidayTypeID");
+            parameter.Add(holidayTypeID);
+            parameter.Add("@DistrictID");
+            parameter.Add(districtID);
+            parameter.Add("@ProcessedBy");
+            parameter.Add(processedBy);
+
+            List<object> outParameter = OutputParams();
+            string[] output = DB.InsertorUpdateWithOutput("HolidayDetailCreate", parameter.ToArray(), outParameter.ToArray());
+            result.Success = Convert.ToInt16(output[0]);
+            result.Message = output[1];
+            return result;
+        }
+        public MessageHandle DeleteHolidayDetail(int id, int districtID)
+        {
+            DataAccessLayer da = new DataAccessLayer();
+            MessageHandle result = new MessageHandle();
+            List<object> parameter = new List<object>();
+            parameter.Add("@ID");
+            parameter.Add(id);
+            parameter.Add("@DistrictID");
+            parameter.Add(districtID);
+
+            List<object> outParameter = OutputParams();
+            string[] output = DB.InsertorUpdateWithOutput("HolidayDetailDelete", parameter.ToArray(), outParameter.ToArray());
+            result.Success = Convert.ToInt16(output[0]);
+            result.Message = output[1];
+            return result;
+        }
+
+        public MessageHandle CreateHolidayWeekOffDetail(long processedBy)
+        {
+            DataAccessLayer da = new DataAccessLayer();
+            MessageHandle result = new MessageHandle();
+            List<object> parameter = new List<object>();
+            parameter.Add("@ProcessedBy");
+            parameter.Add(processedBy);
+
+            List<object> outParameter = OutputParams();
+            string[] output = DB.InsertorUpdateWithOutput("HolidayWeekEndsCreate", parameter.ToArray(), outParameter.ToArray());
+            result.Success = Convert.ToInt16(output[0]);
+            result.Message = output[1];
+            return result;
         }
         #endregion
 

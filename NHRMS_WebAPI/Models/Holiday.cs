@@ -18,5 +18,7 @@ namespace NHRMS_WebAPI.Models
         public string Date { get; set; }
         public string Day { get; set; }
         public string Holiday { get; set; }
+        public int DistrictID { get; set; }
+        public string DistrictName { get; set; }
     }
 }

@@ -2160,7 +2160,7 @@ namespace ITInventory.Common
             return outParameter;
         }
 
-        private List<object> MapDate(string date, List<object> parameter, string paramName)
+        public List<object> MapDate(string date, List<object> parameter, string paramName)
         {
             if (date != "")
             {
