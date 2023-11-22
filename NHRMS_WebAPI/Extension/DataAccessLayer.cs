@@ -217,6 +217,21 @@ namespace ITInventory.Common
             return result;
         }
 
+        public MessageHandle EmployeeSimDetailUpdation(string simID)
+        {
+            MessageHandle result = new MessageHandle();
+            List<object> parameter = new List<object>();
+            parameter.Add("@SimID");
+            parameter.Add(simID);
+
+            List<object> outParameter = OutputParams();
+            string[] output = DB.InsertorUpdateWithOutput("UpdateSimID", parameter.ToArray(), outParameter.ToArray());
+            result.Success = Convert.ToInt16(output[0]);
+            result.Message = output[1];
+
+            return result;
+        }
+
         public List<EmployeeDetail> GetEmployeeLoginDetail(string username, string password, out string msg)
         {
             msg = string.Empty;
