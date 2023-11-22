@@ -658,6 +658,7 @@ namespace NHRMS_WebAPI.Extension
                                            {
                                                YearId = dr.Field<int>("YearId"),
                                                Year = dr.Field<string>("Year"),
+                                               IsCurrentYear = dr.Field<bool>("IsCurrentYear"),
                                                Success = 1,
                                                Message = ""
                                            }).ToList();
@@ -670,6 +671,20 @@ namespace NHRMS_WebAPI.Extension
                 return null;
             }
 
+        }
+
+        public MessageHandle CreateYearDetail(long processedBy)
+        {
+            MessageHandle result = new MessageHandle();
+            List<object> parameter = new List<object>();
+            parameter.Add("@ProcessedBy");
+            parameter.Add(processedBy);
+
+            List<object> outParameter = OutputParams();
+            string[] output = DB.InsertorUpdateWithOutput("YearDetailCreate", parameter.ToArray(), outParameter.ToArray());
+            result.Success = Convert.ToInt16(output[0]);
+            result.Message = output[1];
+            return result;
         }
         #endregion
 
