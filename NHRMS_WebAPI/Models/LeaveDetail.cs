@@ -17,7 +17,7 @@ namespace NHRMS_WebAPI.Models
         public string LeaveTypeT { get; set; }
         public string LeaveReason { get; set; }
         public long ApprovingAuthorityID { get; set; }
-        public bool IsAttachedDocumets { get; set; }
+        public int IsAttachedDocumets { get; set; }
         public string AttachDocUrls { get; set; }
         public string StatusUpdatedBy { get; set; }
         public int LeaveStatusID { get; set; }

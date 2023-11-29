@@ -1269,7 +1269,7 @@ namespace ITInventory.Common
             parameter.Add(ld.ApprovingAuthorityID);
             parameter.Add("@IsAttachedDocumets");
             parameter.Add(ld.IsAttachedDocumets);
-            if (ld.IsAttachedDocumets)
+            if (ld.IsAttachedDocumets==1)
             {
                 string extension = ld.fileExtension.ToLower();
                 if (ld.fileExtension != "" && (extension == "jpeg" || extension == "jpg" || extension == "pdf"))
@@ -1310,7 +1310,7 @@ namespace ITInventory.Common
             result.Message = output[1];
             if (result.Success == 2)
             {
-                if (ld.IsAttachedDocumets) { string im = image(ld.HrmsNo, ld.bytedata); }
+                if (ld.IsAttachedDocumets==1) { string im = image(ld.HrmsNo, ld.bytedata); }
             }
             return result;
         }
